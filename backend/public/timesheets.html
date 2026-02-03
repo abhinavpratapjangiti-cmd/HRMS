@@ -1,0 +1,192 @@
+const express = require("express");
+const router = express.Router();
+const db = require("../db");
+const { verifyToken } = require("../middleware/auth");
+const ExcelJS = require("exceljs");
+
+/* =========================
+   SAVE TIMESHEET
+========================= */
+router.post("/", verifyToken, (req, res) => {
+  const { work_date, project, task, hours } = req.body;
+
+  if (!work_date || hours == null) {
+    return res.status(400).json({ message: "Date & hours required" });
+  }
+
+  db.query(
+    `
+    INSERT INTO timesheets (employee_id, work_date, project, task, hours, status)
+    VALUES (?,?,?,?,?,'Submitted')
+    ON DUPLICATE KEY UPDATE
+      project=VALUES(project),
+      task=VALUES(task),
+      hours=VALUES(hours),
+      status='Submitted'
+    `,
+    [req.user.id, work_date, project, task, hours]
+  )
+    .then(() => res.json({ status: "success" }))
+    .catch(() =>
+      res.status(500).json({ message: "DB error" })
+    );
+});
+
+/* =========================
+   ADMIN / MANAGER VIEW
+========================= */
+router.get("/admin", verifyToken, (req, res) => {
+  const { month } = req.query;
+  const { id, role } = req.user;
+
+  let sql = `
+    SELECT t.*, e.name, e.manager_id, e.department
+    FROM timesheets t
+    JOIN employees e ON e.id = t.employee_id
+    WHERE DATE_FORMAT(t.work_date,'%Y-%m') = ?
+  `;
+  const params = [month];
+
+  if (role === "manager") {
+    sql += " AND e.manager_id = ?";
+    params.push(id);
+  }
+
+  if (role === "admin") {
+    sql += " AND e.id != ?";
+    params.push(id);
+  }
+
+  db.query(sql, params)
+    .then(([rows]) => res.json(rows))
+    .catch(() =>
+      res.status(500).json({ message: "DB error" })
+    );
+});
+
+/* =========================
+   APPROVE / REJECT
+========================= */
+router.put("/:id/status", verifyToken, (req, res) => {
+  const { status } = req.body;
+  const { id, role } = req.user;
+
+  if (!["Approved", "Rejected"].includes(status)) {
+    return res.status(400).json({ message: "Invalid status" });
+  }
+
+  if (role === "employee") {
+    return res.status(403).json({ message: "Employees cannot approve" });
+  }
+
+  db.query(
+    `
+    SELECT t.employee_id, t.status, e.manager_id
+    FROM timesheets t
+    JOIN employees e ON e.id = t.employee_id
+    WHERE t.id=?
+    `,
+    [req.params.id]
+  )
+    .then(([rows]) => {
+      if (!rows.length) {
+        return res.status(404).json({ message: "Not found" });
+      }
+
+      const ts = rows[0];
+
+      if (ts.status !== "Submitted") {
+        return res.status(400).json({ message: "Already processed" });
+      }
+
+      if (role === "admin" && ts.employee_id === id) {
+        return res.status(403).json({ message: "Cannot approve own" });
+      }
+
+      if (role === "manager" && ts.manager_id !== id) {
+        return res.status(403).json({ message: "Not your reportee" });
+      }
+
+      return db.query(
+        "UPDATE timesheets SET status=? WHERE id=?",
+        [status, req.params.id]
+      );
+    })
+    .then(() => res.json({ status: "success" }))
+    .catch(err => {
+      if (!res.headersSent) {
+        console.error("APPROVE ERROR:", err);
+        res.status(500).json({ message: "DB error" });
+      }
+    });
+});
+
+/* =========================
+   EXPORT EXCEL (FIXED)
+========================= */
+router.get("/export", verifyToken, (req, res) => {
+  const { month } = req.query;
+
+  const sql = `
+    SELECT e.id, e.name, e.department,
+           t.work_date, t.project, t.task, t.hours, t.status
+    FROM timesheets t
+    JOIN employees e ON e.id = t.employee_id
+    WHERE DATE_FORMAT(t.work_date,'%Y-%m') = ?
+    ORDER BY t.work_date
+  `;
+
+  db.query(sql, [month])
+    .then(([rows]) => {
+      const workbook = new ExcelJS.Workbook();
+      const sheet = workbook.addWorksheet("Timesheet");
+
+      sheet.mergeCells("A1:E1");
+      sheet.getCell("A1").value = "LOVAS IT";
+      sheet.getCell("A1").font = { bold: true, size: 16 };
+      sheet.getCell("A1").alignment = { horizontal: "center" };
+
+      sheet.addRow([]);
+      sheet.addRow(["Employee Name", rows[0]?.name || ""]);
+      sheet.addRow(["Department", rows[0]?.department || ""]);
+      sheet.addRow(["Month", month]);
+      sheet.addRow([]);
+
+      sheet.addRow(["Date", "Project", "Task", "Hours", "Status"]).font = {
+        bold: true
+      };
+
+      let total = 0;
+      rows.forEach(r => {
+        sheet.addRow([
+          r.work_date.toISOString().slice(0, 10),
+          r.project,
+          r.task,
+          r.hours,
+          r.status
+        ]);
+        total += Number(r.hours);
+      });
+
+      sheet.addRow([]);
+      sheet.addRow(["", "", "TOTAL HOURS", total]);
+
+      res.setHeader(
+        "Content-Type",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      );
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename=Timesheet-${month}.xlsx`
+      );
+
+      return workbook.xlsx.write(res);
+    })
+    .then(() => res.end())
+    .catch(err => {
+      console.error("EXPORT EXCEL ERROR:", err);
+      res.status(500).json({ message: "DB error" });
+    });
+});
+
+module.exports = router;

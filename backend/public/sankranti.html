@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sankranti Kites Demo</title>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto;
+      background: linear-gradient(to top, #fde68a, #60a5fa);
+    }
+
+    /* Overlay */
+    .sankranti-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .message {
+      position: absolute;
+      top: 12%;
+      text-align: center;
+      color: #7c2d12;
+    }
+
+    .message h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .message p {
+      font-size: 1.3rem;
+    }
+
+    /* Kite */
+    .kite {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: red;
+      transform: rotate(45deg);
+      animation: fly linear infinite;
+    }
+
+    .kite::after {
+      content: "";
+      position: absolute;
+      width: 2px;
+      height: 50px;
+      background: #374151;
+      left: 50%;
+      top: 40px;
+    }
+
+    /* Kite colors */
+    .kite.yellow { background: #facc15; }
+    .kite.red { background: #ef4444; }
+    .kite.blue { background: #3b82f6; }
+    .kite.green { background: #22c55e; }
+
+    @keyframes fly {
+      from {
+        transform: translateY(110vh) translateX(0) rotate(45deg);
+      }
+      to {
+        transform: translateY(-120vh) translateX(120px) rotate(45deg);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="sankranti-overlay" id="overlay">
+  <div class="message">
+    <h1>🪁 Happy Sankranti 🪁</h1>
+    <p>May your days rise high with joy & success</p>
+  </div>
+
+  <!-- Kites -->
+  <div class="kite yellow" style="left:10%; animation-duration: 10s;"></div>
+  <div class="kite red" style="left:25%; animation-duration: 12s;"></div>
+  <div class="kite blue" style="left:50%; animation-duration: 9s;"></div>
+  <div class="kite green" style="left:70%; animation-duration: 11s;"></div>
+  <div class="kite yellow" style="left:85%; animation-duration: 13s;"></div>
+
+  <!-- Optional soft festive music -->
+  <audio id="bgm" autoplay>
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_3c63f0a4c0.mp3?filename=indian-flute-soft-121663.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+  const audio = document.getElementById("bgm");
+  audio.volume = 0.25;
+
+  setTimeout(() => {
+    document.getElementById("overlay").style.display = "none";
+    audio.pause();
+    audio.currentTime = 0;
+  }, 7000);
+</script>
+
+</body>
+</html>

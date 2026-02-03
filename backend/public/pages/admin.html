@@ -1,0 +1,116 @@
+<!-- ================= ADMIN : USER MANAGEMENT ================= -->
+
+<div class="container-fluid">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4>User Management</h4>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- CREATE USER -->
+    <div class="col-lg-4">
+      <div class="card shadow-sm">
+        <div class="card-header">Create New User</div>
+        <div class="card-body">
+
+          <div class="mb-3">
+            <label>Name</label>
+            <input id="name" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label>Email</label>
+            <input id="email" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label>Password</label>
+            <input id="password" type="password" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label>Department</label>
+            <input id="department" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label>Client Name</label>
+            <input id="clientName" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label>Work Location</label>
+            <input id="workLocation" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label>Role</label>
+            <select id="role" class="form-select">
+              <option value="employee">Employee</option>
+              <option value="manager">Manager</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label>Reports To</label>
+            <select id="createManager" class="form-select"></select>
+            <small id="managerHelp" class="text-muted">
+              Select reporting manager
+            </small>
+          </div>
+
+          <button class="btn btn-primary w-100" onclick="createUser()">
+            Create User
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- USER DIRECTORY -->
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between">
+          <span>User Directory</span>
+          <input
+            id="search"
+            class="form-control form-control-sm w-50"
+            placeholder="Search by name"
+          />
+        </div>
+
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Manager</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="userTable">
+            <tr>
+              <td colspan="4" class="text-center">
+                Loading users...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  window.onPageLoad = function (page) {
+    if (page !== "admin") return;
+
+    // dynamically load admin-users.js only when admin page is active
+    const script = document.createElement("script");
+    script.src = "./assets/js/admin-users.js";
+    document.body.appendChild(script);
+  };
+</script>

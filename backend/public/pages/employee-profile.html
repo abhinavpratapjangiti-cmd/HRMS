@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Employee Profile</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Page-specific CSS (optional but recommended) -->
+  <link rel="stylesheet" href="/assets/css/pages/employee-profile.css" />
+
+  <style>
+    /* SAFETY FALLBACKS (won't override global theme) */
+    .page-container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    }
+
+    .muted {
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      font-size: 14px;
+    }
+
+    .input:disabled {
+      background: #f9fafb;
+      color: #4b5563;
+    }
+
+    .actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .timeline-dot {
+      width: 10px;
+      height: 10px;
+      background: #2563eb;
+      border-radius: 50%;
+      margin-top: 6px;
+    }
+
+    /* HR visibility safety */
+    .hr-only {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-container">
+
+    <!-- ================= EMPLOYEE HEADER ================= -->
+    <div class="card">
+      <h2 id="empName">—</h2>
+      <p id="empEmail" class="muted">—</p>
+
+      <div class="muted">
+        <span id="empDepartment">—</span> ·
+        <span id="empDesignation">—</span> ·
+        <span id="empStatus">—</span>
+      </div>
+    </div>
+
+    <!-- ================= ROLE & JOB ================= -->
+    <div id="roleJobSection" class="card">
+      <h3>Role & Job</h3>
+      <p class="muted">Designation and role management</p>
+
+      <!-- Current Designation -->
+      <div class="form-group">
+        <label for="currentDesignation">Current Designation</label>
+        <input
+          id="currentDesignation"
+          class="input"
+          type="text"
+          disabled
+          aria-readonly="true"
+        />
+      </div>
+
+      <!-- HR / ADMIN ONLY -->
+      <div class="form-group hr-only">
+        <label for="newDesignation">Change Designation</label>
+        <select
+          id="newDesignation"
+          class="input"
+          aria-describedby="designationHelp"
+        >
+          <option value="">Select new designation</option>
+          <option value="Software Engineer">Software Engineer</option>
+          <option value="Senior Software Engineer">Senior Software Engineer</option>
+          <option value="Senior Consultant">Senior Consultant</option>
+          <option value="Lead">Lead</option>
+          <option value="Manager">Manager</option>
+        </select>
+        <small id="designationHelp" class="muted">
+          This change will be recorded in the employee timeline.
+        </small>
+      </div>
+
+      <div class="actions hr-only">
+        <button
+          id="saveRoleBtn"
+          class="btn-primary"
+          type="button"
+          disabled
+        >
+          Save Changes
+        </button>
+        <span class="muted">
+          Select a designation to enable saving
+        </span>
+      </div>
+    </div>
+
+    <!-- ================= TIMELINE ================= -->
+    <div class="card">
+      <h3>Employee Timeline</h3>
+      <div id="employeeTimeline">
+        <span class="muted">Loading timeline…</span>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ================= UI SAFETY SCRIPT ================= -->
+  <script>
+    // Enable save button only when designation selected
+    document.addEventListener("DOMContentLoaded", () => {
+      const select = document.getElementById("newDesignation");
+      const saveBtn = document.getElementById("saveRoleBtn");
+
+      if (select && saveBtn) {
+        select.addEventListener("change", () => {
+          saveBtn.disabled = !select.value;
+        });
+      }
+    });
+  </script>
+</body>
+</html>

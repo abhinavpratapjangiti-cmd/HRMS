@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Management</title>
+
+  <!-- Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <style>
+    body {
+      background: #f6f8fb;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .page-header {
+      background: #fff;
+      border-radius: 14px;
+      padding: 18px 22px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+    }
+
+    .card {
+      border: 0;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+    }
+
+    /* ===== EMPLOYEES TABLE ===== */
+    .employees-card {
+      background: #fff;
+      border-radius: 16px;
+    }
+
+    .employees-title {
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .employee-grid {
+      display: grid;
+      grid-template-columns: 1fr 150px 180px;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .employee-header {
+      background: #f8fafc;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #6c757d;
+      margin-bottom: 12px;
+    }
+
+    .employee-row {
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .employee-row:hover {
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .employee-name {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .employee-email {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    /* ===== SNAPSHOT ===== */
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 14px;
+    }
+
+    .stat-row span:last-child {
+      font-weight: 600;
+    }
+
+    /* ===== RECENT USERS ===== */
+    .recent-user {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      padding: 6px 0;
+    }
+
+    .badge-role {
+      font-size: 11px;
+      background: #eef2ff;
+      color: #3730a3;
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container-fluid p-4">
+
+  <div class="page-header mb-4">
+    <h4>User Management</h4>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- LEFT: CREATE -->
+    <div class="col-xl-6">
+      <div class="card mb-4">
+        <div class="card-header">Create Employee</div>
+        <div class="card-body">
+
+          <input id="name" class="form-control mb-2" placeholder="Full name">
+          <input id="email" class="form-control mb-2" placeholder="Work email">
+          <input id="password" type="password" class="form-control mb-2" placeholder="Temporary password">
+
+          <select id="role" class="form-select mb-2">
+            <option value="employee">Employee</option>
+            <option value="manager">Manager</option>
+            <option value="hr">HR</option>
+            <option value="admin">Admin</option>
+          </select>
+
+          <select id="createManager" class="form-select mb-3">
+            <option value="">No reporting manager</option>
+          </select>
+
+          <button class="btn btn-primary w-100" onclick="createUser()">
+            Create Employee
+          </button>
+        </div>
+      </div>
+
+      <!-- ORGANISATION SNAPSHOT -->
+      <div class="card">
+        <div class="card-header">Organisation Snapshot</div>
+        <div class="card-body" id="orgStats">
+          <div class="text-muted text-center">Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: EMPLOYEES -->
+    <div class="col-xl-6">
+
+      <div class="card employees-card mb-4">
+        <div class="card-header employees-title">Employees</div>
+        <div class="card-body">
+
+          <div class="employee-header employee-grid">
+            <div>Name</div>
+            <div>Role</div>
+            <div>Reporting Manager</div>
+          </div>
+
+          <div id="employeesList">
+            <div class="text-muted text-center">Loading...</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RECENT USERS -->
+      <div class="card">
+        <div class="card-header">Recently Added</div>
+        <div class="card-body" id="recentUsers">
+          <div class="text-muted text-center">Loading...</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* =========================
+   INIT
+========================= */
+document.addEventListener("DOMContentLoaded", () => {
+  loadEmployees();
+  loadOrgStats();
+  loadRecentUsers();
+});
+
+/* =========================
+   EMPLOYEES
+========================= */
+async function loadEmployees() {
+  const res = await fetch("/api/users", {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  });
+
+  const employees = await res.json();
+  const container = document.getElementById("employeesList");
+  container.innerHTML = "";
+
+  employees.forEach(emp => {
+    const row = document.createElement("div");
+    row.className = "employee-row";
+
+    row.innerHTML = `
+      <div class="employee-grid">
+        <div>
+          <div class="employee-name">${emp.name}</div>
+          <div class="employee-email">${emp.email}</div>
+        </div>
+
+        <select class="form-select form-select-sm"
+                onchange="updateUserRole(${emp.user_id}, this.value)">
+          ${["employee","manager","hr","admin"].map(r =>
+            `<option value="${r}" ${r===emp.role?"selected":""}>${r}</option>`
+          ).join("")}
+        </select>
+
+        <select class="form-select form-select-sm manager-select"
+                data-user-id="${emp.employee_id}"
+                data-current="${emp.manager_id || ""}">
+          <option value="">No manager</option>
+        </select>
+      </div>
+    `;
+    container.appendChild(row);
+  });
+
+  loadManagers();
+}
+
+/* =========================
+   MANAGERS
+========================= */
+async function loadManagers() {
+  const res = await fetch("/api/users/managers", {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  });
+  const managers = await res.json();
+
+  document.querySelectorAll(".manager-select").forEach(select => {
+    const current = select.dataset.current;
+
+    managers.forEach(m => {
+      const opt = document.createElement("option");
+      opt.value = m.employee_id;
+      opt.textContent = m.name;
+      if (String(m.employee_id) === String(current)) opt.selected = true;
+      select.appendChild(opt);
+    });
+
+    select.onchange = () =>
+      updateReportingManager(select.dataset.userId, select.value);
+  });
+
+  const createSelect = document.getElementById("createManager");
+  createSelect.innerHTML = `<option value="">No reporting manager</option>`;
+  managers.forEach(m => {
+    const opt = document.createElement("option");
+    opt.value = m.employee_id;
+    opt.textContent = m.name;
+    createSelect.appendChild(opt);
+  });
+}
+
+/* =========================
+   SNAPSHOT
+========================= */
+async function loadOrgStats() {
+  const res = await fetch("/api/users/stats", {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  });
+  const d = await res.json();
+
+  document.getElementById("orgStats").innerHTML = `
+    <div class="stat-row"><span>Total Employees</span><span>${d.total}</span></div>
+    <div class="stat-row"><span>Managers</span><span>${d.managers}</span></div>
+    <div class="stat-row text-success"><span>Active</span><span>${d.active}</span></div>
+    <div class="stat-row text-danger"><span>Inactive</span><span>${d.inactive}</span></div>
+  `;
+}
+
+/* =========================
+   RECENT USERS
+========================= */
+async function loadRecentUsers() {
+  const res = await fetch("/api/users/recent", {
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+  });
+
+  const users = await res.json();
+  document.getElementById("recentUsers").innerHTML = users.map(u => `
+    <div class="recent-user">
+      <span>${u.name}</span>
+      <span class="badge-role">${u.role}</span>
+    </div>
+  `).join("");
+}
+
+/* =========================
+   CREATE USER
+========================= */
+async function createUser() {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const role = document.getElementById("role").value;
+  const managerId = document.getElementById("createManager").value;
+
+  if (!name || !email || !password) {
+    alert("Name, email and password are required");
+    return;
+  }
+
+  const res = await fetch("/api/users", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    },
+    body: JSON.stringify({ name, email, password, role })
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    alert(err.message || "Create failed");
+    return;
+  }
+
+  const data = await res.json();
+  const userId = data.user?.id || data.id;
+
+  if (managerId) {
+    await fetch(`/api/users/${userId}/manager`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      },
+      body: JSON.stringify({ manager_id: managerId })
+    });
+  }
+
+  alert("Employee created");
+
+  document.getElementById("name").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("password").value = "";
+  document.getElementById("role").value = "employee";
+  document.getElementById("createManager").value = "";
+
+  loadEmployees();
+  loadOrgStats();
+  loadRecentUsers();
+}
+
+/* =========================
+   UPDATES
+========================= */
+async function updateUserRole(userId, role) {
+  await fetch(`/api/users/${userId}/role`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    },
+    body: JSON.stringify({ role })
+  });
+}
+
+async function updateReportingManager(employeeId, managerId) {
+  await fetch(`/api/users/${employeeId}/manager`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    },
+    body: JSON.stringify({ manager_id: managerId || null })
+  });
+}
+</script>
+
+</body>
+</html>

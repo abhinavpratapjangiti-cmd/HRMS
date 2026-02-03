@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Employee Dashboard · HRMS</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+</head>
+
+<body class="bg-light">
+
+<!-- ================= TOP BAR ================= -->
+<nav class="navbar navbar-dark bg-dark px-4">
+  <span class="navbar-brand">HRMS · Employee</span>
+  <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+</nav>
+
+<div class="container-fluid p-4">
+
+  <!-- ================= WELCOME ================= -->
+  <h5 id="welcome" class="mb-4"></h5>
+
+  <!-- ================= QUICK ACTIONS ================= -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-3">
+      <div class="btn btn-outline-primary w-100 text-start"
+           onclick="location.href='/attendance.html'">
+        Attendance
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="btn btn-outline-primary w-100 text-start"
+           onclick="location.href='/leaves.html'">
+        Apply Leave
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="btn btn-outline-primary w-100 text-start"
+           onclick="location.href='/salary.html'">
+        Salary Slip
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="btn btn-outline-primary w-100 text-start"
+           onclick="location.href='/chatbot.html'">
+        Chatbot
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MY LEAVES ================= -->
+  <button
+    class="btn btn-outline-dark mb-2"
+    data-bs-toggle="collapse"
+    data-bs-target="#leaveSection"
+  >
+    ▶ My Leave Requests
+  </button>
+
+  <div id="leaveSection" class="collapse">
+    <div class="card shadow-sm mb-4">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-dark">
+            <tr>
+              <th>From</th>
+              <th>To</th>
+              <th>Reason</th>
+              <th>Status</th>
+              <th>Applied On</th>
+            </tr>
+          </thead>
+          <tbody id="leaveTable">
+            <tr>
+              <td colspan="5" class="text-center p-4">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MY TIMESHEETS ================= -->
+  <button
+    class="btn btn-outline-dark mb-2"
+    data-bs-toggle="collapse"
+    data-bs-target="#timesheetSection"
+    onclick="prepareMonth(); loadTimesheet();"
+  >
+    ▶ My Timesheets
+  </button>
+
+  <div id="timesheetSection" class="collapse">
+    <div class="card shadow-sm">
+      <div class="card-body">
+
+        <!-- MONTH FILTER -->
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <input type="month" id="tsMonth" class="form-control">
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary" onclick="loadTimesheet()">
+              Load
+            </button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-dark">
+              <tr>
+                <th>Date</th>
+                <th>Project</th>
+                <th>Task</th>
+                <th>Hours</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="timesheetTable">
+              <tr>
+                <td colspan="5" class="text-center p-4">
+                  Select month to view entries
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= SCRIPTS ================= -->
+<script src="/assets/js/auth.js"></script>
+<script src="/assets/js/leaves.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+requireAuth("employee");
+const API = "http://localhost:5000/api";
+
+/* ---------- helpers ---------- */
+function fmt(d) {
+  return d ? String(d).split("T")[0] : "-";
+}
+
+function statusBadge(status) {
+  if (status === "Approved") return "bg-success";
+  if (status === "Rejected") return "bg-danger";
+  return "bg-warning text-dark";
+}
+
+/* ---------- welcome ---------- */
+const user = JSON.parse(localStorage.getItem("user") || "{}");
+if (user?.name) {
+  document.getElementById("welcome").innerText = `Welcome, ${user.name}`;
+}
+
+/* ---------- timesheet ---------- */
+const tsMonth = document.getElementById("tsMonth");
+const tsTable = document.getElementById("timesheetTable");
+
+function prepareMonth() {
+  if (!tsMonth.value) {
+    const d = new Date();
+    tsMonth.value =
+      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+  }
+}
+
+async function loadTimesheet() {
+  const month = tsMonth.value;
+  tsTable.innerHTML = `<tr><td colspan="5">Loading...</td></tr>`;
+
+  try {
+    const res = await fetch(
+      `${API}/timesheet/my?month=${month}`,
+      { headers: getAuthHeaders() }
+    );
+
+    const data = await res.json();
+    tsTable.innerHTML = "";
+
+    if (!data.length) {
+      tsTable.innerHTML =
+        `<tr><td colspan="5" class="text-center">No records</td></tr>`;
+      return;
+    }
+
+    data.forEach(r => {
+      const locked = r.status === "Approved";
+      tsTable.innerHTML += `
+        <tr class="${locked ? "table-secondary" : ""}">
+          <td>${fmt(r.work_date)}</td>
+          <td>${r.project || "-"}</td>
+          <td>${r.task || "-"}</td>
+          <td>${Number(r.hours).toFixed(2)}</td>
+          <td>
+            <span class="badge ${statusBadge(r.status)}">${r.status}</span>
+            ${locked ? `<span class="ms-2 text-muted">(Locked)</span>` : ""}
+          </td>
+        </tr>`;
+    });
+
+  } catch (e) {
+    console.error(e);
+    tsTable.innerHTML =
+      `<tr><td colspan="5" class="text-danger text-center">Error loading data</td></tr>`;
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+/* ======================================================
+   PAYROLL PAGE – FINAL CLEAN STYLES
+====================================================== */
+
+/* =========================
+   PAGE WRAPPER
+========================= */
+.payroll-page {
+  max-width: 980px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+.page-header h3 {
+  margin-bottom: 2px;
+}
+
+.page-header p {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* =========================
+   2-COLUMN LAYOUT
+========================= */
+.payroll-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* =========================
+   PAYROLL CARD (BASE)
+========================= */
+.payroll-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 26px rgba(0,0,0,.08);
+}
+
+/* =========================
+   CARD HEADER
+========================= */
+.card-header {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
+.card-header h5 {
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+/* =========================
+   FORM ELEMENTS
+========================= */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.form-control,
+.form-select {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  background-color: #f9fafb;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+  outline: none;
+}
+
+/* =========================
+   SALARY GRID
+========================= */
+.salary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.salary-item {
+  background: #f9fafb;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.salary-item span {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.salary-item b {
+  display: block;
+  font-size: 18px;
+  margin-top: 4px;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* Deduction */
+.salary-item.deduction b {
+  color: #dc2626;
+}
+
+/* Net Pay */
+.salary-item.netpay {
+  grid-column: span 2;
+  background: #ecfdf5;
+  padding: 18px;
+}
+
+.salary-item.netpay b {
+  color: #059669;
+  font-size: 22px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.btn {
+  border-radius: 12px;
+}
+
+#downloadBtn {
+  width: 100%;
+  padding: 12px 18px;
+  font-weight: 600;
+}
+
+/* =========================
+   PAYROLL UPLOAD CARD (HR)
+========================= */
+.payroll-upload-card {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  opacity: 0.97;
+}
+
+.payroll-upload-card .btn-success {
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+.payroll-empty {
+  text-align: center;
+  padding: 40px 0;
+  color: #6b7280;
+}
+
+/* =========================
+   MOBILE STACK
+========================= */
+@media (max-width: 900px) {
+  .payroll-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .salary-item.netpay {
+    grid-column: span 1;
+  }
+}

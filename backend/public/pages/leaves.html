@@ -1,0 +1,91 @@
+<!-- ================= LEAVES PAGE ================= -->
+
+<div class="container mt-4 leave-container">
+  <div class="leave-card">
+
+    <!-- HEADER -->
+    <div class="leave-header">
+      <h3>🏖 Apply Leave</h3>
+      <p class="leave-subtitle">Manager approval required</p>
+    </div>
+
+    <!-- LEAVE FORM -->
+    <form id="leaveForm" autocomplete="off">
+
+      <!-- DATE RANGE -->
+      <div class="form-group">
+        <label>📅 Date Range</label>
+        <div class="date-range">
+          <input
+            type="date"
+            id="fromDate"
+            name="from_date"
+            required
+          >
+          <span class="range-sep">→</span>
+          <input
+            type="date"
+            id="toDate"
+            name="to_date"
+            required
+          >
+        </div>
+        <small id="leaveDuration" class="hint">
+          Select start and end date
+        </small>
+      </div>
+
+      <!-- LEAVE TYPE -->
+      <div class="form-group">
+        <label>🗂 Leave Type</label>
+        <select
+          id="leaveType"
+          name="leave_type"
+          required
+        >
+          <option value="">Select leave type</option>
+          <option value="PL">Paid Leave</option>
+          <option value="SL">Sick Leave</option>
+          <option value="CL">Casual Leave</option>
+          <option value="CO">Comp Off</option>
+        </select>
+        <small class="hint">
+          Balance will be checked automatically
+        </small>
+      </div>
+
+      <!-- REASON -->
+      <div class="form-group">
+        <label>
+          📝 Reason <span class="muted">(optional)</span>
+        </label>
+        <textarea
+          id="reason"
+          name="reason"
+          rows="3"
+          placeholder="Family function, medical, travel..."
+          maxlength="255"
+        ></textarea>
+      </div>
+
+      <!-- SUBMIT -->
+      <button type="submit" class="btn-primary">
+        Apply Leave
+      </button>
+
+      <!-- BACK -->
+      <a href="#home" class="btn-link">← Back</a>
+
+    </form>
+
+    <!-- MESSAGE -->
+    <div id="msg" class="mt-3"></div>
+
+  </div>
+</div>
+
+<script>
+  if (typeof initLeaves === "function") {
+    initLeaves();
+  }
+</script>

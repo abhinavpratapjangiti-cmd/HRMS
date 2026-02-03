@@ -1,0 +1,164 @@
+<!-- =====================================================
+     ATTENDANCE PAGE — FINAL, ERROR-FREE, SPA SAFE
+===================================================== -->
+
+<div class="attendance-wrapper" id="attendancePage">
+
+  <!-- ================= HEADER ================= -->
+  <h4 class="mb-3 d-flex align-items-center gap-2">
+    📅 Today's Attendance
+  </h4>
+
+  <div class="alert alert-info mb-4">
+    ℹ️ Attendance status is updated automatically
+  </div>
+
+  <!-- ================= SUMMARY ================= -->
+  <div class="attendance-summary">
+
+    <div class="attendance-card">
+      <small>Status</small>
+      <b id="attendanceStatusText">Loading…</b>
+    </div>
+
+    <div class="attendance-card">
+      <small>Worked Time</small>
+      <b id="workedTime">00:00</b>
+    </div>
+
+    <div class="attendance-card">
+      <small>Break Time</small>
+      <b id="breakTime">00:00</b>
+    </div>
+
+    <div class="attendance-card">
+      <small>Clock In At</small>
+      <b id="clockInAtText">--</b>
+    </div>
+
+  </div>
+
+  <!-- ================= LIVE TIMER + ACTIONS ================= -->
+  <div class="clock-card mt-4">
+
+    <div class="clock-metrics">
+      <div class="clock-metric">
+        <small class="text-muted">LIVE WORK TIMER</small>
+
+        <!-- 🔴 IMPORTANT: hidden by default, JS will show -->
+        <div
+          class="metric live"
+          id="liveWorkTimer"
+          style="display:none"
+        >
+          00:00:00
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= ACTION BUTTONS ================= -->
+    <div class="today-actions mt-3">
+
+      <button
+        id="clockInBtn"
+        class="btn btn-success btn-lg me-2"
+        type="button"
+      >
+        Clock In
+      </button>
+
+      <button
+        id="clockOutBtn"
+        class="btn btn-danger btn-lg"
+        type="button"
+        style="display:none"
+      >
+        Clock Out
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- ================= CLOCK OUT FORM ================= -->
+  <div
+    id="clockOutForm"
+    class="card shadow-sm mb-4 border-0 d-none mt-4"
+  >
+    <div class="card-body">
+
+      <h6 class="text-uppercase text-muted mb-3">
+        Clock Out Details
+      </h6>
+
+      <div class="row g-3 align-items-end">
+
+        <div class="col-md-4">
+          <label for="projectInput" class="form-label">
+            Project
+          </label>
+          <input
+            id="projectInput"
+            class="form-control"
+            placeholder="Optional"
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label for="taskInput" class="form-label">
+            Task
+          </label>
+          <input
+            id="taskInput"
+            class="form-control"
+            placeholder="What did you work on?"
+          />
+        </div>
+
+        <div class="col-md-2">
+          <button
+            id="confirmClockOutBtn"
+            class="btn btn-danger w-100"
+            type="button"
+          >
+            Confirm
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= HISTORY ================= -->
+  <div class="attendance-calendar mt-4">
+
+    <div class="calendar-header mb-2">
+      <h5>Attendance History</h5>
+    </div>
+
+    <table class="timesheet-table w-100">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Clock In</th>
+          <th>Clock Out</th>
+          <th>Hours</th>
+        </tr>
+      </thead>
+
+      <tbody id="attendanceTableBody">
+        <tr>
+          <td colspan="4" class="text-center text-muted">
+            Loading attendance history…
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
+
+<!-- =====================================================
+     END OF ATTENDANCE PAGE
+===================================================== -->
