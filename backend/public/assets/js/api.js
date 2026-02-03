@@ -1,10 +1,5 @@
 /* =====================================================
-   api.js — GLOBAL API HELPERS (HARDENED & EXPOSED)
-   ✅ Exposes 'window.api' object
-   ✅ GET / POST / PATCH / FORM
-   ✅ Auth safe
-   ✅ Timeout safe
-   ✅ HTML fallback protected
+   api.js — FIXED & HARDENED
 ===================================================== */
 
 (function () {
@@ -12,6 +7,11 @@
   window.__apiLoaded = true;
 
   const TIMEOUT = 7000;
+  
+  // 1. SET YOUR BASE URL HERE
+  // If your frontend and backend are on the same port, leave as empty string ""
+  // Given your screenshot, this ensures we hit the right server.
+  const BASE_URL = "http://16.16.18.115:5000"; 
 
   /* =========================
       INTERNAL HELPERS
@@ -19,22 +19,23 @@
   function authHeaders(extra) {
     const token = localStorage.getItem("token");
     const h = extra || {};
-    if (token) h.Authorization = "Bearer " + token;
+    if (token) h["Authorization"] = "Bearer " + token;
     return h;
   }
 
   async function safeJson(res, path) {
     const text = await res.text();
 
-    // 🔥 Express SPA fallback guard
-    if (text.startsWith("<!DOCTYPE") || text.startsWith("<html")) {
-      throw new Error("API returned HTML instead of JSON → " + path);
+    // Catching the "SPA Fallback" (where server sends index.html instead of error)
+    if (text.trim().startsWith("<!DOCTYPE") || text.trim().startsWith("<html")) {
+      console.error("❌ API Error: Received HTML instead of JSON from:", path);
+      throw new Error("Backend route not found (404) or returned HTML.");
     }
 
     try {
       return JSON.parse(text);
     } catch (e) {
-      console.error("Invalid JSON from API:", path, text);
+      console.error("❌ Invalid JSON from API:", path, "Response:", text);
       throw e;
     }
   }
@@ -48,30 +49,32 @@
     ]);
   }
 
-  // 🔥 Ensures path always starts with /api/
+  // FIXED URL BUILDER
   function apiUrl(path) {
-    return "/api/" + String(path || "").replace(/^\/+/, "");
+    // Remove leading slashes from path
+    const cleanPath = String(path || "").replace(/^\/+/, "");
+    // Ensure we don't double up on /api/
+    const finalPath = cleanPath.startsWith("api/") ? cleanPath : "api/" + cleanPath;
+    return BASE_URL + "/" + finalPath;
   }
 
   /* =========================
       THE API OBJECT
   ========================= */
   const api = {
-    
-    // GET
     get: function (path) {
       return withTimeout(
         fetch(apiUrl(path), {
+          method: "GET",
           headers: authHeaders()
         }).then(res => {
-          if (!res.ok) throw new Error("HTTP " + res.status);
+          if (!res.ok) throw new Error("HTTP " + res.status + " at " + path);
           return safeJson(res, path);
         }),
         path
       );
     },
 
-    // POST (JSON)
     post: function (path, body) {
       return fetch(apiUrl(path), {
         method: "POST",
@@ -81,42 +84,12 @@
         if (!res.ok) throw new Error("HTTP " + res.status);
         return safeJson(res, path);
       });
-    },
-
-    // POST (FORM DATA)
-    postForm: function (path, fd) {
-      return fetch(apiUrl(path), {
-        method: "POST",
-        headers: authHeaders(),
-        body: fd
-      }).then(res => {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return safeJson(res, path);
-      });
-    },
-
-    // PATCH
-    patch: function (path, body) {
-      return fetch(apiUrl(path), {
-        method: "PATCH",
-        headers: authHeaders({ "Content-Type": "application/json" }),
-        body: JSON.stringify(body || {})
-      }).then(res => {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return safeJson(res, path);
-      });
     }
   };
 
-  /* =========================
-      EXPOSE TO WINDOW
-  ========================= */
-  // This is the critical fix that connects it to dashboard.js
   window.api = api;
-  
-  // Optional: Keep old names if other files use them
   window.apiGet = api.get;
   window.apiPost = api.post;
 
-  console.log("✅ api.js loaded & exposed as window.api");
+  console.log("✅ api.js initialized at " + BASE_URL);
 })();

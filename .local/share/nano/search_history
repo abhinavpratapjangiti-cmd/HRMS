@@ -1,14 +1,3 @@
-HTTP 400
-GET user
-user
-No 
-manager
-./routes/users"
-/api/users
-employees?role=manager"
-/employees?role=manager
-MANAGERS_CACHE
-const employees
 employees/${employeeId}
 manager_id: managerId
 ${employeeId}/manager`
@@ -98,6 +87,17 @@ formatDate
 loadAttendanceHistory(
 completed
 a.total_break_minutes
+.card
+fetch('/api/manager/pending-requests')
+pending
+manager/pending-requests
+manager
+pending-requests
+fetch('/api/manager/
+/api/attendance/inbox
+/attendance
+/attendance/today
+/today",
 
 
 y

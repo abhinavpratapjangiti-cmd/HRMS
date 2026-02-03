@@ -1,223 +1,3 @@
-mysql -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com -P 3306 -u admin -p hrms < hrms_full_schema_raw.sql
-mysqldump -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com -P 3306 -u admin -p --no-data --routines --triggers --events --set-gtid-purged=OFF --column-statistics=0 hrms > hrms_full_schema_raw.sql
-sed -i 's/DEFINER[ ]*=[ ]*[^*]*\*/\*/g' hrms_full_schema_raw.sql
-sed -i '/^SET @@/d' hrms_full_schema_raw.sql
-sed -i '/^\/\*!.*SET/d' hrms_full_schema_raw.sql
-mysql -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com -P 3306 -u admin -p hrms < hrms_full_schema_raw.sql
-mysql -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com -P 3306 -u admin -p
-mysqldump -u root -p   --no-data   --set-gtid-purged=OFF   --column-statistics=0   hrms_db > hrms_schema.sql
-mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
-mysql -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com -P 3306 -u admin -p
-pm2 status
-cd backend
-pm2 status
-ls
-pm2 start server.js --name hrms-backend
-pm2 status
-sudo lsof -i -P -n | grep LISTEN
-pm2 save
-pm2 startup
-sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu
-pm2 save
-pm2 status
-sudo reboot
-pm2 logs
-ls
-cd backend
-cd public
-cd assets
-cd js
-cd pages
-nano attendance.js
-cd backend
-cd public
-ls
-cd assets
-ls
-cd ..
-cd pages
-ls
-cd ..
-cd assets
-cd js
-ls
-cd pages
-ls
-nano attendance.js
-pm2 status
-cd backend
-ls
-cd public
-ls
-cd assets
-ls
-cd js
-ls
-cd pages
-ls
-rm attendance.js.save
-rm attendance.js.save.1
-ls
-nano attendance.js
-cd backend
-cd public
-cd assets 
-cd js
-ls
-cd pages
-ls
-cat attendance.js.save
-cat attendance.js
-nano attendance.js
-cat backend/routes/attandance.js
-cd backend
-cat routes/attandance.js
-ls
-cd routes
-ls -l
-cat attendance.js
-cd ..
-cd backend
-cat public/assets/js/pages/attendance.js
-pm2 status
-nano backend/routes/attendance.js
-pm2 restart hrms-backend
-cat backend/routes/me.js
-cd backend
-cat routes/me.js
-cd routes/
-cat me.js
-ls 
-cd ..
-cat public/assets/js/pages/me.js
-cat routes/document.js
-cat routes/documents.js
-mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
-cd backend
-cd routed
-cd routes
-nano thought.js
-cat thought.js
-nano thought.js
-cd 
-cd backend
-pm2 restart all
-nano thought.js
-ls
-nano routes/thought.js
-nano backend/public/assets/js/pages/me.js
-cat backend/public/assets/js/pages/me.js
-cd backend/public
-grep -R "function apiGet" .
-cat backend/public/assets/js/api.js
-cat backend/public/assets/js/pages/api.js
-cd ..
-cat backend/public/assets/js/api.js
-nano backend/public/assets/js/api.js
-cat backend/public/assets/js/pages/dashboard.js
-nano backend/public/assets/js/pages/dashboard.js
-pm2 restart hrms-backend
-nano backend/public/assets/js/pages/me.js
-cat backend/server.js
-nano backend/server.js
-pm2 restart all
-nano backend/public/assets/js/api.js
-nano backend/public/assets/js/pages/me.js
-cat backend/server.js
-nano backend/server.js
-pm2 restart hrms-backend
-# on EC2
-cd backend
-nano server.js        # paste this file
-pm2 restart hrms-backend
-pm2 logs hrms-backend --lines 50
-pm2 status
-nano backend/public/assets/js/pages/me.js
-nano public/assets/js/pages/me.js
-cat public/assets/js/pages/me.js
-nano public/assets/js/pages/me.js
-nano public/assets/js/pages/api.js
-nano public/assets/js/api.js
-pm2 restart hrms-backend
-nano public/assets/js/pages/me.js
-nano public/assets/js/pages/attendance.js
-cd 
-cd backend
-ls
-cs public
-cd public
-ls
-cd pages
-ls
-cat attendance.html
-nano public/assets/js/pages/attendance.js
-cd
-cd backend
-cd public
-cd assets
-cd js
-cd pages
-nano attendance.js
-mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
-cat backend/public/assets/js
-cat backend/public/assets/js/pages/attendance.js
-nano backend/public/assets/js/pages/attendance.js
-cd backend/public/assets/js/pages
-ls
-rm attendance.js.save
-nano attendance.js
-cd
-cd backend
-pm2 restart all
-pm2 restart all
-pm2 status
-nano backend/public/routes/attendance.js
-cd backend
-ls
-cd routes
-ls
-nano attendance.js
-cd
-backend pm2 restart all
-cd backend
-pm2 restart all
-pm2 restart hrms-backend
-mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
-nano backend/routes/attendance.js
-cat backend/routes/attendance.js
-cat backend/public/assets/js/pages/attendance.js
-nano backend/public/assets/js/pages/attendance.js
-nano backend/routes/attendance.js
-pm2 restart hrms-backend
-pm2 logs
-cat backend/server.js
-nano backend/server.js
-pm2 restart hrms-backend
-pm2 logs --lines 50
-nano backend/server.js
-nano backend/routes/thought.js
-pm2 delete hrms-backend
-pm2 start server.js --name hrms-backend
-pm2 logs --lines 30
-nano backend/server.js
-nano backend/routes/thought.js
-backend/routes/thought.js
-pm2 delete hrms-backend
-pm2 start backend/server.js --name hrms-backend
-pm2 logs --lines 30
-cd backend
-pm2 flush
-pm2 logs --lines 20
-nano routes/attendance.js
-cd 
-pm2 restart hrms-backend
-sudo apt update
-sudo apt install redis-server -y
-redis-server --version
-redis-cli ping
-# PONG
-bind 127.0.0.1 172.31.38.58
-protected-mode yes
 requirepass STRONG_REDIS_PASSWORD
 sudo nano /etc/redis/redis.conf
 cd backend
@@ -1998,3 +1778,223 @@ nano  backend/public/assets/js/pages/dashboard.js
 nano backend/routes/dashboard.js
 pm2 restart all
 nano backend/public/pages/home.html
+nano backend/public/pages/attendance.html
+cat backend/public/pages/attendance.html
+nano backend/public/pages/attendance.html
+pm2 restart all
+nano backend/routes/attendance.js
+cat backend/routes/attendance.js
+nano backend/routes/attendance.js
+pm2 restart all
+pm2 logs
+nano backend/routes/attendance.js
+pm2 restart all
+pm2 logs
+cat backend/public/pages/attendance.html
+nano backend/public/pages/attendance.html
+nano backend/routes/attendance.js
+pm2 restart all
+nano backend/public/pages/attendance.html
+cat backend/routes/attendance.js
+nano backend/routes/attendance.js
+pm2 restart all
+nano backend/routes/attendance.js
+pm2 restart all
+cat backend/routes/attendance.js
+cat backend/public/assets/js/pages/attendance.js
+cat backend/public/pages/attendance.html
+nano  backend/public/assets/js/pages/dashboard.js
+nano  backend/server.js
+pm2 restart all
+nano  backend/public/assets/js/pages/dashboard.js
+pm2 restart all
+nano  backend/public/assets/js/pages/dashboard.js
+pm2 restart all
+cat backend/public/assets/ui/api.js
+cat backend/public/assets/js/ui/api.js
+cat backend/public/assets/js/api.js
+nano backend/public/assets/js/api.js
+pm2 restart all
+https://github.com/abhinavpratapjangiti-cmd/HRMS.git
+git init
+git add .
+git status
+git commit -m"my 1st commit"
+git remote add origin https://github.com/abhinavpratapjangiti-cmd/HRMS.git
+git push -u origin main
+git branch -M main
+git push -u origin main
+git push
+git push --set-upstream origin main
+A289nav@230791@
+git push --set-upstream origin main
+git status
+rm -rf backend/.git
+git rm --cached backend
+git add backend/
+git commit -m "Fix nested git repository in backend"
+git push
+git config --global credential.helper store
+git push
+git config --global credential.helper store
+git push
+pm2 restart all
+nano bakend/public/assets/css
+cd bakend/public/assets/css
+cd backend/public/assets/css
+ls
+cd pages
+ls
+nano home.css
+cd 
+nano backend/public/pages/home.html
+cat backend/public/pages/home.html
+nano backend/public/pages/home.html
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+cat backend/public/pages/home.html
+nano backend/public/pages/home.html
+nano backend/public/pages/home.html
+cat backend/public/assets/js/pages/attendance.js
+nano backend/public/assets/js/pages/attendance.js
+pm2 restart all
+nano backend/public/assets/js/pages/home.js
+cat backend/public/assets/js/pages/home.js
+nano backend/public/assets/js/pages/home.js
+cat backend/routes/team.js
+cat backend/routes/attendance.js
+nano backend/routes/attendance.js
+pm2 restart all
+nano backend/routes/attendance.js
+nano backend/routes/dashboard.js
+cat backend/routes/dashboard.js
+nano backend/routes/dashboard.js
+pm2 restart all
+nano backend/routes/dashboard.js
+nano backend/public/assets/js/pages/home.js
+pm2 restart all
+nano backend/public/assets/js/pages/home.js
+pm2 restart all
+nano backend/routes/attendance.js
+cat backend/routes/attendance.js
+cat backend/routes/dashboard.js
+nano backend/routes/dashboard.js
+nano backend/public/assets/js/pages/home.js
+cat backend/public/assets/js/pages/home.js
+nano backend/public/assets/js/pages/home.js
+pm2 restart all
+nano backend/routes/server.js
+nano backend/server.js
+pm2 restart all
+cat backend/public/assets/js/pages/home.js
+nano backend/routes/dashboard.js
+cat backend/routes/dashboard.js
+nano backend/routes/attendance.js
+cat backend/public/assets/js/pages/home.js
+nano backend/public/assets/js/pages/home.js
+cat backend/routes/dashboard.js
+nano backend/routes/dashboard.js
+pm2 restart all
+nano backend/routes/dashboard.js
+nano backend/public/assets/js/pages/home.js
+nano backend/routes/attendance.js
+pm2 restart all
+nano backend/routes/attendance.js
+pm2 restart all
+nano backend/public/assets/js/pages/home.js
+nano backend/routes/dashboard.js
+pm2 restart all
+cat backend/public/assets/js/pages/dashboard.js
+nano backend/public/assets/js/pages/home.js
+nano backend/public/assets/js/pages/dashboard.js 
+nano backend/routes/attendance.js
+pm2 restart all
+cat backend/server.js
+cat backend/public/index.html
+cat backend/routes/auth.js
+nano backend/routes/auth.js
+cat backend/public/index.html
+pm2 restart all
+cat backend/routes/auth.js
+cat backend/public/assets/js/ui/api.js
+cd backend/public/assets/js/ui
+ls
+cd ..
+ls
+cat api.js
+nano api.js
+cd
+nano backend/server.js
+cat backend/server.js
+cat backend/routes/dashboard.js
+cat backend/routes/attendance.js
+nano  backend/routes/attendance.js
+cat backend/routes/dashboard.js
+nano backend/routes/dashboard.js
+pm2 restart all
+nano backend/public/assets/js/api.js
+pm2 restart all
+nano backend/public/assets/js/pages/attendance.js
+nano backend/public/assets/js/pages/dashboard.js
+nano backend/routes/dashboard.js
+nano backend/routes/attendance.js
+
+cat backend/routes/attendance.js
+nano backend/routes/attendance.js
+pm2 restart all
+cat backend/public/assets/js/pages/attendance.js
+nano backend/public/assets/js/pages/attendance.js
+
+cat backend/assets/js/ui/api.js
+cat backend/public/js/ui/api.js
+cd backend/public/js/ui
+cd public
+cd backend
+cd assets
+ls
+cd public
+cd js
+ls
+cd ..
+ls
+cd assets
+cd public
+ls
+cd assets
+ls
+cd js
+ls
+cat api.js
+nano api.js
+cd ..
+cat js/pages/attendance.js
+nano js/pages/attendance.js
+cd
+pm2 restart all
+cat backend/public/pages/attendance.html
+nano backend/public/pages/attendance.html
+nano backend/public/pages/home.html
+cat backend/routes/attendance.js
+nano backend/routes/attendance.js
+cat backend/public/assets/js/pages/attendance.js
+nano backend/public/assets/js/pages/attendance.js
+pm2 restart all
+cat backend/assest/js/pages/home.js
+cd backend/assest/js/pages
+cat backend/public/assest/js/pages/home.js
+cd backend/public/assest/js/pages
+cd backend/public/assest/js
+cd backend/public
+ls
+cd assets
+ls
+cd js
+ls
+cd pages
+ls
+cat home.js
+cat backend/public/pages/home.html
+nano backend/public/pages/home.html
+pm2 restart all
+cat backend/public/assets/js/auth.js
+nano backend/public/assets/js/auth.js
+pm2 restart all

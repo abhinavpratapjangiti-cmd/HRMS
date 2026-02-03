@@ -357,4 +357,12 @@ router.post("/logout-all", verifyToken, (req, res) => {
     );
 });
 
+/* =========================
+   LOGOUT
+========================= */
+router.post("/logout", (req, res) => {
+  // Since we use JWT, we just tell the frontend it's successful
+  res.json({ success: true, message: "Logged out successfully" });
+});
+
 module.exports = router;

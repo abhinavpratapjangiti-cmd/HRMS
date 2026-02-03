@@ -564,3 +564,1448 @@ team summary error: Error: Unknown column 'l.start_date' in 'on clause'
   sqlState: '42S22',
   sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
 }
+CV fetch error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+CV fetch error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+CV fetch error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+CV fetch error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+My Team API error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/team.js:29:32
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+My Team API error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/team.js:29:32
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+CV list error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/documents.js:122:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+CREATE EMPLOYEE ERROR: Error: Duplicate entry '9' for key 'employees.user_id'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/users.js:75:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_DUP_ENTRY',
+  errno: 1062,
+  sql: '\n' +
+    '      INSERT INTO employees\n' +
+    '      (\n' +
+    '        user_id,\n' +
+    '        name,\n' +
+    '        email,\n' +
+    '        department,\n' +
+    '        client_name,\n' +
+    '        work_location,\n' +
+    '        designation,\n' +
+    '        manager_id,\n' +
+    '        active\n' +
+    '      )\n' +
+    "      VALUES (9, 'sukeshdeepak', 'sukeshdeepak@lovasit.com', NULL, NULL, NULL, NULL, NULL, 1)\n" +
+    '      ',
+  sqlState: '23000',
+  sqlMessage: "Duplicate entry '9' for key 'employees.user_id'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+CV fetch error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:174:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: 'SELECT COUNT(DISTINCT e.id) AS total, COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '       COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '       FROM employees e LEFT JOIN attendance_logs al ON al.employee_id = e.id AND al.log_date = CURDATE()\n' +
+    "       LEFT JOIN leaves l ON l.employee_id = e.id AND l.status = 'APPROVED' AND CURDATE() BETWEEN l.start_date AND l.end_date\n" +
+    '       WHERE e.manager_id = 2',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+CV fetch error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+CV fetch error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+CV fetch error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 11\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 11\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+My Team API error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/team.js:29:32
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+CV fetch error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 11\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 11\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 11\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 11\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 11\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 11\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 11\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 11\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 11\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 11\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 11\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 11\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+CV fetch error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+CV fetch error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+⚠️ WS not available for user 5
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}
+❌ /team error: Error: Unknown column 'e.first_name' in 'field list'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:200:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT \n' +
+    '        e.id, \n' +
+    '        e.first_name, \n' +
+    '        e.last_name, \n' +
+    '        e.avatar,\n' +
+    '        CASE \n' +
+    "          WHEN al.id IS NOT NULL THEN 'Present' \n" +
+    "          ELSE 'Absent' \n" +
+    '        END as status,\n' +
+    '        al.clock_in as punch_in\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al \n' +
+    '        ON e.id = al.employee_id AND al.log_date = CURDATE()\n' +
+    "      WHERE e.reporting_manager_id = 'summary'\n" +
+    '    ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'e.first_name' in 'field list'"
+}
+❌ /team error: Error: Unknown column 'e.first_name' in 'field list'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:200:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT \n' +
+    '        e.id, \n' +
+    '        e.first_name, \n' +
+    '        e.last_name, \n' +
+    '        e.avatar,\n' +
+    '        CASE \n' +
+    "          WHEN al.id IS NOT NULL THEN 'Present' \n" +
+    "          ELSE 'Absent' \n" +
+    '        END as status,\n' +
+    '        al.clock_in as punch_in\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al \n' +
+    '        ON e.id = al.employee_id AND al.log_date = CURDATE()\n' +
+    "      WHERE e.reporting_manager_id = 'summary'\n" +
+    '    ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'e.first_name' in 'field list'"
+}
+CV fetch error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Today attendance error Error: Unknown column 'user_id' in 'where clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:156:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: 'SELECT clock_in, clock_out \n' +
+    '       FROM attendance \n' +
+    '       WHERE user_id = 2 AND DATE(clock_in) = CURDATE()',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'user_id' in 'where clause'"
+}
+Today attendance error Error: Unknown column 'user_id' in 'where clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:156:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: 'SELECT clock_in, clock_out \n' +
+    '       FROM attendance \n' +
+    '       WHERE user_id = 2 AND DATE(clock_in) = CURDATE()',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'user_id' in 'where clause'"
+}
+CV fetch error: TypeError: db.promise is not a function
+    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+team summary error: Error: Unknown column 'l.start_date' in 'on clause'
+    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at /home/ubuntu/backend/routes/attendance.js:246:29
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  code: 'ER_BAD_FIELD_ERROR',
+  errno: 1054,
+  sql: '\n' +
+    '      SELECT\n' +
+    '        COUNT(DISTINCT e.id) AS total,\n' +
+    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
+    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
+    '      FROM employees e\n' +
+    '      LEFT JOIN attendance_logs al\n' +
+    '        ON al.employee_id = e.id\n' +
+    '        AND al.log_date = CURDATE()\n' +
+    '      LEFT JOIN leaves l\n' +
+    '        ON l.employee_id = e.id\n' +
+    "        AND l.status = 'APPROVED'\n" +
+    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
+    '      WHERE e.manager_id = 2\n' +
+    '      ',
+  sqlState: '42S22',
+  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+}

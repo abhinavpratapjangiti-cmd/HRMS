@@ -31,11 +31,12 @@ function getRole() {
 function requireAuth() {
   const token = getToken();
 
-  // Allow login page without token
-  if (location.hash === "#/login") return true;
+  // If we are on the login page, do nothing (prevent infinite loop)
+  if (window.location.pathname.endsWith("login.html")) return true;
 
   if (!token) {
-    location.replace("#/login");
+    // Redirect to full login page, not just a hash route
+    window.location.href = "/login.html";
     return false;
   }
 
@@ -77,24 +78,73 @@ function populateUserName() {
 }
 
 /* =========================
-   LOGOUT
+   LOGOUT LOGIC
 ========================= */
-function confirmLogout() {
+function handleLogout(e) {
+  if (e) e.preventDefault();
+  
   if (!confirm("Are you sure you want to logout?")) return;
 
+  // 1. Try to tell server to logout
+  // Note: apiPost is available globally from api.js
+  if (typeof apiPost === 'function') {
+      apiPost("/auth/logout", {})
+        .then(() => {
+            console.log("Server logout successful");
+            finalizeLogout();
+        })
+        .catch((err) => {
+            console.warn("Server logout failed, forcing local logout", err);
+            finalizeLogout();
+        });
+  } else {
+      // Fallback if api.js isn't loaded
+      finalizeLogout();
+  }
+}
+
+function finalizeLogout() {
+  // 1. Close Websocket if exists
   try {
     if (typeof window.closeWS === "function") {
       window.closeWS();
     }
-  } catch {}
+  } catch (err) { 
+    console.warn("WS close error:", err); 
+  }
 
+  // 2. Clear Storage
   localStorage.removeItem("token");
   localStorage.removeItem("user");
   sessionStorage.clear();
 
-  history.replaceState(null, "", "/");
-  location.replace("#/login");
+  // 3. Hard Redirect to Login Page
+  // Using replace to prevent "Back" button from returning to app
+  window.location.replace("/login.html");
 }
+
+/* =========================
+   EVENT LISTENERS (The Missing Piece)
+========================= */
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Populate UI
+    populateUserName();
+
+    // 2. Listen for Logout Clicks anywhere in the document
+    // This catches the data-action="logout" button
+    document.body.addEventListener("click", function (e) {
+        const logoutBtn = e.target.closest('[data-action="logout"]');
+        if (logoutBtn) {
+            handleLogout(e);
+        }
+    });
+
+    // 3. Trigger initial router if needed
+    if (location.hash && typeof window.dispatchEvent === "function") {
+       // Only dispatch if Router is loaded
+       // window.dispatchEvent(new HashChangeEvent("hashchange")); 
+    }
+});
 
 /* =========================
    GLOBAL EXPORTS
@@ -104,7 +154,7 @@ window.getUser = getUser;
 window.getRole = getRole;
 window.requireAuth = requireAuth;
 window.populateUserName = populateUserName;
-window.confirmLogout = confirmLogout;
+window.confirmLogout = handleLogout; // Expose as confirmLogout for backward compatibility
 
 /* =========================
    AUTH BOOTSTRAP (CRITICAL)
@@ -117,7 +167,7 @@ window.__authReady = false;
 
   // Either:
   // 1. logged in correctly
-  // 2. logged out cleanly
+  // 2. logged out cleanly (no token)
   if ((token && user) || !token) {
     window.__authReady = true;
     return;
@@ -126,14 +176,3 @@ window.__authReady = false;
   // Token exists but user not yet restored → wait
   setTimeout(bootstrapAuth, 30);
 })();
-
-/* =========================
-   ROUTER TRIGGER AFTER AUTH
-========================= */
-document.addEventListener("DOMContentLoaded", () => {
-  populateUserName();
-
-  if (location.hash) {
-    window.dispatchEvent(new HashChangeEvent("hashchange"));
-  }
-});

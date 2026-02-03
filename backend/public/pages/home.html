@@ -39,15 +39,31 @@
   </div>
 
   <div id="managerDashboard" class="row mb-4 d-none">
+    
     <div class="col-sm-6 col-md-3 mb-3">
-      <div class="card p-3 h-100 shadow-sm border-0">
+      <div class="card p-3 h-100 shadow-sm border-0" style="border-radius: 12px;">
         <h6 class="text-muted small">👥 Team Attendance</h6>
         <div id="teamAttendanceCount" class="fs-3 fw-bold text-primary my-2">—</div>
         <small id="teamAttendanceMeta" class="text-muted" style="font-size: 0.75rem;">—</small>
       </div>
     </div>
+
     <div class="col-sm-6 col-md-3 mb-3">
-      <div class="card p-3 h-100 shadow-sm border-0">
+      <div class="card p-3 h-100 shadow-sm border-0" style="border-radius: 12px;">
+        <h6 class="text-muted small">📝 Pending Leaves</h6>
+        <div id="pendingLeavesCount" class="fs-3 fw-bold text-warning my-2">0</div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-3 mb-3">
+      <div class="card p-3 h-100 shadow-sm border-0" style="border-radius: 12px;">
+        <h6 class="text-muted small">⏳ Pending Timesheets</h6>
+        <div id="pendingTimesheetsCount" class="fs-3 fw-bold text-info my-2">0</div>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-3 mb-3">
+      <div class="card p-3 h-100 shadow-sm border-0" style="border-radius: 12px;">
         <h6 class="text-muted small">🏖 Team on Leave</h6>
         <div id="teamOnLeave" class="fs-3 fw-bold text-danger my-2">—</div>
       </div>
@@ -55,7 +71,7 @@
   </div>
 
   <div class="row mb-4">
-    <div class="col-12" id="leaveBalanceCol">
+    <div class="col-md-8 mb-3 mb-md-0" id="leaveBalanceCol">
       <div class="card p-4 h-100 shadow-sm border-0" style="border-radius: 12px;">
         <h6 class="text-muted text-uppercase small fw-bold mb-4">Leave Balance</h6>
         <div id="leaveBalanceBox" class="row text-center g-3">
@@ -63,6 +79,19 @@
         </div>
         <div class="text-center mt-4">
           <a href="#/leaves" class="text-decoration-none fw-bold text-primary">Apply Leave →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-4 h-100 shadow-sm border-0" style="border-radius: 12px;">
+        <h6 class="text-muted text-uppercase small fw-bold mb-2">Inbox</h6>
+        <p class="text-muted mb-4">Pending approvals & requests</p>
+        
+        <div class="mt-auto"> 
+            <button class="btn btn-primary w-100 py-2" style="background-color: #2563EB; border: none; border-radius: 6px;">
+                Take Action
+            </button>
         </div>
       </div>
     </div>

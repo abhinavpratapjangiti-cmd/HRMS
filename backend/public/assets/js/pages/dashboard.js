@@ -157,19 +157,46 @@
       .catch(err => console.error("leave balance failed", err));
   }
 
-  /* ================= 3. TIME TODAY ================= */
-  function loadTodayTime(api) {
-    const user = getUser();
-    if (!user?.employee_id) return;
+/* ================= 3. TIME TODAY ================= */
+function loadTodayTime(api) {
+  const user = getUser();
+  if (!user?.employee_id) return;
 
-    api.get(`/attendance/today/${user.employee_id}`)
-      .then((d) => {
+  api.get(`/attendance/today`)
+    .then((d) => {
+      if (!d) {
+        setText("workedTime", "00:00");
+        setText("breakTime", "00:00");
+        return;
+      }
+
+      // ✅ Case 1: backend sends seconds
+      if (typeof d.worked_seconds === "number") {
         setText("workedTime", toHHMM(d.worked_seconds));
-        setText("breakTime", toHHMM(d.break_seconds));
-      })
-      .catch(err => console.error("today time failed", err));
-  }
+      } 
+      // ✅ Case 2: backend sends clock_in / clock_out
+      else if (d.clock_in) {
+        const clockIn = new Date(d.clock_in);
+        const clockOut = d.clock_out ? new Date(d.clock_out) : new Date();
 
+        const workedSeconds = Math.floor(
+          (clockOut - clockIn) / 1000
+        );
+
+        setText("workedTime", toHHMM(workedSeconds));
+      } 
+      // ✅ Fallback
+      else {
+        setText("workedTime", "00:00");
+      }
+
+      setText(
+        "breakTime",
+        toHHMM(d.break_seconds || 0)
+      );
+    })
+    .catch(err => console.error("today time failed", err));
+}
   /* ================= 4. MANAGER STATS ================= */
   function loadManagerStats(api) {
     api.get("/attendance/team/summary")

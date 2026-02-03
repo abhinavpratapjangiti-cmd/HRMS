@@ -91,7 +91,8 @@ function loadRoute(routePath) {
 const authRoutes          = loadRoute("./routes/auth");
 const usersRoutes         = loadRoute("./routes/users");
 const employeeRoutes      = loadRoute("./routes/employee");
-const dashboardRoutes = require("./routes/dashboard");
+// FIXED: Used loadRoute for consistency
+const dashboardRoutes     = loadRoute("./routes/dashboard"); 
 const holidayRoutes       = loadRoute("./routes/holiday");
 const teamRoutes          = loadRoute("./routes/team");
 const attendanceRoutes    = loadRoute("./routes/attendance");
@@ -122,6 +123,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/employees", employeeRoutes);
 
+app.use("/api/dashboard", dashboardRoutes); // FIXED: Removed double semicolon
+
 app.use("/api/holiday", holidayRoutes);
 app.use("/api/team", teamRoutes);
 app.use("/api/attendance", attendanceRoutes);
@@ -145,7 +148,6 @@ app.use("/api/analytics/profile", analyticsProfileRoutes);
 app.use("/api/analytics/bench", analyticsBenchRoutes);
 app.use("/api/analytics", analyticsRoutes);
 
-app.use("/api/dashboard", dashboardRoutes);;
 /* =========================
    HEALTH CHECK
 ========================= */

@@ -3,6 +3,7 @@
    - Runs ONLY when attendance page exists
    - No crashes on Home / Dashboard
    - Backend contract aligned
+   - FIXED: History table now shows HH:MM format
 ===================================================== */
 
 (function () {
@@ -95,14 +96,11 @@
       return;
     }
 
-    // 🔥 FIXED: Now accepts seconds directly from backend for precision
+    // Accepts seconds directly from backend for precision
     baseSeconds = Number(data.worked_seconds || 0);
 
     updateWorked(baseSeconds);
-    
-    // 🔥 FIXED: Reads 'clock_in' correctly
     updateClockIn(data.clock_in);
-    
     setStatus(data.status);
 
     if (data.status === "WORKING") {
@@ -143,17 +141,17 @@
     }
 
     rows.forEach(r => {
-      const hours =
-        r.work_minutes != null
-          ? (Number(r.work_minutes) / 60).toFixed(2)
-          : "0.00";
+      // 🔥 FIX: Convert work_minutes to seconds and use hhmm() formatter
+      // This changes "0.95" decimal hours into "00:57" format
+      const workSeconds = (Number(r.work_minutes) || 0) * 60;
+      const hoursFormatted = hhmm(workSeconds);
 
       tbody.innerHTML += `
       <tr>
         <td>${formatDate(r.log_date)}</td>
         <td>${formatTime(r.clock_in)}</td>
         <td>${formatTime(r.clock_out)}</td>
-        <td>${hours}</td>
+        <td>${hoursFormatted}</td>
       </tr>
     `;
     });
@@ -171,7 +169,7 @@
     const live = $("liveWorkTimer");
 
     if (wt) wt.innerText = hhmm(sec);
-    if (live) live.innerText = hhmmss(sec); 
+    if (live) live.innerText = hhmmss(sec);
   }
 
   function updateClockIn(dt) {
@@ -303,7 +301,7 @@
     const empId = getEmployeeId();
     const pInput = $("projectInput");
     const tInput = $("taskInput");
-    
+
     if (!empId) return;
 
     const res = await fetch("/api/attendance/clock-out", {
