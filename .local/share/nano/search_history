@@ -1,0 +1,104 @@
+HTTP 400
+GET user
+user
+No 
+manager
+./routes/users"
+/api/users
+employees?role=manager"
+/employees?role=manager
+MANAGERS_CACHE
+const employees
+employees/${employeeId}
+manager_id: managerId
+${employeeId}/manager`
+init
+initmanager
+manageusers
+users/${employeeId}/manager
+employees.map
+employeesList"
+loading
+card-header
+card-header">Employees
+emp.name
+employee-grid employee-header mb-2
+employee-grid
+employee-header mb-2
+Reporting Manager
+forEach(emp
+No manager
+/balance
+No leave data
+loadleave
+loadleavebalance
+loadLeaveBalance
+sql, params
+rows
+.promise().query
+BASE_SELECT
+${BASE_SELECT}
+clock_out
+holiday
+/holiday
+./routes/notifications
+password"
+Create Employee
+User ID missing
+Create failed
+res.json()
+ failed
+loadEmployees()
+toUpperCase
+EMPLOYEE
+localStorage.user.role
+ refreshHomeLayout
+refreshHomeLayout
+localStorage
+sectionGreeting
+sectionManager
+showInboxSafely
+homeInboxCard
+attendance
+/holidays/nearest
+holidays/nearest
+nearest
+card holiday-card
+api.get("/thought/today")
+T00:00:00
+homePage
+ard holiday-card
+holiday-card
+DB error
+return res.status(500
+upload.single("cv
+ upload.single("cv")
+router.post("/cv
+t("/something"
+"/something"
+employeeId
+today/
+today
+backend/public/assets/js/pages$ nano attendance.js
+updateWorked()
+r.log_date
+total_work_minutes
+ORDER BY log_date DESC
+attendance_logs
+log_date DESC
+toFixed(2) : "0.00"
+LIMIT 30
+/history/:employee_id
+60).toFixed(2)
+formatDate(d)
+formatTime
+authHeaders()
+formatdate
+formatDate
+loadAttendanceHistory(
+completed
+a.total_break_minutes
+
+
+y
+

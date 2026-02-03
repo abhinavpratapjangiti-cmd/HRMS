@@ -1,0 +1,133 @@
+/* ===============================
+   EDIT SIDEBAR (SLIDE-IN PANEL)
+=============================== */
+
+.edit-sidebar {
+  position: fixed;
+  top: 0;
+  right: -420px;              /* hidden state */
+  width: 420px;
+  max-width: 100%;
+  height: 100dvh;             /* mobile-safe viewport */
+  background: #fff;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+  z-index: 1050;
+
+  display: flex;
+  flex-direction: column;
+
+  transition: right 0.3s ease;
+  will-change: right;         /* smoother animation */
+}
+
+/* OPEN STATE */
+.edit-sidebar.open {
+  right: 0;
+}
+
+/* ===============================
+   HEADER
+=============================== */
+
+.sidebar-header {
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ===============================
+   BODY
+=============================== */
+
+.sidebar-body {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* ===============================
+   BACKDROP
+=============================== */
+
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1049;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.sidebar-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+/* ==================================================
+   LEFT NAVIGATION SIDEBAR (ICON-ONLY COLLAPSE)
+   DOES NOT AFFECT .edit-sidebar
+================================================== */
+
+.sidebar {
+  transition: width 0.25s ease;
+}
+
+/* COLLAPSED = ICON ONLY */
+.sidebar.is-collapsed {
+  width: 60px !important;
+}
+
+/* Center icons when collapsed */
+.sidebar.is-collapsed a {
+  text-align: center;
+  padding: 12px 0;
+}
+
+/* Hide text labels */
+.sidebar.is-collapsed a span {
+  display: none;
+}
+
+/* Icon size consistency */
+.sidebar i {
+  font-size: 1.2rem;
+}
+
+/* Shift main layout */
+.main {
+  transition: margin-left 0.25s ease;
+}
+
+.main.sidebar-collapsed {
+  margin-left: 60px !important;
+}
+
+/* Mobile: fully hide sidebar */
+@media (max-width: 768px) {
+  .sidebar.is-collapsed {
+    width: 0 !important;
+  }
+
+  .main.sidebar-collapsed {
+    margin-left: 0 !important;
+  }
+}
+/* ===============================
+   SIDEBAR BRAND FIX (TOP LEFT)
+=============================== */
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+/* Hide brand text when collapsed */
+.sidebar.is-collapsed .brand-text {
+  display: none;
+}

@@ -1,0 +1,299 @@
+/* ======================================================
+   TEAM PAGE – MODERN ORG STRUCTURE (FINAL)
+====================================================== */
+
+/* =========================
+   PAGE WRAPPER
+========================= */
+.team-wrapper {
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+/* =========================
+   OVERVIEW STATS
+========================= */
+.team-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.team-stat {
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.05);
+  text-align: center;
+}
+
+.team-stat small {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.team-stat b {
+  display: block;
+  margin-top: 6px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* =========================
+   ORG TREE
+========================= */
+.org-tree {
+  margin-top: 32px;
+}
+
+/* =========================
+   ORG SECTIONS
+========================= */
+.org-section {
+  margin-bottom: 40px;
+}
+
+.org-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* =========================
+   ORG NODE
+========================= */
+.org-node {
+  position: relative;
+  margin-top: 14px;
+}
+
+/* =========================
+   ORG CARD (BASE)
+========================= */
+.org-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.04),
+    0 8px 24px rgba(0,0,0,0.04);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+
+.org-card:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.08),
+    0 12px 32px rgba(0,0,0,0.06);
+}
+
+/* =========================
+   ROLE ACCENTS
+========================= */
+.role-manager {
+  border-left: 4px solid #6366f1;
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+}
+
+.role-hr {
+  border-left: 4px solid #9333ea;
+  background: linear-gradient(180deg, #faf5ff, #ffffff);
+}
+
+.role-employee {
+  border-left: 4px solid #94a3b8;
+}
+
+/* =========================
+   LEFT SECTION
+========================= */
+.org-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Toggle */
+.org-toggle {
+  cursor: pointer;
+  font-size: 14px;
+  color: #6366f1;
+  user-select: none;
+  width: 16px;
+  text-align: center;
+}
+
+.org-toggle:hover {
+  color: #4338ca;
+}
+
+/* Avatar */
+.org-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Meta */
+.org-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.org-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.role-manager .org-name {
+  font-size: 16px;
+}
+
+.org-role {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+/* =========================
+   ROLE CHIPS
+========================= */
+.role-chip {
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.role-chip.manager {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.role-chip.hr {
+  background: #f3e8ff;
+  color: #6b21a8;
+}
+
+.role-chip.employee {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.role-chip.matrix {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* =========================
+   MANAGER MICRO STATS
+========================= */
+.org-stats {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #475569;
+}
+
+/* =========================
+   RIGHT SECTION
+========================= */
+.org-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* =========================
+   STATUS BADGE
+========================= */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.inactive {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+/* =========================
+   CHILDREN + CONNECTORS (CRITICAL FIX)
+========================= */
+.org-children {
+  margin-left: 36px;
+  padding-left: 20px;
+  border-left: 2px dashed #e5e7eb;
+
+  /* 🔒 COLLAPSE LOGIC */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  will-change: max-height;
+}
+
+/* Horizontal connector */
+.org-children .org-node::before {
+  content: "";
+  position: absolute;
+  top: 28px;
+  left: -20px;
+  width: 20px;
+  height: 2px;
+  background: #e5e7eb;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+.team-empty {
+  text-align: center;
+  padding: 40px 0;
+  color: #6b7280;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .team-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .org-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .org-right {
+    align-self: flex-end;
+  }
+}
