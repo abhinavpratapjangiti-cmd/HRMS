@@ -1,14 +1,3 @@
-employees/${employeeId}
-manager_id: managerId
-${employeeId}/manager`
-init
-initmanager
-manageusers
-users/${employeeId}/manager
-employees.map
-employeesList"
-loading
-card-header
 card-header">Employees
 emp.name
 employee-grid employee-header mb-2
@@ -98,6 +87,17 @@ fetch('/api/manager/
 /attendance
 /attendance/today
 /today",
+Em
+Employee
+snapshot
+window.saveEdit
+Super
+Admin
+Hr
+Hr Admin
+HR Admin
+<p>${escapeHtml(node.designation || node.department || "")}</p>
+await db.promise().query
 
 
 y

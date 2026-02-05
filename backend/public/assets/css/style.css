@@ -532,3 +532,7 @@ tr.timesheet-row--hol > td:first-child {
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
+.recently-added-list {
+  max-height: 300px;
+  overflow-y: auto;
+}

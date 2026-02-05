@@ -1,0 +1,528 @@
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  override existing env vars with { override: true }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxNDE3NDQsImV4cCI6MTc3MDIyODE0NH0.CwHfZ9vs5cgSjhkqMpCBCHFI-qaOXwY1Ny9Qvi0DGeM
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJyYXZpQHRlc3QuY29tIiwicm9sZSI6ImVtcGxveWVlIiwiZW1wbG95ZWVfaWQiOjEsInRva2VuX3ZlcnNpb24iOjYsImlhdCI6MTc3MDE4NjcwMiwiZXhwIjoxNzcwMjczMTAyfQ.RjkxudDSobG2NPjv3hU3A3_IXh6u6xq3E02iRxcE4L8
+🔌 WS connected: user 2
+❌ WS closed: user 2
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJyYXZpQHRlc3QuY29tIiwicm9sZSI6ImVtcGxveWVlIiwiZW1wbG95ZWVfaWQiOjEsInRva2VuX3ZlcnNpb24iOjYsImlhdCI6MTc3MDE4NjcwMiwiZXhwIjoxNzcwMjczMTAyfQ.RjkxudDSobG2NPjv3hU3A3_IXh6u6xq3E02iRxcE4L8
+🔌 WS connected: user 2
+❌ WS closed: user 2
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  override existing env vars with { override: true }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  override existing env vars with { override: true }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo0LCJpYXQiOjE3NzAxODY4NTUsImV4cCI6MTc3MDI3MzI1NX0.1L0Rp0xWY6Dhd21277crYpEdH9tv6IoW6j37R5bdl9g
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJyYXZpQHRlc3QuY29tIiwicm9sZSI6ImVtcGxveWVlIiwiZW1wbG95ZWVfaWQiOjEsInRva2VuX3ZlcnNpb24iOjYsImlhdCI6MTc3MDIxMzMwNiwiZXhwIjoxNzcwMjk5NzA2fQ.vClB_Go_GhOU2HdVonMNKR5fzox-e89ndRdCyXa0WRg
+🔌 WS connected: user 2
+❌ WS closed: user 2
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJyYXZpQHRlc3QuY29tIiwicm9sZSI6ImVtcGxveWVlIiwiZW1wbG95ZWVfaWQiOjEsInRva2VuX3ZlcnNpb24iOjYsImlhdCI6MTc3MDIxMzMwNiwiZXhwIjoxNzcwMjk5NzA2fQ.vClB_Go_GhOU2HdVonMNKR5fzox-e89ndRdCyXa0WRg
+🔌 WS connected: user 2
+❌ WS closed: user 2
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTM0MDMsImV4cCI6MTc3MDI5OTgwM30.EWm_fWjNEr3BoAVzyTTGYIQz1OzZQ1xi9FsZ2bOUVYk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTM0MDMsImV4cCI6MTc3MDI5OTgwM30.EWm_fWjNEr3BoAVzyTTGYIQz1OzZQ1xi9FsZ2bOUVYk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  override existing env vars with { override: true }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+Deleted employee Kalyan (ID: 15)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+Deleted employee pandu anna (ID: 21)
+Deleted employee pandu anna (ID: 22)
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+[dotenv@17.2.3] injecting env (9) from .env -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED BACKEND ROUTES/LEAVES: /home/ubuntu/backend/routes/leaves.js
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAyMTQxMDMsImV4cCI6MTc3MDMwMDUwM30.Y_MCe2Rt0N3Tf2RuSVvBDEtML9KUtIjlhMGaqVVChUk
+🔌 WS connected: user 3
+❌ WS closed: user 3

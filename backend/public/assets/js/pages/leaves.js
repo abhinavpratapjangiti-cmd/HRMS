@@ -1,161 +1,153 @@
-// public/assets/js/pages/leaves.js
-console.log("leaves.js loaded");
+/* =========================================
+   LEAVES.JS - FRONTEND LOGIC
+   ========================================= */
+const API_BASE = "http://16.16.18.115:5000"; 
 
-/* SAFE TOAST WRAPPERS */
-function notifySuccess(title, message) {
-  if (typeof window.showSuccessToast === "function") {
-    window.showSuccessToast(title, message);
-  } else {
-    console.log("SUCCESS:", title, message);
-  }
-}
-function notifyError(title, message) {
-  if (typeof window.showErrorToast === "function") {
-    window.showErrorToast(title, message);
-  } else {
-    console.error("ERROR:", title, message);
-  }
-}
+const getHeaders = () => ({
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${localStorage.getItem("token")}`
+});
 
-/* small helper to call API, uses global apiGet/apiPost if provided */
-async function apiGetOrFetch(path) {
-  if (typeof apiGet === "function") return apiGet(path);
-  const token = localStorage.getItem("token");
-  const res = await fetch("/api" + path, { headers: { Authorization: `Bearer ${token}` } });
-  if (!res.ok) throw new Error((await res.json()).message || "Request failed");
-  return res.json();
-}
-async function apiPostOrFetch(path, body) {
-  if (typeof apiPost === "function") return apiPost(path, body);
-  const token = localStorage.getItem("token");
-  const res = await fetch("/api" + path, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-    body: JSON.stringify(body)
-  });
-  if (!res.ok) {
-    let errMsg = "Request failed";
-    try { errMsg = (await res.json()).message || errMsg; } catch {}
-    throw new Error(errMsg);
-  }
-  return res.json();
-}
+// 1. INITIALIZATION
+window.initLeaves = function() {
+    console.log("🌿 Leaves Page Logic Initialized");
+    setupDateListeners();
+    window.loadLeaveHistory(); 
+};
 
-/* PAGE INIT (SPA SAFE) */
-function initLeaves() {
-  console.log("initLeaves called");
+// 2. LOAD HISTORY
+window.loadLeaveHistory = async function() {
+    const tbody = document.getElementById("leaveHistoryBody");
+    if(!tbody) return;
 
-  const form = document.getElementById("leaveForm");
-  if (!form) return;
-  if (form.dataset.bound) return;
-  form.dataset.bound = "true";
-
-  const fromEl = document.getElementById("fromDate");
-  const toEl = document.getElementById("toDate");
-  const leaveTypeEl = document.getElementById("leaveType");
-  const reasonEl = document.getElementById("reason");
-  const msgEl = document.getElementById("msg");
-  const durationEl = document.getElementById("leaveDuration");
-  const submitBtn = form.querySelector("button[type='submit']");
-
-  function setMsg(text, type = "info") {
-    if (!msgEl) return;
-    msgEl.innerHTML = `<div class="leave-msg ${type}">${text}</div>`;
-  }
-
-  function updateDuration() {
-    if (!durationEl) return;
-    if (!fromEl.value || !toEl.value) {
-      durationEl.innerText = "Select start and end date";
-      return;
-    }
-    const from = new Date(fromEl.value);
-    const to = new Date(toEl.value);
-    if (to < from) {
-      durationEl.innerText = "Invalid range";
-      return;
-    }
-    const days = Math.floor((to - from) / 86400000) + 1;
-    durationEl.innerText = `${days} day${days > 1 ? "s" : ""} selected`;
-  }
-
-  fromEl && fromEl.addEventListener("change", updateDuration);
-  toEl && toEl.addEventListener("change", updateDuration);
-async function loadLeaveBalance() {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    console.warn("No token yet, skipping leave balance load");
-    return;
-  }
-
-  try {
-    const balances = await apiGetOrFetch("/leaves/balance");
-
-    leaveTypeEl.innerHTML = `<option value="">Select leave type</option>`;
-    (balances || []).forEach(b => {
-      const opt = document.createElement("option");
-      opt.value = b.leave_type;
-      opt.textContent = `${b.name} (${b.balance} left)`;
-      leaveTypeEl.appendChild(opt);
-    });
-  } catch (err) {
-    console.error("Leave balance load failed:", err);
-    notifyError("Leave Balance", "Unable to load leave balance");
-    setMsg("Unable to load leave balance", "error");
-  }
-}
-
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const from_date = fromEl.value;
-    const to_date = toEl.value;
-    const leave_type = leaveTypeEl.value;
-    const reason = (reasonEl.value || "").trim();
-
-    if (!from_date || !to_date || !leave_type) {
-      notifyError("Validation", "Please fill all required fields");
-      setMsg("Please fill all required fields", "warning");
-      return;
-    }
-
-    if (new Date(from_date) > new Date(to_date)) {
-      notifyError("Validation", "From date cannot be after To date");
-      setMsg("From date cannot be after To date", "error");
-      return;
-    }
-
-    submitBtn.disabled = true;
-    const prevText = submitBtn.innerText;
-    submitBtn.innerText = "Applying…";
+    tbody.innerHTML = `<tr><td colspan="6" class="text-center py-5 text-muted"><div class="spinner-border spinner-border-sm text-primary mb-2"></div><p class="mb-0">Loading...</p></td></tr>`;
 
     try {
-      // IMPORTANT: call the backend route that we defined: POST /api/leaves/apply
-      const payload = { from_date, to_date, leave_type, reason };
-      console.log("Applying leave:", payload);
+        const res = await fetch(`${API_BASE}/api/leaves/history`, { headers: getHeaders() });
+        const data = await res.json();
 
-      const res = await apiPostOrFetch("/leaves/apply", payload);
+        if (!data || data.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">No records found.</td></tr>`;
+            return;
+        }
 
-      notifySuccess("Leave Applied", res.message || "Leave applied successfully");
-      setMsg(res.message || "Leave applied successfully", "success");
+        tbody.innerHTML = data.map(leave => `
+            <tr>
+                <td class="ps-4 fw-bold text-dark">${leave.type || leave.type_code}</td>
+                <td>${leave.from}</td>
+                <td>${leave.to}</td>
+                <td><span class="badge bg-light text-dark border">${leave.days} Day(s)</span></td>
+                <td>${getStatusBadge(leave.status)}</td>
+                <td class="pe-4 text-end">
+                    ${(leave.status || '').toLowerCase() === 'pending' ? 
+                      /* --- UPDATED BUTTON STYLE HERE --- */
+                      `<button class="btn btn-sm btn-outline-danger px-3" 
+                               style="border-radius: 8px; font-weight: 500;" 
+                               onclick="window.cancelLeave(${leave.id})">
+                        Cancel
+                       </button>` : 
+                      '<span class="text-muted small">-</span>'}
+                </td>
+            </tr>
+        `).join('');
 
-      form.reset();
-      updateDuration();
-      await loadLeaveBalance();
-    } catch (err) {
-      console.error("Leave apply failed:", err);
-      notifyError("Leave Apply Failed", err.message || "Server error");
-      setMsg(err.message || "Server error. Try again later.", "error");
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.innerText = prevText || "Apply Leave";
+    } catch (error) {
+        console.error("History Error:", error);
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-danger">Error loading data.</td></tr>`;
     }
-  });
+};
 
-  // initial load
-  loadLeaveBalance();
+// 3. SUBMIT LEAVE
+window.submitLeave = async function() {
+    const btn = document.querySelector("#leaveForm button[type='submit']");
+    const msgDiv = document.getElementById("msg");
+
+    const payload = {
+        from_date: document.getElementById("fromDate").value,
+        to_date: document.getElementById("toDate").value,
+        leave_type: document.getElementById("leaveType").value,
+        reason: document.getElementById("reason").value
+    };
+
+    if (!payload.from_date || !payload.to_date || !payload.leave_type) {
+        alert("Please select Dates and Leave Type.");
+        return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = 'Applying...';
+    if(msgDiv) msgDiv.innerHTML = '';
+
+    try {
+        const res = await fetch(`${API_BASE}/api/leaves/apply`, {
+            method: "POST",
+            headers: getHeaders(),
+            body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+
+        if (res.ok) {
+            alert("Success! Leave applied.");
+            document.getElementById("leaveForm").reset();
+            document.getElementById("leaveDuration").innerText = ""; 
+            window.loadLeaveHistory(); 
+        } else {
+            if(msgDiv) msgDiv.innerHTML = `<div class="alert alert-danger small p-2 mb-0">${result.message || 'Failed'}</div>`;
+            else alert(result.message);
+        }
+    } catch (e) {
+        alert("Network Error");
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'Apply Leave';
+    }
+};
+
+// 4. CANCEL LEAVE
+window.cancelLeave = async function(id) {
+    if(!confirm("Are you sure you want to cancel this leave request?")) return;
+    try {
+        const res = await fetch(`${API_BASE}/api/leaves/${id}`, { method: "DELETE", headers: getHeaders() });
+        if(res.ok) {
+            alert("Cancelled.");
+            window.loadLeaveHistory();
+        } else {
+            alert("Error cancelling.");
+        }
+    } catch(e) { alert("Network Error"); }
+};
+
+// Utils
+function getStatusBadge(status) {
+    const s = (status || '').toLowerCase();
+    if(s === 'approved') return '<span class="badge bg-success bg-opacity-10 text-success">Approved</span>';
+    if(s === 'pending') return '<span class="badge bg-warning bg-opacity-10 text-warning">Pending</span>';
+    if(s === 'rejected') return '<span class="badge bg-danger bg-opacity-10 text-danger">Rejected</span>';
+    return `<span class="badge bg-secondary">${status}</span>`;
 }
 
-/* Required by SPA router */
-window.initLeaves = initLeaves;
+function setupDateListeners() {
+    const fromInput = document.getElementById("fromDate");
+    const toInput = document.getElementById("toDate");
+    const text = document.getElementById("leaveDuration");
+
+    function update() {
+        if(fromInput.value && toInput.value) {
+            const start = new Date(fromInput.value);
+            const end = new Date(toInput.value);
+            const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+            
+            if(days > 0) {
+                text.innerText = `${days} Day(s) Selected`;
+                text.className = "text-primary fw-bold mt-1 d-block";
+            } else {
+                text.innerText = "Invalid Dates";
+                text.className = "text-danger fw-bold mt-1 d-block";
+            }
+        }
+    }
+    if(fromInput && toInput) {
+        fromInput.addEventListener("change", update);
+        toInput.addEventListener("change", update);
+    }
+}

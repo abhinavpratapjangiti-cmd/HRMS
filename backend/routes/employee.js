@@ -19,7 +19,7 @@ function getEmployeeIdByUser(userId) {
 }
 
 /* =========================
-   EMPLOYEE SEARCH (ADMIN / HR / MANAGER)
+   1. EMPLOYEE SEARCH (ADMIN / HR / MANAGER)
 ========================= */
 router.get("/search", verifyToken, (req, res) => {
   const q = (req.query.q || "").trim();
@@ -64,7 +64,7 @@ router.get("/search", verifyToken, (req, res) => {
 });
 
 /* =========================
-   GET ALL EMPLOYEES (ADMIN / HR)
+   2. GET ALL EMPLOYEES (ADMIN / HR)
 ========================= */
 router.get("/", verifyToken, (req, res) => {
   const role = req.user.role?.toLowerCase();
@@ -80,9 +80,11 @@ router.get("/", verifyToken, (req, res) => {
       u.role,
       e.department,
       e.manager_id,
+      m.name AS manager_name,
       e.active
     FROM employees e
     JOIN users u ON u.id = e.user_id
+    LEFT JOIN employees m ON m.id = e.manager_id
     ORDER BY e.name
   `)
     .then(([rows]) => res.json(rows))
@@ -93,7 +95,7 @@ router.get("/", verifyToken, (req, res) => {
 });
 
 /* =========================
-   GET MY PROFILE
+   3. GET MY PROFILE
 ========================= */
 router.get("/me", verifyToken, (req, res) => {
   db.query(
@@ -134,7 +136,7 @@ router.get("/me", verifyToken, (req, res) => {
 });
 
 /* =========================
-   GET EMPLOYEE BY ID (SCOPE SAFE)
+   4. GET EMPLOYEE BY ID
 ========================= */
 router.get("/:id", verifyToken, (req, res) => {
   const role = req.user.role?.toLowerCase();
@@ -189,33 +191,61 @@ router.get("/:id", verifyToken, (req, res) => {
 });
 
 /* =========================
-   UPDATE REPORTING MANAGER
+   5. UPDATE EMPLOYEE (FULL PATCH)
+   This fixes the 404 error on PUT /api/employees/:id
 ========================= */
-router.patch("/:id/manager", verifyToken, (req, res) => {
-  if (!["admin", "hr"].includes(req.user.role)) {
+router.put("/:id", verifyToken, async (req, res) => {
+  const role = req.user.role?.toLowerCase();
+  if (!["admin", "hr"].includes(role)) {
     return res.status(403).json({ message: "Access denied" });
   }
 
   const { id } = req.params;
-  const { manager_id } = req.body;
+  const { name, email, role: newRole, department, manager_id } = req.body;
 
-  db.query(
-    `
-    UPDATE employees
-    SET manager_id = ?
-    WHERE id = ?
-    `,
-    [manager_id || null, id]
-  )
-    .then(() => res.json({ success: true }))
-    .catch(err => {
-      console.error("UPDATE MANAGER ERROR:", err);
-      res.status(500).json({ message: "DB error" });
-    });
+  try {
+    // 1. Update the 'employees' table
+    await db.query(
+      `UPDATE employees 
+       SET name = ?, email = ?, department = ?, manager_id = ? 
+       WHERE id = ?`,
+      [name, email, department, manager_id || null, id]
+    );
+
+    // 2. Update the associated 'users' table role
+    await db.query(
+      `UPDATE users u
+       JOIN employees e ON e.user_id = u.id
+       SET u.role = ?
+       WHERE e.id = ?`,
+      [newRole || 'employee', id]
+    );
+
+    res.json({ success: true, message: "Employee updated successfully" });
+  } catch (err) {
+    console.error("UPDATE EMPLOYEE ERROR:", err);
+    res.status(500).json({ message: "Failed to update employee" });
+  }
 });
 
 /* =========================
-   EMPLOYEE TIMELINE (SELF)
+   6. DELETE EMPLOYEE
+========================= */
+router.delete("/:id", verifyToken, async (req, res) => {
+    if (!["admin", "hr"].includes(req.user.role?.toLowerCase())) {
+        return res.status(403).json({ message: "Access denied" });
+    }
+    const { id } = req.params;
+    try {
+        await db.query("DELETE FROM employees WHERE id = ?", [id]);
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ message: "DB error" });
+    }
+});
+
+/* =========================
+   7. TIMELINE LOGIC
 ========================= */
 router.get("/me/timeline", verifyToken, (req, res) => {
   getEmployeeIdByUser(req.user.id)
@@ -223,9 +253,6 @@ router.get("/me/timeline", verifyToken, (req, res) => {
     .catch(() => res.json([]));
 });
 
-/* =========================
-   EMPLOYEE TIMELINE (ADMIN / HR / MANAGER)
-========================= */
 router.get("/:id/timeline", verifyToken, (req, res) => {
   const role = req.user.role?.toLowerCase();
   if (!["admin", "hr", "manager"].includes(role)) {
@@ -253,9 +280,6 @@ router.get("/:id/timeline", verifyToken, (req, res) => {
     .catch(() => res.status(403).json({ message: "Access denied" }));
 });
 
-/* =========================
-   TIMELINE HELPER
-========================= */
 function getTimeline(employeeId, res) {
   const timeline = [];
 
@@ -265,19 +289,16 @@ function getTimeline(employeeId, res) {
       [employeeId]
     )
     .then(([[emp]]) => {
-      timeline.push({
-        label: "Joined LovasIT",
-        date: emp.join_date
-      });
+      if(emp) {
+        timeline.push({ label: "Joined LovasIT", date: emp.join_date });
+      }
 
       return db.query(
-        `
-        SELECT old_designation, new_designation,
-               DATE_FORMAT(changed_at,'%Y-%m-%d') AS date
-        FROM employee_role_history
-        WHERE employee_id = ?
-        ORDER BY changed_at
-        `,
+        `SELECT old_designation, new_designation,
+                DATE_FORMAT(changed_at,'%Y-%m-%d') AS date
+         FROM employee_role_history
+         WHERE employee_id = ?
+         ORDER BY changed_at`,
         [employeeId]
       );
     })
@@ -288,11 +309,9 @@ function getTimeline(employeeId, res) {
           date: h.date
         });
       });
-
       res.json(timeline);
     })
     .catch(() => res.json([]));
 }
 
 module.exports = router;
-

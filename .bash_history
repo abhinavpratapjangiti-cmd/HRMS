@@ -1,265 +1,3 @@
-requirepass STRONG_REDIS_PASSWORD
-sudo nano /etc/redis/redis.conf
-cd backend
-nano routes/attendance.js
-pm2 restart hrms-backend
-clear
-mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
-clear
-mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
-cat backend/.env
-cat backend/public/assets/js/pages/attendance.js
-pm2 logs
-# or
-tail -f logs/app.log
-pm2 restart all
-# or
-node server.js
-pm2 restart hrms-backend
-mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
-cat .env
-pm2 restart all
-telnet hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com 3306
-ALTER USER 'admin'@'%' IDENTIFIED WITH mysql_native_password BY 'WuKRSUGNPhOUVfmYTEhq';
-FLUSH PRIVILEGES;
-mysql -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com -u admin -p
-pm2 restart all
-# 1. Kill any existing node processes that are hanging
-sudo killall -9 node
-# 2. Restart your application
-# If you are using PM2:
-pm2 restart all --update-env
-# If you are NOT using PM2, start it manually to see the logs:
-npm start
-cd backend
-sudo npm install -g pm2
-pm2 start server.js
-pm2 save
-pm2 startup
-pm2 delete all
-pm2 start server.js --name hrms-backend
-pm2 save
-pm2 logs
-cd backend
-ls
-cd middleware
-ls
-cat auth.js
-cd backend
-cd ..
-cd routes
-nano attendance.js
-cat attendance.js
-nano attendance.js
-pm2 restart hrms-backend --update-env
-pm2 logs hrms-backend
-cd
-pm2 restart hrms-backend --update-env
-pm2 logs hrms-backend
-cat backend/routes/auth.js
-nso backend/routes/attendance.js
-nano backend/routes/attendance.js
-cat backend/routes/assets/js/pages/attendance.js
-cat backend/public/assets/js/pages/attendance.js
-nano backend/public/assets/js/pages/attendance.js
-cat backend/public/assets/js/pages/attendance.js
-mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
-nano backend/public/assets/js/pages/attendance.js
-pm2 restart hrms-backend
-mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
-cd backend
-cat routes/attendance.js
-nano routes/attendance.js
-pm2 delete hrms-backend
-pm2 start backend/server.js --name hrms-backend --update-env
-pm2 logs hrms-backend
-cd
-pm2 delete hrms-backend
-pm2 start backend/server.js --name hrms-backend --update-env
-pm2 logs hrms-backend
-mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
-cd backend
-cat public/assets/js/pages/attenadance.sj
-cd public
-ls
-cat assets/js/pages/attenadance.js
-cd assets
-cd js
-cd pages
-cat
-cd backend
-ls
-cd db
-cat index.js
-cd ..
-cat routes/attendance.js
-nano routes/attendance.js
-pm2 restart hrms-backend
-mysql -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com -u admin -p
-cd backend
-nano routes/attendance.js
-cd backend
-pm2 logs
-cd backend
-nano backend/routes/attendance.js
-nano backend/public/assets/js/attendance.js
-cd backend/public/assets
-ls
-cd js
-ls
-cd pages
-ls
-nano attendnace.js
-nano attendance.js
-cd
-cd backend
-pm2 restart all
-nano public/aseets/js/pages/attendance.js
-nano public/assets/js/pages/attendance.js
-nano public/assets/js/pages
-cd public/assets/js/pages
-ls
-cd ..
-ls
-cd ..
-ls
-cd ..
-ls
-cat attendance.html
-nano backend/routes/attendance.js
-nano backend/public/assets/js/pages/attendance.js
-cd backend pm2 restart hrms-backend
-cd backend
-pm2 restart hrms-backend
-nano backend/public/assets/js/pages/attendance.js
-nano public/assets/js/pages/attendance.js
-nano backend/public/assets/js/pages/attendance.js
-nano public/assets/js/pages/attendance.js
-nano backend/public/attendance.html
-nano backend/public/assets/attendance.html
-nano backend/public/attendance.html
-nano public/attendance.html
-cat public/attendance.html
-nano public/attendance.html
-ls
-cd public
-ls
-cd pages
-ls
-cat attendance.html
-cd ..
-ls
-cd public
-ls
-rm attendance.html
-nano assets/js/pages/attendance.js
-cd ..
-cat routes/attendance.js
-nano assets/js/pages/attendance.js
-nano public/assets/js/pages/attendance.js
-pm2 restart hrms-backend
-cat public/assets/js/pages/attendance.js
-nano public/assets/js/pages/attendance.js
-pm2 restart hrms-backend
-nano public/assets/js/pages/attendance.js
-nano routes/attendance.js
-
-nano routes/attendance.js
-pm2 restart hrms-backend
-cat routes/attendance.js
-nano routes/attendance.js
-pm2 restart hrms-backend
-nano routes/attendance.js
-pm2 restart hrms-backend
-nano backend/routes/leaves.js
-nano backend/public/assets/js/pages/leaves.js
-cat backend/public/assets/js/pages/leaves.js
-nano backend/public/assets/js/pages/leaves.js
-cd backend
-pm2 restart all
-pm2 logs
-nano backend/routes/leaves.js
-nano routes/leaves.js
-pm2 restart all
-ls
-cd public
-ls
-cd assets
-ls
-cd js
-ls
-cd ui
-ls
-cat toast.js
-cd
-nano backend/public/assets/js/pages/leaves.js
-nano backend/public/assets/js/ui/toast.js
-pm2 restart all
-cd backend
-ls
-cd public
-ls
-cat index.html
-nano index.html
-cd
-cd backend/public/assets/js/pages/
-ls
-cd ..
-ls
-cat router.js
-ls
-nano auth,js
-nano auth.js
-nano router.js
-cd
-backend/public/
-ls
-cd assets
-ls
-cd ..
-cd pages
-ls
-cd ..
-assets
-cd assets
-nano index.html
-ls
-cd ..
-cat index.html
-nano index.html
-cd 
-pm2 restart
-pm2 restart hrms-backend
-cat backend/public/assets/js/router.js
-nano backend/public/assets/js/router.js
-pm2 restart hrms-backend
-pm2 logs
-nano backend/routes/leaves.js
-nano backend/public/assets/js/pages/attendance.js
-pm2 restart hrms-backend
-pm2 logs
-cat backend/routes/leaves.js
-cat backend/public/assets/js/pages/attendance.js
-cat backend/public/assets/js/router.js
-nano backend/routes/leaves.js
-cat backend/public/assets/js/pages/attendance.js
-nano backend/public/assets/js/pages/attendance.js
-nano backend/public/assets/js/pages/router.js
-nano backend/public/assets/js/router.js
-pm2 logs
-nano backend/routes/leaves.js
-pm2 logs
-pm2 restart hrms-backend
-nano backend/public/assets/js/pages/attendance.js
-nano backend/public/assets/js/pages/leaves.js
-nano backend/public/assets/js/pages/timesheets.js
-nano backend/public/assets/js/router.js
-nano backend/public/assets/js/pages/leaves.js
-cat backend/public/assets/js/pages/timesheets.js
-cat backend/public/assets/js/pages/leaves.js
-nano backend/public/assets/js/pages/leaves.js
-pm2 restart hrms-backend
-pm2 logs
 nl -ba backend/routes/leaves.js | sed -n '1,40p'
 grep -R "document" backend/routes
 nl -ba backend/server.js | sed -n '60,100p'
@@ -1998,3 +1736,265 @@ pm2 restart all
 cat backend/public/assets/js/auth.js
 nano backend/public/assets/js/auth.js
 pm2 restart all
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+nano backend/public/assets/js/api.js
+cat backend/public/assets/js/api.js
+nano backend/public/assets/js/api.js
+nano backend/server.js
+cat backend/server.js
+cat backend/routes/dashboard.js
+nano backend/server.js
+nano backend/routes/dashboard.js
+
+cat backend/routes/attendance.js
+cat backend/routes/dashboard.js
+cat backend/server.js
+
+
+cat backend/routes/attendance.js
+nano backend/routes/attendance.js
+pm2 restart all
+cat backend/routes/attendance.js
+nano backend/routes/attendance.js
+pm2 restart all
+nano backend/routes/attendance.js
+pm2 restart all
+nano backend/routes/dashboard.js
+nano backend/public/assets/js/pages/dashboard.js
+nano backend/routes/attendance.js
+pm2 restart all
+nano backend/routes/attendance.js
+nano backend/public/assets/js/pages/dashboard.js
+cat backend/public/assets/js/pages/dashboard.js
+nano backend/public/assets/js/pages/dashboard.js
+pm2 restart all
+git add .
+git status
+git commit - m"all will work"
+git status
+git commit -m"one fix"
+git push
+git status
+git push -u origin upstream
+git push
+git rm --cached .git-credentials
+.gitignore
+git commit --amend --no-edit
+git config --global user.name "abhinavpratapjangiti-cmd"
+git config --global user.email "abhinavpratapjangiti@gmail.com"
+git commit --amend --reset-author --no-edit
+git rm --cached .gitconfig
+git commit --amend --no-edit
+git push
+cd backend/public
+ls
+cd assets
+ls
+cd css
+ls
+cat style.css
+nano style.css
+cd ..
+ls
+cat js
+cd js
+ls
+cd pages
+ls
+cat manage-users.js
+nano manage-users.js
+cd
+pm2 restart all
+cd backend
+ls
+cd routes;
+ls
+touch backend/routes/manage-users.js
+rm backend/routes/manage-users.js
+cd backend/public
+ls
+cd assets
+ls
+cd ..
+cd pages
+ls
+cat manage-user.html
+cat manage-users.html
+nano manage-users.js
+nano manage-users.html
+cd backend/public/assets/js/pages
+ls
+cat manage-users.js
+nano manage-users.js
+pm2 restart all
+cat manage-users.js
+nano manage-users.js
+cat backend/public/assets/js/pages/manage-users.html
+cd backend/public/assets/js/pages
+ls
+cd ..
+ls
+cd pages
+ls
+cat manage-users.htnl
+cat manage-users.html
+
+cat manage-users.html
+
+cd
+cat backend/public/assets/js/pages/manage-users.js
+nano backend/public/assets/js/pages/manage-users.js
+
+cat backend/public/assets/js/pages/manage-users.js
+cat backend/public/pages/manage-users.html
+nano backend/public/assets/js/pages/manage-users.js
+nano backend/public/pages/manage-users.html
+pm2 restart all
+cat backend/public/pages/manage-users.html
+cat backend/public/assets/js/pages/manage-users.js
+nano backend/public/assets/js/pages/manage-users.js
+pm2 restart all
+nano backend/public/pages/manage-users.html
+pm2 restart all
+
+nano backend/public/assets/js/pages/manage-users.js
+pm2 restart all
+nano backend/public/assets/js/pages/manage-users.js
+nano backend/public/pages/manage-users.html
+pm2 restart all
+cat backend/public/pages/manage-users.html
+cat backend/public/assets/js/pages/manage-users.js
+nano backend/public/assets/js/pages/manage-users.js
+pm2 restart all
+nano backend/public/pages/manage-users.html
+pm2 resatrt all
+pm2 restart all
+nano backend/public/assets/js/pages/manage-users.js
+pm2 restart all
+nano backend/public/assets/js/pages/manage-users.js
+cat backend/public/assets/js/pages/manage-users.js
+nao backend/public/assets/js/pages/manage-users.js
+nano backend/public/assets/js/pages/manage-users.js
+pm2 restart  all
+nano backend/public/assets/js/pages/manage-users.js
+pm2 restart all
+nano backend/public/pages/manage-users.html
+cat backend/public/pages/manage-users.html
+nano backend/public/pages/manage-users.html
+nano backend/public/assets/js/pages/manage-users.js
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+cat backend/public/pages/manage-users.html
+nano backend/public/pages/manage-users.html
+
+nano backend/public/pages/manage-users.html
+cat backend/public/assets/js/pages/manage-users.js
+cat backend/public/assets/js/pages/manage-users.js
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+nano backend/public/assets/js/pages/manage-users.js
+nano backend/routes/manage-users.js
+nano backend/routes/users.js
+pm2 restart all
+nano backend/public/assets/js/pages/manage-users.js
+pm2 restart all
+nano backend/public/assets/js/pages/manage-users.js
+nano backend/public/pages/manage-users.html
+nano backend/public/assets/js/pages/manage-users.js
+pm2 restart all
+nano backend/public/assets/js/pages/manage-users.js
+pm2 restart all
+pm2 logs
+nano backend/public/assets/js/pages/manage-users.js
+pm2 restart all
+cat backend/public/assets/js/pages/manage-users.js
+cat backend/public/pages/manage-users.html
+cat backend/server.js
+nano backend/routes/manage-users.js
+cd backend
+ls
+cd routes
+ls
+cd
+cat backend/public/assets/js/pages/manage-users.js
+cat backend/routes/users.js
+cat backend/public/assets/js/pages/manage-users.js
+cat backend/public/pages/manage-users.html
+nano backend/public/pages/manage-users.html
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+cat backend/public/pages/manage-users.html
+nano backend/public/pages/manage-users.html
+cat backend/public/pages/manage-users.html
+nano backend/public/pages/manage-users.html
+nano backend/public/pages/manage-users.html
+cat backend/public/pages/manage-users.html
+cat backend/public/assets/js/pages/manage-users.js
+cat backend/public/pages/manage-users.html
+nano backend/public/pages/manage-users.html
+mkdir public/vendor/bootstrap
+cd backend
+mkdir public/vendor/bootstrap
+nano backend/public/assets/js/pages/manage-users.js
+nano backend/routes/user.html
+nano backend/routes/users.html
+cd backend
+ls
+cd routes
+ls
+nano users.js
+cat users.js
+nano users.js
+pm2 restart all
+cat backend/public/assets/js/pages/manage-users.js
+cat backend/routes/users.js
+nano backend/routes/users.js
+pm2 restart all
+cat backend/public/pages/manage-users.html
+nano backend/public/pages/manage-users.html
+nano backend/public/assets/js/pages/manage-users.js
+pm2 restart all
+cat backend/public/assets/js/pages/manage-users.js
+nano backend/public/assets/js/pages/manage-users.js
+pm2 restart all
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+nano backend/public/assets/js/pages/manage-users.js
+pm2 restart all
+nano backend/public/assets/js/pages/manage-users.js
+cat backend/public/assets/js/pages/manage-users.js
+nano backend/public/assets/js/pages/manage-users.js
+pm2 restart all
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+cat backend/public/pages/leaves.html
+nano backend/public/pages/leaves.html
+cat backend/routes/leaves.js
+nano backend/routes/leaves.js
+pm2 restart all
+nano backend/routes/leaves.js
+pm2 restart all
+nano backend/routes/leaves.js
+pm2 restart all
+nano backend/routes/leaves.js
+pm2 restart all
+cat backend/routes/leaves.js
+nano backend/routes/leaves.js
+cat backend/routes/leaves.js
+cat backend/public/pages/leaves.html
+cat backend/public/assets/js/pages.leaves.js
+c
+nano backend/public/pages/leaves.html
+nano backend/routes/leaves.js
+nano backend/public/assets/js/pages/leaves.js
+pm2 restart all
+nano backend/public/pages/leaves.html
+cat backend/routes/leaves.js
+nano backend/routes/leaves.js
+pm2 restart all
+cat backend/routes/leaves.js
+cat backend/public/pages/leaves.html
+nano backend/public/pages/leaves.html
+cat backend/routes/leaves.js
+nano backend/routes/leaves.js
+pm2 restart all
+nano backend/public/assets/js/pages/leaves.js
+pm2 restart all
+nano backend/public/pages/leaves.html
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p

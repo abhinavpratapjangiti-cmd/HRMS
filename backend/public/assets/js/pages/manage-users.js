@@ -1,280 +1,358 @@
-console.log("manage-users.js loaded");
+/* =========================================
+   CONFIGURATION & AUTH
+   ========================================= */
+const API_BASE = "http://16.16.18.115:5000"; // Ensure this matches your server IP
 
-/* =========================
-   GLOBAL STATE
-========================= */
-let MANAGERS_CACHE = [];
+const getHeaders = () => ({
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${localStorage.getItem("token")}`
+});
 
-/* =========================
-   PAGE INIT (SPA SAFE)
-========================= */
-async function initManageUsers() {
-  console.log("initManageUsers called");
+/* =========================================
+   1. INITIALIZATION
+   ========================================= */
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("HRMS Manager Initialized");
+    // The HTML auto-click script will trigger refreshAll(), but we call it here too just in case.
+    if (typeof window.refreshAll === 'function') {
+        window.refreshAll();
+    }
+});
 
-  try {
-    await Promise.all([
-      loadManagers(),
-      loadAllEmployees(),
-      loadOrgSnapshot(),
-      loadRecentUsers()
-    ]);
-  } catch (err) {
-    console.error("Init failed", err);
-  }
+window.refreshAll = function() {
+    loadEmployees();
+    loadStats();
+    loadDepartmentDistribution(); 
+};
+
+/* =========================================
+   2. LOAD DATA
+   ========================================= */
+async function loadEmployees() {
+    const tableBody = document.getElementById("employeesList");
+    // Show spinner while loading
+    tableBody.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary" role="status"></div><div class="mt-2 text-muted">Loading directory...</div></div>';
+
+    try {
+        const res = await fetch(`${API_BASE}/api/users`, { headers: getHeaders() });
+
+        if (!res.ok) throw new Error(`Server returned ${res.status}`);
+
+        const data = await res.json();
+        // Handle different possible response structures (array vs object)
+        const employees = Array.isArray(data) ? data : (data.employees || data.users || []);
+
+        if (employees.length === 0) {
+            tableBody.innerHTML = '<div class="text-center text-muted py-5">No employees found.</div>';
+            return;
+        }
+
+        renderTable(employees);
+        updateManagerDropdown(employees);
+        calculateStatsLocally(employees);
+
+    } catch (error) {
+        console.error("Error loading employees:", error);
+        tableBody.innerHTML = '<div class="text-center text-danger py-5">Error loading data. Check console (F12).</div>';
+    }
 }
 
-/* =========================
-   CREATE EMPLOYEE
-========================= */
-window.createUser = async function () {
-  try {
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    const role = document.getElementById("role").value;
-    const managerId = document.getElementById("createManager").value;
+async function loadStats() {
+    try {
+        const res = await fetch(`${API_BASE}/api/users/stats`, { headers: getHeaders() });
+        if (!res.ok) return;
 
-    if (!name || !email || !password) {
-      alert("Name, email and password are required");
-      return;
+        const data = await res.json();
+        const statsBox = document.getElementById("orgStats");
+
+        if (statsBox && data) {
+            statsBox.innerHTML = `
+                <div class="stat-row"><span>Total Employees</span><span class="fw-bold">${data.total || 0}</span></div>
+                <div class="stat-row"><span>Managers</span><span class="fw-bold">${data.managers || 0}</span></div>
+                <div class="stat-row text-success"><span>Active Users</span><span class="fw-bold">${data.active || 0}</span></div>
+            `;
+        }
+    } catch (e) {
+        console.warn("Stats API error", e);
     }
+}
 
-    const res = await fetch("/api/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      },
-      body: JSON.stringify({ name, email, password, role })
+async function loadDepartmentDistribution() {
+    let container = document.getElementById("deptDistribution");
+    // Fallback: search by text if ID is missing
+    if (!container) {
+         const allDivs = document.querySelectorAll('.card-body');
+         for (let div of allDivs) {
+             if (div.innerText.includes("Loading charts")) {
+                 container = div;
+                 break;
+             }
+         }
+    }
+    if (!container) return;
+
+    try {
+        const res = await fetch(`${API_BASE}/api/users/departments`, { headers: getHeaders() });
+        const data = await res.json();
+
+        if (!data || data.length === 0) {
+            container.innerHTML = '<div class="text-muted small text-center py-3">No department data</div>';
+            return;
+        }
+
+        container.innerHTML = data.map(d => `
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span>${d.department}</span>
+                <span class="badge bg-primary rounded-pill">${d.count}</span>
+            </div>
+        `).join('');
+
+    } catch (e) {
+        console.error("Dept Load Error:", e);
+        container.innerHTML = '<div class="text-danger small text-center">Failed to load</div>';
+    }
+}
+
+/* =========================================
+   3. RENDER UI
+   ========================================= */
+function renderTable(employees) {
+    const container = document.getElementById("employeesList");
+    container.innerHTML = "";
+
+    employees.forEach(emp => {
+        // Safe Data Extraction with Fallbacks
+        const name = emp.name || emp.username || "Unknown";
+        const email = emp.email || "No Email";
+        const role = emp.role || "employee";
+        const userId = emp.user_id || emp.id;
+        const employeeId = emp.employee_id || emp.id;
+        const department = emp.department || "IT";
+        const managerId = emp.manager_id || "";
+        
+        // Handle Manager Name safely
+        const managerName = emp.manager_name || "No Manager";
+
+        // Create Row Element
+        const row = document.createElement("div");
+        row.className = "employee-row border-bottom py-3";
+        
+        // Grid Layout Calculation (Total = 12 columns)
+        // Name(3) + Role(2) + Status(2) + Reporting Manager(3) + Actions(2)
+        row.innerHTML = `
+            <div class="row align-items-center">
+                
+                <div class="col-md-3">
+                    <div class="fw-bold text-dark text-truncate" title="${name}">${name}</div>
+                    <div class="small text-muted text-truncate" title="${email}">${email}</div>
+                </div>
+
+                <div class="col-md-2">
+                    <span class="badge bg-light text-dark border text-uppercase mb-1">${role}</span>
+                    <div class="small text-muted text-truncate">${department}</div>
+                </div>
+
+                <div class="col-md-2">
+                     <small class="text-muted">
+                        <i class="fa fa-circle ${emp.active ? 'text-success' : 'text-danger'} me-1" style="font-size: 8px;"></i>
+                        ${emp.active ? 'Active' : 'Inactive'}
+                     </small>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="small text-uppercase text-muted" style="font-size: 0.65rem; font-weight: 700;">Reporting To</div>
+                    <div class="fw-medium text-dark text-truncate" title="${managerName}">
+                        <i class="fa-solid fa-user-tie text-secondary me-1"></i> ${managerName}
+                    </div>
+                </div>
+
+                <div class="col-md-2 text-end">
+                    <button class="btn btn-sm btn-outline-primary me-1"
+                            title="Edit User"
+                            onclick="window.openEditModal('${userId}', '${employeeId}', '${name}', '${email}', '${role}', '${managerId}', '${department}')">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" 
+                            title="Delete User"
+                            onclick="window.deleteEmployee('${employeeId}')">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>`;
+        container.appendChild(row);
     });
+}
 
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || "Failed to create employee");
+function updateManagerDropdown(employees) {
+    const createSelect = document.getElementById("createManager");
+    const editSelect = document.getElementById("edit-manager");
+    const defaultOption = '<option value="">No reporting manager</option>';
+    
+    // Filter for people who can be managers (Admin, HR, Manager)
+    const managers = employees.filter(e => ['manager', 'admin', 'hr'].includes((e.role || '').toLowerCase()));
+    
+    const managerOptions = managers.map(m => `<option value="${m.employee_id || m.id}">${m.name}</option>`).join('');
+
+    if (createSelect) createSelect.innerHTML = defaultOption + managerOptions;
+    if (editSelect) editSelect.innerHTML = defaultOption + managerOptions;
+}
+
+function calculateStatsLocally(employees) {
+    const statsBox = document.getElementById("orgStats");
+    // Only update if it's still showing the "Loading..." text
+    if (statsBox && statsBox.innerText.includes("Loading")) {
+        const total = employees.length;
+        const managers = employees.filter(e => (e.role || '').toLowerCase() === 'manager').length;
+        statsBox.innerHTML = `
+            <div class="stat-row"><span>Total Employees</span><span class="fw-bold">${total}</span></div>
+            <div class="stat-row"><span>Managers</span><span class="fw-bold">${managers}</span></div>
+            <div class="stat-row text-success"><span>Active Users</span><span class="fw-bold">${total}</span></div>
+        `;
+    }
+}
+
+/* =========================================
+   4. ACTIONS (Create, Edit, Delete)
+   ========================================= */
+window.createUser = async function() {
+    const btn = document.getElementById("createBtn");
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    const payload = {
+        name: nameInput ? nameInput.value.trim() : "",
+        email: emailInput ? emailInput.value.trim() : "",
+        password: passwordInput ? passwordInput.value : "Welcome123",
+        role: document.getElementById("role") ? document.getElementById("role").value : "employee",
+        department: document.getElementById("department") ? document.getElementById("department").value : "IT",
+        client_name: document.getElementById("client") ? document.getElementById("client").value : "Internal",
+        manager_id: document.getElementById("createManager") ? document.getElementById("createManager").value : null
+    };
+
+    if (!payload.name || !payload.email) {
+        alert("Please fill in Name and Email.");
+        return;
     }
 
-    const data = await res.json();
-    const userId =
-  res.id ||
-  res.user?.id ||
-  res.user_id ||
-  res.insertId;
+    btn.disabled = true;
+    try {
+        const res = await fetch(`${API_BASE}/api/users`, {
+            method: "POST",
+            headers: getHeaders(),
+            body: JSON.stringify(payload)
+        });
 
-if (!userId) {
-  console.error("Create user response:", res);
-  throw new Error("User ID missing in response");
-}
+        const result = await res.json();
 
-    // Assign manager only if selected
-    if (managerId) {
-      await fetch(`/api/users/${userId}/manager`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        },
-        body: JSON.stringify({ manager_id: managerId })
-      });
+        if (res.ok) {
+            alert("User created successfully!");
+            // Clear inputs
+            if(nameInput) nameInput.value = "";
+            if(emailInput) emailInput.value = "";
+            refreshAll();
+        } else {
+            // This is where "Invalid role" alert comes from
+            alert("Error: " + (result.message || "Failed to create user"));
+        }
+    } catch (e) {
+        console.error(e);
+        alert("Network Error: Check console");
+    } finally {
+        btn.disabled = false;
+    }
+};
+
+window.openEditModal = function(userId, employeeId, name, email, role, managerId, department) {
+    document.getElementById("edit-id").value = userId;          
+    document.getElementById("edit-emp-id").value = employeeId; 
+    document.getElementById("edit-name").value = name;
+    document.getElementById("edit-email").value = email;
+    document.getElementById("edit-role").value = (role || 'employee').toLowerCase();
+
+    const deptEl = document.getElementById("edit-department");
+    if (deptEl) deptEl.value = department || "IT";
+
+    const managerEl = document.getElementById("edit-manager");
+    if (managerEl) managerEl.value = managerId || "";
+
+    const modalEl = document.getElementById('editModal');
+    if (modalEl) {
+        const modal = new bootstrap.Modal(modalEl);
+        modal.show();
+    }
+};
+
+window.saveEdit = async function() {
+    const userId = document.getElementById("edit-id").value;
+    const employeeId = document.getElementById("edit-emp-id").value;
+    const newRole = document.getElementById("edit-role").value;
+    const newManager = document.getElementById("edit-manager").value;
+
+    try {
+        const promises = [];
+
+        // 1. Update Role
+        if (newRole) {
+            promises.push(
+                fetch(`${API_BASE}/api/users/${userId}/role`, {
+                    method: "PATCH",
+                    headers: getHeaders(),
+                    body: JSON.stringify({ role: newRole })
+                })
+            );
+        }
+
+        // 2. Update Reporting Manager
+        if (newManager !== undefined) {
+             promises.push(
+                fetch(`${API_BASE}/api/users/${employeeId}/manager`, {
+                    method: "PATCH",
+                    headers: getHeaders(),
+                    body: JSON.stringify({ manager_id: newManager || null })
+                })
+            );
+        }
+
+        await Promise.all(promises);
+
+        const modalEl = document.getElementById('editModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+
+        alert("Updates saved successfully.");
+        refreshAll();
+
+    } catch (e) {
+        console.error(e);
+        alert("Network Error: Could not connect to server.");
+    }
+};
+
+window.deleteEmployee = async function(employeeId) {
+    if (!confirm("Are you sure you want to delete this employee? This action cannot be undone.")) {
+        return;
     }
 
-    alert("Employee created successfully");
+    try {
+        console.log(`Attempting to delete employee ID: ${employeeId}`);
 
-    // Reset form
-    document.getElementById("name").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("password").value = "";
-    document.getElementById("role").value = "employee";
-    document.getElementById("createManager").value = "";
+        const response = await fetch(`${API_BASE}/api/users/${employeeId}`, {
+            method: 'DELETE',
+            headers: getHeaders() 
+        });
 
-    // Refresh UI
-    loadAllEmployees();
-    loadOrgStats();
-    loadRecentUsers();
+        const result = await response.json();
 
-  } catch (err) {
-    console.error("Create employee failed:", err);
-    alert(err.message || "Create employee failed");
-  }
-};
-/* =========================
-   RESET FORM
-========================= */
-function resetCreateForm() {
-  ["name", "email", "password"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = "";
-  });
+        if (response.ok) {
+            alert("Employee deleted successfully!");
+            window.refreshAll();
+        } else {
+            alert(`Error: ${result.message}`);
+        }
 
-  document.getElementById("role").value = "employee";
-  document.getElementById("createManager").value = "";
-}
-
-/* =========================
-   LOAD MANAGERS (CACHE)
-========================= */
-async function loadManagers() {
-  try {
-    MANAGERS_CACHE = await apiGet("/users/managers");
-
-    const select = document.getElementById("createManager");
-    if (select) {
-      select.innerHTML = `<option value="">No reporting manager</option>`;
-      MANAGERS_CACHE.forEach(m => {
-        const opt = document.createElement("option");
-        opt.value = m.employee_id;
-        opt.textContent = m.name;
-        select.appendChild(opt);
-      });
+    } catch (error) {
+        console.error("Delete failed:", error);
+        alert("Server error. Please check the console.");
     }
-  } catch (err) {
-    console.warn("Managers list failed", err);
-    MANAGERS_CACHE = [];
-  }
-}
-
-/* =========================
-   LOAD ALL EMPLOYEES
-========================= */
-async function loadAllEmployees() {
-  const el = document.getElementById("employeesList");
-  if (!el) return;
-
-  try {
-    const employees = await apiGet("/users");
-
-    el.innerHTML = employees.length
-      ? employees.map(emp => `
-        <div class="employee-row employee-grid">
-
-          <!-- NAME -->
-          <div>
-            <div class="employee-name">${emp.name}</div>
-            <div class="employee-email">${emp.email}</div>
-          </div>
-
-          <!-- ROLE -->
-          <select class="form-select form-select-sm"
-                  onchange="updateUserRole(${emp.user_id}, this.value)">
-            ${renderRoleOptions(emp.role)}
-          </select>
-
-          <!-- REPORTING MANAGER -->
-          <select class="form-select form-select-sm manager-select"
-                  onchange="updateReportingManager(${emp.employee_id}, this.value)">
-            <option value="">No manager</option>
-            ${renderManagerOptions(emp.manager_id)}
-          </select>
-
-        </div>
-      `).join("")
-      : `<div class="text-muted text-center">No employees found</div>`;
-
-  } catch (err) {
-    console.error("Load employees failed", err);
-    el.innerHTML = `<div class="text-muted text-center">Unable to load employees</div>`;
-  }
-}
-
-/* =========================
-   ROLE OPTIONS
-========================= */
-function renderRoleOptions(current) {
-  return ["employee", "manager", "hr", "admin"]
-    .map(r =>
-      `<option value="${r}" ${r === current ? "selected" : ""}>${r}</option>`
-    )
-    .join("");
-}
-
-/* =========================
-   MANAGER OPTIONS
-========================= */
-function renderManagerOptions(currentManagerId) {
-  return MANAGERS_CACHE
-    .map(m =>
-      `<option value="${m.employee_id}"
-        ${m.employee_id === currentManagerId ? "selected" : ""}>
-        ${m.name}
-      </option>`
-    )
-    .join("");
-}
-
-/* =========================
-   UPDATE ROLE
-========================= */
-window.updateUserRole = async function (userId, role) {
-  try {
-    await apiPatch(`/users/${userId}/role`, { role });
-    showSuccessToast("Role Updated", "Employee role updated");
-    loadOrgSnapshot();
-  } catch (err) {
-    showErrorToast("Update Failed", err?.message || "Unable to update role");
-  }
 };
-
-/* =========================
-   UPDATE MANAGER
-========================= */
-window.updateReportingManager = async function (employeeId, managerId) {
-  try {
-    await apiPatch(`/users/${employeeId}/manager`, {
-      manager_id: managerId || null
-    });
-    showSuccessToast("Updated", "Reporting manager updated");
-  } catch (err) {
-    showErrorToast("Update Failed", err?.message || "Unable to update manager");
-  }
-};
-
-/* =========================
-   ORGANISATION SNAPSHOT
-========================= */
-async function loadOrgSnapshot() {
-  const el = document.getElementById("orgStats");
-  if (!el) return;
-
-  try {
-    const stats = await apiGet("/users/stats");
-
-    el.innerHTML = `
-      <div class="stat-row"><span>Total Employees</span><span>${stats.total}</span></div>
-      <div class="stat-row"><span>Managers</span><span>${stats.managers}</span></div>
-      <div class="stat-row text-success"><span>Active</span><span>${stats.active}</span></div>
-      <div class="stat-row text-danger"><span>Inactive</span><span>${stats.inactive}</span></div>
-    `;
-  } catch (err) {
-    el.innerHTML = `<div class="text-muted text-center">Unable to load stats</div>`;
-  }
-}
-
-/* =========================
-   RECENT USERS
-========================= */
-async function loadRecentUsers() {
-  const el = document.getElementById("recentUsers");
-  if (!el) return;
-
-  try {
-    const users = await apiGet("/users/recent");
-
-    el.innerHTML = users.length
-      ? users.map(u => `
-          <div class="recent-user">
-            <span>${u.name}</span>
-            <span class="badge-role">${u.role}</span>
-          </div>
-        `).join("")
-      : `<div class="text-muted text-center">No recent users</div>`;
-
-  } catch (err) {
-    el.innerHTML = `<div class="text-muted text-center">Unable to load recent users</div>`;
-  }
-}
-
-/* =========================
-   FORCE INIT (SPA)
-========================= */
-if (window.location.hash === "#/manage-users") {
-  initManageUsers();
-}

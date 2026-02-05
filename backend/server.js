@@ -27,6 +27,7 @@ const db = require("./db");
 ========================= */
 (async () => {
   try {
+    // Using db.execute or db.query depending on your pool setup
     await db.query("SET time_zone = '+05:30'");
     console.log("🕒 DB timezone locked to IST");
   } catch (err) {
@@ -69,49 +70,42 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 /* =========================
-   SAFE ROUTE LOADER (FAIL FAST)
+   SAFE ROUTE LOADER
 ========================= */
 function loadRoute(routePath) {
   try {
     const route = require(routePath);
-    if (!route) {
-      throw new Error("Route exported nothing");
-    }
+    if (!route) throw new Error("Route exported nothing");
     return route;
   } catch (err) {
     console.error(`❌ Failed to load route: ${routePath}`);
     console.error(err.stack);
-    process.exit(1); // hard fail → no PM2 restart loop
+    process.exit(1); 
   }
 }
 
 /* =========================
    ROUTE IMPORTS
 ========================= */
-const authRoutes          = loadRoute("./routes/auth");
-const usersRoutes         = loadRoute("./routes/users");
-const employeeRoutes      = loadRoute("./routes/employee");
-// FIXED: Used loadRoute for consistency
-const dashboardRoutes     = loadRoute("./routes/dashboard"); 
-const holidayRoutes       = loadRoute("./routes/holiday");
-const teamRoutes          = loadRoute("./routes/team");
-const attendanceRoutes    = loadRoute("./routes/attendance");
-const leaveRoutes         = loadRoute("./routes/leaves");
-
-const payrollRoutes       = loadRoute("./routes/payroll");
-const payrollUploadRoutes = loadRoute("./routes/payroll-upload");
-const payslipRoutes       = loadRoute("./routes/payslips");
-
-const notificationRoutes  = loadRoute("./routes/notifications");
-const timesheetRoutes     = loadRoute("./routes/timesheets");
-const thoughtRoutes       = loadRoute("./routes/thought");
-const festivalRoutes      = loadRoute("./routes/festival");
-const managerRoutes       = loadRoute("./routes/manager");
-
-const documentRoutes      = loadRoute("./routes/documents");
-const decisionRoutes      = loadRoute("./routes/decisions");
-const executiveRoutes     = loadRoute("./routes/executive");
-
+const authRoutes             = loadRoute("./routes/auth");
+const usersRoutes            = loadRoute("./routes/users");
+const employeeRoutes         = loadRoute("./routes/employee");
+const dashboardRoutes        = loadRoute("./routes/dashboard");
+const holidayRoutes          = loadRoute("./routes/holiday");
+const teamRoutes             = loadRoute("./routes/team");
+const attendanceRoutes       = loadRoute("./routes/attendance");
+const leaveRoutes            = loadRoute("./routes/leaves");
+const payrollRoutes          = loadRoute("./routes/payroll");
+const payrollUploadRoutes    = loadRoute("./routes/payroll-upload");
+const payslipRoutes          = loadRoute("./routes/payslips");
+const notificationRoutes     = loadRoute("./routes/notifications");
+const timesheetRoutes        = loadRoute("./routes/timesheets");
+const thoughtRoutes          = loadRoute("./routes/thought");
+const festivalRoutes         = loadRoute("./routes/festival");
+const managerRoutes          = loadRoute("./routes/manager");
+const documentRoutes         = loadRoute("./routes/documents");
+const decisionRoutes         = loadRoute("./routes/decisions");
+const executiveRoutes        = loadRoute("./routes/executive");
 const analyticsProfileRoutes = loadRoute("./routes/analytics-profile");
 const analyticsBenchRoutes   = loadRoute("./routes/analytics-bench");
 const analyticsRoutes        = loadRoute("./routes/analytics");
@@ -122,28 +116,22 @@ const analyticsRoutes        = loadRoute("./routes/analytics");
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/employees", employeeRoutes);
-
-app.use("/api/dashboard", dashboardRoutes); // FIXED: Removed double semicolon
-
+app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/holiday", holidayRoutes);
 app.use("/api/team", teamRoutes);
 app.use("/api/attendance", attendanceRoutes);
 app.use("/api/leaves", leaveRoutes);
-
 app.use("/api/payroll", payrollRoutes);
 app.use("/api/payroll/upload", payrollUploadRoutes);
 app.use("/api/payslips", payslipRoutes);
-
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/timesheets", timesheetRoutes);
 app.use("/api/thought", thoughtRoutes);
 app.use("/api/festival", festivalRoutes);
 app.use("/api/manager", managerRoutes);
-
 app.use("/api/documents", documentRoutes);
 app.use("/api/decisions", decisionRoutes);
 app.use("/api/executive", executiveRoutes);
-
 app.use("/api/analytics/profile", analyticsProfileRoutes);
 app.use("/api/analytics/bench", analyticsBenchRoutes);
 app.use("/api/analytics", analyticsRoutes);
@@ -161,9 +149,9 @@ app.get("/health", (req, res) => {
 });
 
 /* =========================
-   API FALLBACK
+   API FALLBACK (404 for API only)
 ========================= */
-app.use("/api", (req, res) => {
+app.all("/api/*", (req, res) => {
   res.status(404).json({
     message: "API route not found",
     path: req.originalUrl
@@ -176,6 +164,7 @@ app.use("/api", (req, res) => {
 const frontendPath = path.join(__dirname, "public");
 app.use(express.static(frontendPath));
 
+// Only serve index.html for non-API routes to support SPA routing
 app.get("*", (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
 });
@@ -185,7 +174,7 @@ app.get("*", (req, res) => {
 ========================= */
 app.use((err, req, res, next) => {
   console.error("❌ Unhandled Error:", err);
-  res.status(500).json({
+  res.status(err.status || 500).json({
     message: "Internal server error",
     ...(NODE_ENV !== "production" && { error: err.message })
   });

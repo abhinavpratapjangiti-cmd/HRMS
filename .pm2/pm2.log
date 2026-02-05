@@ -371,3 +371,282 @@
 2026-02-03T18:01:22: PM2 log: pid=22741 msg=process killed
 2026-02-03T18:01:22: PM2 log: App [hrms-backend:14] starting in -fork mode-
 2026-02-03T18:01:22: PM2 log: App [hrms-backend:14] online
+2026-02-03T18:42:04: PM2 log: Stopping app:hrms-backend id:14
+2026-02-03T18:42:04: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-03T18:42:04: PM2 log: pid=22773 msg=process killed
+2026-02-03T18:42:04: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-03T18:42:04: PM2 log: App [hrms-backend:14] online
+2026-02-03T19:49:02: PM2 log: Stopping app:hrms-backend id:14
+2026-02-03T19:49:02: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-03T19:49:02: PM2 log: pid=23191 msg=process killed
+2026-02-03T19:49:02: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-03T19:49:02: PM2 log: App [hrms-backend:14] online
+2026-02-03T19:50:36: PM2 log: Stopping app:hrms-backend id:14
+2026-02-03T19:50:36: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-03T19:50:36: PM2 log: pid=23522 msg=process killed
+2026-02-03T19:50:36: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-03T19:50:36: PM2 log: App [hrms-backend:14] online
+2026-02-04T04:53:01: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T04:53:01: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T04:53:01: PM2 log: pid=23544 msg=process killed
+2026-02-04T04:53:01: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T04:53:01: PM2 log: App [hrms-backend:14] online
+2026-02-04T05:42:20: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T05:42:20: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T05:42:20: PM2 log: pid=24716 msg=process killed
+2026-02-04T05:42:20: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T05:42:20: PM2 log: App [hrms-backend:14] online
+2026-02-04T05:54:47: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T05:54:47: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T05:54:47: PM2 log: pid=24958 msg=process killed
+2026-02-04T05:54:47: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T05:54:47: PM2 log: App [hrms-backend:14] online
+2026-02-04T06:18:38: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T06:18:38: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T06:18:38: PM2 log: pid=25060 msg=process killed
+2026-02-04T06:18:38: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T06:18:38: PM2 log: App [hrms-backend:14] online
+2026-02-04T06:19:22: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T06:19:22: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T06:19:22: PM2 log: pid=25227 msg=process killed
+2026-02-04T06:19:22: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T06:19:22: PM2 log: App [hrms-backend:14] online
+2026-02-04T06:23:00: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T06:23:00: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T06:23:00: PM2 log: pid=25247 msg=process killed
+2026-02-04T06:23:00: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T06:23:00: PM2 log: App [hrms-backend:14] online
+2026-02-04T06:25:43: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T06:25:43: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T06:25:43: PM2 log: pid=25275 msg=process killed
+2026-02-04T06:25:43: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T06:25:43: PM2 log: App [hrms-backend:14] online
+2026-02-04T06:37:26: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T06:37:26: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T06:37:27: PM2 log: pid=25312 msg=process killed
+2026-02-04T06:37:27: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T06:37:27: PM2 log: App [hrms-backend:14] online
+2026-02-04T06:39:27: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T06:39:27: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T06:39:27: PM2 log: pid=25343 msg=process killed
+2026-02-04T06:39:27: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T06:39:27: PM2 log: App [hrms-backend:14] online
+2026-02-04T06:43:31: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T06:43:31: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T06:43:31: PM2 log: pid=25385 msg=process killed
+2026-02-04T06:43:31: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T06:43:31: PM2 log: App [hrms-backend:14] online
+2026-02-04T06:50:29: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T06:50:29: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T06:50:29: PM2 log: pid=25409 msg=process killed
+2026-02-04T06:50:29: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T06:50:29: PM2 log: App [hrms-backend:14] online
+2026-02-04T06:55:26: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T06:55:26: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T06:55:26: PM2 log: pid=25452 msg=process killed
+2026-02-04T06:55:26: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T06:55:26: PM2 log: App [hrms-backend:14] online
+2026-02-04T09:01:06: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T09:01:06: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T09:01:07: PM2 log: pid=25963 msg=process killed
+2026-02-04T09:01:07: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T09:01:07: PM2 log: App [hrms-backend:14] online
+2026-02-04T10:06:07: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T10:06:07: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T10:06:07: PM2 log: pid=26578 msg=process killed
+2026-02-04T10:06:07: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T10:06:07: PM2 log: App [hrms-backend:14] online
+2026-02-04T10:09:50: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T10:09:50: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T10:09:50: PM2 log: pid=26870 msg=process killed
+2026-02-04T10:09:50: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T10:09:50: PM2 log: App [hrms-backend:14] online
+2026-02-04T10:12:56: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T10:12:56: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T10:12:57: PM2 log: pid=26891 msg=process killed
+2026-02-04T10:12:57: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T10:12:57: PM2 log: App [hrms-backend:14] online
+2026-02-04T10:35:15: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T10:35:15: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T10:35:15: PM2 log: pid=26925 msg=process killed
+2026-02-04T10:35:15: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T10:35:15: PM2 log: App [hrms-backend:14] online
+2026-02-04T11:01:49: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T11:01:49: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T11:01:49: PM2 log: pid=27070 msg=process killed
+2026-02-04T11:01:49: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T11:01:49: PM2 log: App [hrms-backend:14] online
+2026-02-04T14:57:57: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T14:57:57: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T14:57:58: PM2 log: pid=27317 msg=process killed
+2026-02-04T14:57:58: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T14:57:58: PM2 log: App [hrms-backend:14] online
+2026-02-04T15:05:59: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T15:05:59: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T15:05:59: PM2 log: pid=28263 msg=process killed
+2026-02-04T15:05:59: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T15:05:59: PM2 log: App [hrms-backend:14] online
+2026-02-04T15:09:02: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T15:09:02: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T15:09:02: PM2 log: pid=28311 msg=process killed
+2026-02-04T15:09:02: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T15:09:02: PM2 log: App [hrms-backend:14] online
+2026-02-04T15:17:54: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T15:17:54: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T15:17:54: PM2 log: pid=28333 msg=process killed
+2026-02-04T15:17:54: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T15:17:54: PM2 log: App [hrms-backend:14] online
+2026-02-04T15:22:31: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T15:22:31: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T15:22:31: PM2 log: pid=28434 msg=process killed
+2026-02-04T15:22:31: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T15:22:31: PM2 log: App [hrms-backend:14] online
+2026-02-04T16:32:18: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T16:32:18: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T16:32:18: PM2 log: pid=28463 msg=process killed
+2026-02-04T16:32:18: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T16:32:18: PM2 log: App [hrms-backend:14] online
+2026-02-04T16:51:24: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T16:51:24: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T16:51:24: PM2 log: pid=28890 msg=process killed
+2026-02-04T16:51:24: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T16:51:24: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:17:19: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T17:17:19: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T17:17:19: PM2 log: pid=28996 msg=process killed
+2026-02-04T17:17:19: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:17:19: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:18:28: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T17:18:28: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T17:18:28: PM2 log: pid=29158 msg=process killed
+2026-02-04T17:18:28: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:18:28: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:29: PM2 log: Stopping app:hrms-backend id:14
+2026-02-04T17:20:29: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-04T17:20:29: PM2 log: pid=29178 msg=process killed
+2026-02-04T17:20:29: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:29: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:29: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:29: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:29: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:30: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:30: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:30: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:30: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:30: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:30: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:30: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:30: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:30: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:31: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:31: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:31: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:31: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:31: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:31: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:32: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:32: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:32: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:32: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:32: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:32: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:33: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:33: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:33: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:33: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:33: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:33: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:34: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:34: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:34: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:34: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:34: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:34: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:35: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:35: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:35: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:35: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:35: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:35: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:36: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:36: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:20:36: PM2 log: App [hrms-backend:14] online
+2026-02-04T17:20:36: PM2 log: App [hrms-backend:14] exited with code [1] via signal [SIGINT]
+2026-02-04T17:20:36: PM2 log: Script /home/ubuntu/backend/server.js had too many unstable restarts (16). Stopped. "errored"
+2026-02-04T17:21:38: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-04T17:21:38: PM2 log: App [hrms-backend:14] online
+2026-02-05T02:56:03: PM2 log: Stopping app:hrms-backend id:14
+2026-02-05T02:56:03: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-05T02:56:04: PM2 log: pid=29387 msg=process killed
+2026-02-05T02:56:04: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-05T02:56:04: PM2 log: App [hrms-backend:14] online
+2026-02-05T03:11:09: PM2 log: Stopping app:hrms-backend id:14
+2026-02-05T03:11:09: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-05T03:11:09: PM2 log: pid=31388 msg=process killed
+2026-02-05T03:11:09: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-05T03:11:09: PM2 log: App [hrms-backend:14] online
+2026-02-05T04:41:29: PM2 log: Stopping app:hrms-backend id:14
+2026-02-05T04:41:29: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-05T04:41:30: PM2 log: pid=31527 msg=process killed
+2026-02-05T04:41:30: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-05T04:41:30: PM2 log: App [hrms-backend:14] online
+2026-02-05T05:27:55: PM2 log: Stopping app:hrms-backend id:14
+2026-02-05T05:27:55: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-05T05:27:55: PM2 log: pid=31980 msg=process killed
+2026-02-05T05:27:55: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-05T05:27:55: PM2 log: App [hrms-backend:14] online
+2026-02-05T05:46:25: PM2 log: Stopping app:hrms-backend id:14
+2026-02-05T05:46:25: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-05T05:46:25: PM2 log: pid=32163 msg=process killed
+2026-02-05T05:46:25: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-05T05:46:25: PM2 log: App [hrms-backend:14] online
+2026-02-05T06:40:29: PM2 log: Stopping app:hrms-backend id:14
+2026-02-05T06:40:30: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-05T06:40:30: PM2 log: pid=32205 msg=process killed
+2026-02-05T06:40:30: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-05T06:40:30: PM2 log: App [hrms-backend:14] online
+2026-02-05T06:41:10: PM2 log: Stopping app:hrms-backend id:14
+2026-02-05T06:41:10: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-05T06:41:10: PM2 log: pid=34016 msg=process killed
+2026-02-05T06:41:10: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-05T06:41:10: PM2 log: App [hrms-backend:14] online
+2026-02-05T06:46:34: PM2 log: Stopping app:hrms-backend id:14
+2026-02-05T06:46:34: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-05T06:46:34: PM2 log: pid=34038 msg=process killed
+2026-02-05T06:46:34: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-05T06:46:34: PM2 log: App [hrms-backend:14] online
+2026-02-05T06:56:40: PM2 log: Stopping app:hrms-backend id:14
+2026-02-05T06:56:40: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-05T06:56:40: PM2 log: pid=34093 msg=process killed
+2026-02-05T06:56:40: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-05T06:56:40: PM2 log: App [hrms-backend:14] online
+2026-02-05T07:02:28: PM2 log: Stopping app:hrms-backend id:14
+2026-02-05T07:02:28: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-05T07:02:29: PM2 log: pid=34195 msg=process killed
+2026-02-05T07:02:29: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-05T07:02:29: PM2 log: App [hrms-backend:14] online
+2026-02-05T07:08:02: PM2 log: Stopping app:hrms-backend id:14
+2026-02-05T07:08:02: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-05T07:08:02: PM2 log: pid=34241 msg=process killed
+2026-02-05T07:08:02: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-05T07:08:02: PM2 log: App [hrms-backend:14] online
+2026-02-05T07:08:42: PM2 log: Stopping app:hrms-backend id:14
+2026-02-05T07:08:42: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-05T07:08:42: PM2 log: pid=34289 msg=process killed
+2026-02-05T07:08:42: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-05T07:08:42: PM2 log: App [hrms-backend:14] online
+2026-02-05T07:10:35: PM2 log: Stopping app:hrms-backend id:14
+2026-02-05T07:10:35: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-05T07:10:35: PM2 log: pid=34320 msg=process killed
+2026-02-05T07:10:35: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-05T07:10:35: PM2 log: App [hrms-backend:14] online
+2026-02-05T07:29:09: PM2 log: Stopping app:hrms-backend id:14
+2026-02-05T07:29:09: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-05T07:29:09: PM2 log: pid=34354 msg=process killed
+2026-02-05T07:29:09: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-05T07:29:09: PM2 log: App [hrms-backend:14] online
+2026-02-05T07:48:03: PM2 log: Stopping app:hrms-backend id:14
+2026-02-05T07:48:03: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-05T07:48:03: PM2 log: pid=34400 msg=process killed
+2026-02-05T07:48:03: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-05T07:48:03: PM2 log: App [hrms-backend:14] online
