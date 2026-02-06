@@ -1,12 +1,12 @@
 /* ======================================================
-   TEAM PAGE – HORIZONTAL ORG CHART & MODAL (COMPLETE)
+   TEAM PAGE – HORIZONTAL ORG CHART & MODAL
 ====================================================== */
 
 .team-wrapper {
   max-width: 100%;
   margin: 32px auto;
   padding: 0 16px;
-  overflow-x: auto; /* Allows scrolling for wide charts */
+  overflow-x: auto;
 }
 
 /* --- STATS --- */
@@ -39,10 +39,10 @@
 }
 
 .org-tree ul {
-  padding-top: 20px; 
+  padding-top: 20px;
   position: relative;
   transition: all 0.5s;
-  display: flex; /* CRITICAL: Makes children horizontal */
+  display: flex;
   padding-left: 0;
   margin: 0;
   justify-content: center;
@@ -57,7 +57,6 @@
 }
 
 /* --- CONNECTING LINES --- */
-/* Vertical line up */
 .org-tree li::before, .org-tree li::after {
   content: '';
   position: absolute; top: 0; right: 50%;
@@ -70,27 +69,11 @@
   border-left: 2px solid #ccc;
 }
 
-/* Remove connectors from single children */
-.org-tree li:only-child::after, .org-tree li:only-child::before {
-  display: none;
-}
+.org-tree li:only-child::after, .org-tree li:only-child::before { display: none; }
 .org-tree li:only-child { padding-top: 0; }
-
-/* Remove left connector from first child and right from last child */
-.org-tree li:first-child::before, .org-tree li:last-child::after {
-  border: 0 none;
-}
-
-/* Add vertical line back to the single last child */
-.org-tree li:last-child::before{
-  border-right: 2px solid #ccc;
-  border-radius: 0 5px 0 0;
-}
-.org-tree li:first-child::after{
-  border-radius: 5px 0 0 0;
-}
-
-/* Downward line from parent */
+.org-tree li:first-child::before, .org-tree li:last-child::after { border: 0 none; }
+.org-tree li:last-child::before{ border-right: 2px solid #ccc; border-radius: 0 5px 0 0; }
+.org-tree li:first-child::after{ border-radius: 5px 0 0 0; }
 .org-tree ul ul::before {
   content: '';
   position: absolute; top: 0; left: 50%;
@@ -105,7 +88,7 @@
   padding: 15px;
   border-radius: 8px;
   display: inline-block;
-  min-width: 140px; /* Adjusted width for better fit */
+  min-width: 140px;
   text-decoration: none;
   color: #666;
   font-family: inherit;
@@ -124,7 +107,6 @@
   box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
-/* Role Accents */
 .org-card.role-manager { border-top: 4px solid #6366f1; }
 .org-card.role-staff { border-top: 4px solid #10b981; }
 
@@ -142,7 +124,7 @@
 
 
 /* =========================
-   MODAL STYLES (Required to hide the popup at the bottom)
+   MODAL STYLES
 ========================= */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -150,12 +132,7 @@
     z-index: 1050; display: flex; align-items: center; justify-content: center;
     opacity: 0; pointer-events: none; transition: opacity 0.2s;
 }
-
-/* This is critical - it hides the modal when not active */
-.modal-overlay.hidden {
-    display: none !important;
-}
-
+.modal-overlay.hidden { display: none !important; }
 .modal-overlay.active { opacity: 1; pointer-events: all; display: flex !important; }
 
 .modal-card {
@@ -163,8 +140,7 @@
     border-radius: 16px; padding: 24px;
     transform: scale(0.95); transition: transform 0.2s;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    position: relative;
-    text-align: center;
+    position: relative; text-align: center;
 }
 .modal-overlay.active .modal-card { transform: scale(1); }
 
@@ -187,6 +163,16 @@
 .modal-info-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; }
 .label { color: #6b7280; } .value { font-weight: 500; color: #374151; }
 
-.modal-actions { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.btn-primary { background: #6366f1; color: white; border: none; padding: 8px; border-radius: 6px; font-size: 13px; cursor: pointer;}
-.btn-secondary { background: #f3f4f6; color: #4b5563; border: none; padding: 8px; border-radius: 6px; font-size: 13px; cursor: pointer;}
+/* Updates for the button grid */
+.modal-actions { margin-top: 20px; display: grid; gap: 10px; }
+.btn-primary { background: #6366f1; color: white; border: none; padding: 10px; border-radius: 6px; font-size: 13px; cursor: pointer; width: 100%; transition: background 0.2s;}
+.btn-primary:hover { background: #4f46e5; }
+.btn-secondary { background: #f3f4f6; color: #4b5563; border: none; padding: 10px; border-radius: 6px; font-size: 13px; cursor: pointer; width: 100%; transition: background 0.2s;}
+.btn-secondary:hover { background: #e5e7eb; }
+
+/* Styles for the Vertical Path View */
+#singlePathContainer .card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}

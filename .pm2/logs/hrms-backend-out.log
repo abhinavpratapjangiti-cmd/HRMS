@@ -172,3 +172,29 @@
 ❌ WS closed: user 3
 🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAzNzA0OTEsImV4cCI6MTc3MDQ1Njg5MX0.VLmRnevVslc2ZG4k3aP-Vzn9rHaM99l4afLXdAFo_Co
 🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAzNzA0OTEsImV4cCI6MTc3MDQ1Njg5MX0.VLmRnevVslc2ZG4k3aP-Vzn9rHaM99l4afLXdAFo_Co
+🔌 WS connected: user 3
+❌ WS closed: user 3
+[dotenv@17.2.3] injecting env (9) from .env -- tip: ⚙️  override existing env vars with { override: true }
+🔥 DB INDEX LOADED FROM: /home/ubuntu/backend/db/index.js
+✅ MySQL Pool Ready (promise-based)
+✅ LOADED LEAVES API
+🔥 LOADING NOTIFICATIONS ROUTE FROM: /home/ubuntu/backend/routes/notifications.js
+🚀 HRMS running on port 5000
+🌱 Environment: production
+🕒 DB timezone locked to IST
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAzNzA0OTEsImV4cCI6MTc3MDQ1Njg5MX0.VLmRnevVslc2ZG4k3aP-Vzn9rHaM99l4afLXdAFo_Co
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAzNzA0OTEsImV4cCI6MTc3MDQ1Njg5MX0.VLmRnevVslc2ZG4k3aP-Vzn9rHaM99l4afLXdAFo_Co
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBjb21wYW55LmNvbSIsInJvbGUiOiJhZG1pbiIsImVtcGxveWVlX2lkIjoyLCJ0b2tlbl92ZXJzaW9uIjo1LCJpYXQiOjE3NzAzNzA0OTEsImV4cCI6MTc3MDQ1Njg5MX0.VLmRnevVslc2ZG4k3aP-Vzn9rHaM99l4afLXdAFo_Co
+🔌 WS connected: user 3
+❌ WS closed: user 3
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJyYXZpQHRlc3QuY29tIiwicm9sZSI6ImVtcGxveWVlIiwiZW1wbG95ZWVfaWQiOjEsInRva2VuX3ZlcnNpb24iOjYsImlhdCI6MTc3MDM3NTY0OSwiZXhwIjoxNzcwNDYyMDQ5fQ.VnS9YNg-r74bW5v7v5nqsI1ggb4SHjRIZvm56fyP7W0
+🔌 WS connected: user 2
+❌ WS closed: user 2
+🔁 WS upgrade request: /?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJyYXZpQHRlc3QuY29tIiwicm9sZSI6ImVtcGxveWVlIiwiZW1wbG95ZWVfaWQiOjEsInRva2VuX3ZlcnNpb24iOjYsImlhdCI6MTc3MDM3NTY0OSwiZXhwIjoxNzcwNDYyMDQ5fQ.VnS9YNg-r74bW5v7v5nqsI1ggb4SHjRIZvm56fyP7W0
+🔌 WS connected: user 2

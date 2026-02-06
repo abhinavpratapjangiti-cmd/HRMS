@@ -14,8 +14,6 @@
 
             renderFullTree(allEmployees);
             updateStats(allEmployees);
-            // Search is temporarily disabled as it requires different logic for horizontal trees
-            // setupSearch(); 
 
         } catch (e) {
             console.error("Team Init Error:", e);
@@ -24,21 +22,15 @@
     }
     window.initTeam = initTeam;
 
-    // --- RECURSIVE TREE RENDERER (Updated for Horizontal Layout) ---
+    // --- 1. RECURSIVE TREE RENDERER (Horizontal) ---
     function renderFullTree(list) {
-        // Find root nodes (employees whose manager is not in the list)
         const allIds = list.map(e => e.id);
         const roots = list.filter(e => !e.manager_id || !allIds.includes(e.manager_id));
 
         const buildNode = (emp) => {
             const children = list.filter(e => e.manager_id === emp.id);
-            
-            // Determine Role Class for styling
-            const roleClass = (emp.role || '').includes('admin') || (emp.designation || '').includes('Manager') 
-                ? 'role-manager' 
-                : 'role-staff';
+            const roleClass = (emp.role || '').includes('admin') || (emp.designation || '').includes('Manager') ? 'role-manager' : 'role-staff';
 
-            // 1. Build the Card
             let html = `
                 <li>
                     <div class="org-card ${roleClass}" onclick="window.teamActions.viewProfile(${emp.id})">
@@ -46,8 +38,7 @@
                         <span class="org-name">${emp.name}</span>
                         <span class="org-role">${emp.designation || 'Staff'}</span>
                     </div>`;
-            
-            // 2. Build Children (if any)
+
             if (children.length > 0) {
                 html += `<ul>${children.map(child => buildNode(child)).join('')}</ul>`;
             }
@@ -56,9 +47,60 @@
             return html;
         };
 
-        // Wrap the whole tree in a parent <ul> and container
         const treeHtml = `<ul>${roots.map(root => buildNode(root)).join('')}</ul>`;
         document.getElementById("orgTreeContainer").innerHTML = `<div class="org-tree">${treeHtml}</div>`;
+    }
+
+    // --- 2. HIERARCHY PATH RENDERER (Vertical) ---
+    async function loadHierarchyPath(empId) {
+        try {
+            // Close modal first
+            window.teamActions.closeModal();
+
+            // Fetch Path
+            const pathData = await apiGet(`/team/path/${empId}`);
+            
+            if(!pathData || !pathData.length) return;
+
+            // UI Toggles
+            document.getElementById("orgTreeContainer").classList.add("d-none");
+            document.getElementById("treeControls").classList.add("d-none"); // Hide +/- buttons
+            document.getElementById("singlePathContainer").classList.remove("d-none");
+            document.getElementById("resetOrgBtn").classList.remove("d-none");
+
+            // Render
+            renderPathHTML(pathData);
+
+        } catch (err) {
+            console.error("Path load failed", err);
+            alert("Failed to load hierarchy chain.");
+        }
+    }
+
+    function renderPathHTML(pathData) {
+        const container = document.getElementById("singlePathContainer");
+        // Reverse so CEO is at top, Selected User at bottom
+        const visualOrder = [...pathData].reverse(); 
+
+        container.innerHTML = `
+            <div class="d-flex flex-column align-items-center">
+                ${visualOrder.map((node, index) => {
+                    const isTop = index === 0;
+                    const isSelected = index === visualOrder.length - 1;
+                    const borderClass = isSelected ? 'border-primary' : 'border-secondary';
+                    
+                    return `
+                    <div class="card p-3 mb-2 text-center shadow-sm" style="width: 280px; border-left: 5px solid ${isSelected ? '#4f46e5' : '#ccc'};">
+                        <h5 class="mb-1" style="font-weight:700">${node.name}</h5>
+                        <p class="text-muted mb-0 small">${node.designation || 'Staff'}</p>
+                        ${isTop ? '<span class="badge bg-warning text-dark mt-2">👑 Top Level</span>' : ''}
+                        ${isSelected ? '<span class="badge bg-primary mt-2">🎯 Selected</span>' : ''}
+                    </div>
+                    ${index < visualOrder.length - 1 ? '<div class="h3 text-muted my-1">⬇</div>' : ''}
+                    `;
+                }).join("")}
+            </div>
+        `;
     }
 
     // --- HELPERS ---
@@ -84,6 +126,12 @@
             document.getElementById("modalManager").innerText = mgr ? mgr.name : 'None';
             document.getElementById("modalAvatar").innerText = emp.name.charAt(0);
 
+            // Bind the Hierarchy Button to this ID
+            const btnHierarchy = document.getElementById("btnViewHierarchy");
+            if(btnHierarchy) {
+                btnHierarchy.onclick = () => loadHierarchyPath(emp.id);
+            }
+
             const modal = document.getElementById("profileModal");
             modal.classList.remove("hidden");
             setTimeout(() => modal.classList.add("active"), 10);
@@ -92,10 +140,17 @@
             const modal = document.getElementById("profileModal");
             modal.classList.remove("active");
             setTimeout(() => modal.classList.add("hidden"), 300);
-        }
+        },
+        resetView: () => {
+            document.getElementById("singlePathContainer").classList.add("d-none");
+            document.getElementById("resetOrgBtn").classList.add("d-none");
+            document.getElementById("orgTreeContainer").classList.remove("d-none");
+            document.getElementById("treeControls").classList.remove("d-none");
+        },
+        expandAll: () => { /* Logic for expand can be added here if needed */ },
+        collapseAll: () => { /* Logic for collapse can be added here if needed */ }
     };
 
-    // Close modal on outside click
     document.getElementById("profileModal").addEventListener("click", (e) => {
         if(e.target.id === "profileModal") window.teamActions.closeModal();
     });

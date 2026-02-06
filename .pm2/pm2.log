@@ -710,3 +710,8 @@
 2026-02-06T09:29:41: PM2 log: pid=40989 msg=process killed
 2026-02-06T09:29:41: PM2 log: App [hrms-backend:14] starting in -fork mode-
 2026-02-06T09:29:41: PM2 log: App [hrms-backend:14] online
+2026-02-06T10:54:31: PM2 log: Stopping app:hrms-backend id:14
+2026-02-06T10:54:31: PM2 log: App [hrms-backend:14] exited with code [0] via signal [SIGINT]
+2026-02-06T10:54:31: PM2 log: pid=41009 msg=process killed
+2026-02-06T10:54:31: PM2 log: App [hrms-backend:14] starting in -fork mode-
+2026-02-06T10:54:31: PM2 log: App [hrms-backend:14] online
