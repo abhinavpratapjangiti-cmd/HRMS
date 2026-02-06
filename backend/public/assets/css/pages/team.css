@@ -1,38 +1,192 @@
-:root { --line-color: #cbd5e1; --accent: #3b82f6; }
+/* ======================================================
+   TEAM PAGE – HORIZONTAL ORG CHART & MODAL (COMPLETE)
+====================================================== */
 
-/* Dashboard Grid */
-.team-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px; }
-.team-stat-card { background: #fff; padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #edf2f7; }
-.team-stat-card b { font-size: 24px; display: block; }
-.status-online { color: #38a169; }
-
-/* Tree Logic */
-.org-tree-container ul { padding-top: 20px; position: relative; display: flex; justify-content: center; }
-.org-tree-container li { text-align: center; list-style-type: none; position: relative; padding: 20px 5px 0 5px; }
-
-/* Horizontal Connectors */
-.org-tree-container li::before, .org-tree-container li::after {
-    content: ''; position: absolute; top: 0; right: 50%;
-    border-top: 2px solid var(--line-color); width: 50%; height: 20px;
-}
-.org-tree-container li::after { right: auto; left: 50%; border-left: 2px solid var(--line-color); }
-.org-tree-container li:only-child::after, .org-tree-container li:only-child::before { display: none; }
-.org-tree-container li:only-child { padding-top: 0; }
-.org-tree-container li:first-child::before, .org-tree-container li:last-child::after { border: 0 none; }
-.org-tree-container li:last-child::before { border-right: 2px solid var(--line-color); border-radius: 0 5px 0 0; }
-.org-tree-container li:first-child::after { border-radius: 5px 0 0 0; }
-
-.org-tree-container ul ul::before {
-    content: ''; position: absolute; top: 0; left: 50%;
-    border-left: 2px solid var(--line-color); width: 0; height: 20px;
+.team-wrapper {
+  max-width: 100%;
+  margin: 32px auto;
+  padding: 0 16px;
+  overflow-x: auto; /* Allows scrolling for wide charts */
 }
 
-/* Node Cards */
+/* --- STATS --- */
+.team-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 1000px;
+  margin: 0 auto 40px;
+}
+
+.team-stat {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  text-align: center;
+  border: 1px solid #e5e7eb;
+}
+
+.team-stat small { color: #6b7280; font-size: 13px; text-transform: uppercase; }
+.team-stat b { display: block; margin-top: 6px; font-size: 24px; font-weight: 700; color: #111827; }
+.text-success { color: #10b981 !important; }
+
+/* --- ORG CHART TREE CONTAINER --- */
+.org-tree {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 50px;
+}
+
+.org-tree ul {
+  padding-top: 20px; 
+  position: relative;
+  transition: all 0.5s;
+  display: flex; /* CRITICAL: Makes children horizontal */
+  padding-left: 0;
+  margin: 0;
+  justify-content: center;
+}
+
+.org-tree li {
+  float: left; text-align: center;
+  list-style-type: none;
+  position: relative;
+  padding: 20px 10px 0 10px;
+  transition: all 0.5s;
+}
+
+/* --- CONNECTING LINES --- */
+/* Vertical line up */
+.org-tree li::before, .org-tree li::after {
+  content: '';
+  position: absolute; top: 0; right: 50%;
+  border-top: 2px solid #ccc;
+  width: 50%; height: 20px;
+}
+
+.org-tree li::after {
+  right: auto; left: 50%;
+  border-left: 2px solid #ccc;
+}
+
+/* Remove connectors from single children */
+.org-tree li:only-child::after, .org-tree li:only-child::before {
+  display: none;
+}
+.org-tree li:only-child { padding-top: 0; }
+
+/* Remove left connector from first child and right from last child */
+.org-tree li:first-child::before, .org-tree li:last-child::after {
+  border: 0 none;
+}
+
+/* Add vertical line back to the single last child */
+.org-tree li:last-child::before{
+  border-right: 2px solid #ccc;
+  border-radius: 0 5px 0 0;
+}
+.org-tree li:first-child::after{
+  border-radius: 5px 0 0 0;
+}
+
+/* Downward line from parent */
+.org-tree ul ul::before {
+  content: '';
+  position: absolute; top: 0; left: 50%;
+  border-left: 2px solid #ccc;
+  width: 0; height: 20px;
+}
+
+/* --- THE CARD DESIGN --- */
 .org-card {
-    background: #fff; border: 1px solid #e2e8f0; border-top: 4px solid var(--accent);
-    padding: 12px; border-radius: 8px; display: inline-block; min-width: 140px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  padding: 15px;
+  border-radius: 8px;
+  display: inline-block;
+  min-width: 140px; /* Adjusted width for better fit */
+  text-decoration: none;
+  color: #666;
+  font-family: inherit;
+  font-size: 11px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  transition: all 0.3s;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
 }
-.org-avatar { 
-    width: 40px; height: 40px; border-radius: 50%; background: #6366f1; 
-    color: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px;
+
+.org-card:hover {
+  background: #f9fafb;
+  border-color: #94a3b8;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
+
+/* Role Accents */
+.org-card.role-manager { border-top: 4px solid #6366f1; }
+.org-card.role-staff { border-top: 4px solid #10b981; }
+
+.org-avatar {
+  width: 40px; height: 40px;
+  background: #e0e7ff; color: #4f46e5;
+  border-radius: 50%;
+  line-height: 40px; font-size: 16px; font-weight: bold;
+  margin: 0 auto 8px auto;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.org-name { font-size: 14px; font-weight: 700; color: #1f2937; display: block; }
+.org-role { font-size: 12px; color: #6b7280; display: block; margin-top: 2px; }
+
+
+/* =========================
+   MODAL STYLES (Required to hide the popup at the bottom)
+========================= */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(2px);
+    z-index: 1050; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s;
+}
+
+/* This is critical - it hides the modal when not active */
+.modal-overlay.hidden {
+    display: none !important;
+}
+
+.modal-overlay.active { opacity: 1; pointer-events: all; display: flex !important; }
+
+.modal-card {
+    background: white; width: 90%; max-width: 350px;
+    border-radius: 16px; padding: 24px;
+    transform: scale(0.95); transition: transform 0.2s;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    position: relative;
+    text-align: center;
+}
+.modal-overlay.active .modal-card { transform: scale(1); }
+
+.modal-close {
+    position: absolute; top: 12px; right: 16px; border: none; background: none;
+    font-size: 24px; color: #9ca3af; cursor: pointer;
+}
+
+.modal-header { text-align: center; margin-bottom: 16px; }
+.modal-avatar {
+    width: 72px; height: 72px; margin: 0 auto 8px; font-size: 28px;
+    border: 4px solid #fff; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.modal-status { font-size: 12px; color: #10b981; font-weight: 600; }
+
+.modal-body h3 { margin: 0; font-size: 18px; color: #111827; }
+.modal-body p { margin: 2px 0 16px; font-size: 13px; color: #6b7280; }
+
+.modal-divider { height: 1px; background: #e5e7eb; margin: 16px 0; }
+.modal-info-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; }
+.label { color: #6b7280; } .value { font-weight: 500; color: #374151; }
+
+.modal-actions { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn-primary { background: #6366f1; color: white; border: none; padding: 8px; border-radius: 6px; font-size: 13px; cursor: pointer;}
+.btn-secondary { background: #f3f4f6; color: #4b5563; border: none; padding: 8px; border-radius: 6px; font-size: 13px; cursor: pointer;}

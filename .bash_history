@@ -1,106 +1,3 @@
-nl -ba backend/routes/leaves.js | sed -n '1,40p'
-grep -R "document" backend/routes
-nl -ba backend/server.js | sed -n '60,100p'
-pm2 delete hrms-backend
-pm2 flush
-ps aux | grep node
-md5sum backend/routes/leaves.js
-cat backend/routes/leaves.js | head -n 5
-pm2 start /home/ubuntu/backend/server.js --name hrms-backend
-pm2 logs hrms-backend
-> /home/ubuntu/.pm2/logs/hrms-backend-error.log
-exit
-cat backend/routes/leaves.js
-cat backend/public/assets/js/pages/leaves.js
-nano backend/public/assets/js/pages/leaves.js
-nano backend/routes/leaves.js
-pm2 logs
-pm 2 restart hrms-backend
-pm2 restart hrms-backend
-nano backend/public/assets/js/pages/leaves.js
-pm2 restart hrms-backend
-nano backend/public/assets/js/pages/attendance.js
-nano backend/public/assets/js/pages/leaves.js
-cd backend/public/assets/js/pages
-ls
-nano login.js
-c
-cd
-pm2 restart hrms-backend
-pm2 logs
-nano backend/routes/leaves.js
-nano public/assets/js/pages/leaves.js
-nano backend/public/assets/js/pages/leaves.js
-cd backend/public/assets
-cd js
-cd pages
-ls
-nano leaves.js
-cd
-pm2 reload hrms-backend   # or: pm2 restart hrms-backend
-pm2 logs hrms-backend --lines 50
-# look for a log line "✅ LOADED BACKEND ROUTES/LEAVES"
-pm2 logs hrms-backend --lines 200 | grep "LOADED BACKEND ROUTES/LEAVES" -n
-# test balance endpoint WITHOUT auth (for quick check you can use a valid token)
-curl -i -H "Authorization: Bearer <your-jwt-here>" http://localhost:5000/api/leaves/balance
-# test apply (use a valid token)
-curl -i -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <your-jwt-here>"   -d '{"from_date":"2026-02-10","to_date":"2026-02-11","leave_type":"SL","reason":"test"}'   http://localhost:5000/api/leaves/apply
-curl -i   -H "Authorization: Bearer TOKEN_HERE"   http://localhost:5000/api/leaves/balance
-curl -i -X POST   -H "Content-Type: application/json"   -H "Authorization: Bearer TOKEN_HERE"   -d '{"from_date":"2026-02-10","to_date":"2026-02-11","leave_type":"SL","reason":"test"}'   http://localhost:5000/api/leaves/apply
-cat /home/ubuntu/backend/.env | grep JWT
-JWTt /home/ubuntu/backend/.env | grep JWT
-JWT_SECRET=2dd3651df40bfba3cd756950f07c227f361da9f04f9a32610acda4ccde957d06c7d6b670d984f2e6e3e37ac98ada19068c25f06aa3cca074f6e432dfc5faad5d
-ubuntu@ip-172-31-38-58:~$
-pm2 restart hrms-backend --update-env
-nano backend/public/assets/js/pages/leaves.js
-cat backend/public/assets/js/pages/leaves.js
-cat backend/middleware/auth.js
-nano backend/middleware/auth.js
-cat backend/routes/leaves.js
-pm2 logs
-pm2 restart hrms-backend
-cat /home/ubuntu/backend/.env | grep JWT_SECRET
-curl -X POST http://localhost:5000/api/leaves/apply   -H "Authorization: Bearer YOUR_TOKEN_HERE"   -H "Content-Type: application/json"   -d '{
-    "from_date":"2026-02-01",
-    "to_date":"2026-02-01",
-    "leave_type":"SL",
-    "reason":"Test from server"
-  }'
-cd backend
-cd public
-ls
-cd assets
-ls
-cd js
-ls
-cat api.js
-cat pages/login.js
-nano pages/login.js
-pm2 restart hrms-backend
-nano pages/login.js
-cd pages
-ls
-nano attendance.js
-pm2 logs
-cd /home/ubuntu/backend
-pm2 list
-pm2 logs hrms-backend --lines 50
-cd /home/ubuntu/backend
-pm2 logs hrms-backend --lines 50
-cd backend
-ls
-cd routes
-ls
-cat attendance.js
-nano attendance.js
-cat attendance.js
-nano attendance.js
-pm2 restart hrms-backend
-pm2 logs
-pm2 restart hrms-backend
-pm2 logs
-nano backend/routes/notifications.js
-pm2 restart hrms-backend
 pm2 logs
 sed -n '1p' /home/ubuntu/backend/routes/notifications.js | cat -A
 sed -i '1s/^\\//' /home/ubuntu/backend/routes/notifications.js
@@ -1998,3 +1895,106 @@ nano backend/public/assets/js/pages/leaves.js
 pm2 restart all
 nano backend/public/pages/leaves.html
 mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+nano backend/public/pages/team.html
+nano backend/public/assets/css/pages/team.css
+nano backend/public/pages/team.html
+backend/public/assets/js/pages/team.js
+nano backend/public/assets/js/pages/team.js
+nano backend/routes/team.js
+pm2 restart all
+git add .
+git commit -m"leaves and manage-users updated"
+git push
+git status
+git push
+git reset --soft HEAD~1
+git reset HEAD .git-credentials
+# Option A: Delete it (Recommended if you don't need it inside this folder)
+rm .git-credentials
+# Option B: Keep it locally but tell Git to ignore it
+echo ".git-credentials" >> .gitignore
+git add .gitignore
+git commit -m "Fix: Removed credentials file"
+git push origin main
+git reset HEAD .git-credentials
+rm .git-credentials
+git status
+echo ".pm2/" >> .gitignore
+echo ".git-credentials" >> .gitignore
+git add .
+git commit -m "Update Team UI and fix structure"
+git push
+clear
+git push
+git config --global credential.helper store
+git status
+git add .
+git commit -m"cred"
+git push
+: apt list --upgradable
+clear
+cat backend/public/assets/js/pages/team.js
+cat backend/public/pages/team/html
+cat backend/public/pages/team.html
+cat backend/routes/team.js
+cat backend/public/assets/css/pages/team.css
+nano backend/public/pages/team.html
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+nano backend/routes/team.js
+cat backend/routes/team.js
+cat backend/public/pages/team.html
+nano backend/public/pages/team.html
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+cat backend/public/assets/js/pages/team.js
+nano backend/public/assets/js/pages/team.js
+nano backend/public/assets/css/pages/team.css
+git add .gitignore
+nano backend/public/pages/team.html
+nano backend/public/assets/js/pages/team.js
+nano backend/routes/team.js
+pm2 restart all
+cat backend/public/assets/css/pages/team.css
+cat backend/public/assets/js/pages/team.js
+cat backend/public/pages/team.html
+cat backend/routes/team.html
+cat backend/routes/team.js
+nano backend/public/pages/team.html
+nano backend/public/assets/css/pages/team.css
+nano  backend/public/assets/js/pages/team.js
+nano backend/routes/team.js
+pm2 restart all
+nano backend/public/assets/css/pages/team.css
+cat backend/public/assets/js/pages/team.js
+nano backend/public/assets/js/pages/team.js
+pm2 restart all
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+nano backend/public/assets/js/pages/timesheets.js
+pm2 restart all\
+pm2 restart all
+nano backend/public/assets/js/pages/timesheets.js
+nano backend/routes/timesheets.js
+pm2 restart all
+nano backend/routes/timesheets.js
+pm2 restart all
+nano backend/public/assets/js/pages/timesheets.js
+cat backend/public/assets/js/pages/timesheets.js
+cat backend/public/pages/timesheets.html
+cat backend/routes/timesheets.js
+nano backend/routes/timesheets.js
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+cat backend/routes/attendance.js
+nano backend/routes/attendance.js
+pm2 restart all
+nano backend/routes/attendance.js
+catbackend/routes/attendance.js
+cat backend/routes/attendance.js
+cat backend/public/assets/js/pages/attendance.js
+cat backend/public/assets/js/pages/timesheets.js
+cat backend/routes/timesheets.js
+nano backend/routes/timesheets.js
+pm2 restart all
+cat backend/routes/timesheets.js
+cat backend/public/assets/js/pages/timesheets.js

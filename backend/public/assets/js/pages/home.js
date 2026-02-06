@@ -119,3 +119,4 @@
     location.hash = "#/attendance";
   });
 })();
+

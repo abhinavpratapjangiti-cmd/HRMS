@@ -63,10 +63,11 @@ router.post("/clock-in", verifyToken, async (req, res) => {
 });
 
 /* =====================================================
-   CLOCK OUT
+   CLOCK OUT (CORRECTED)
 ===================================================== */
 router.post("/clock-out", verifyToken, async (req, res) => {
-  const { employee_id } = req.body;
+  // 1. EXTRACT project and task FROM REQUEST BODY
+  const { employee_id, project, task } = req.body; 
 
   if (!employee_id) {
     return res.status(400).json({ error: "employee_id required" });
@@ -77,9 +78,10 @@ router.post("/clock-out", verifyToken, async (req, res) => {
     conn = await db.getConnection();
     await conn.beginTransaction();
 
+    // Select existing attendance record
     const [rows] = await conn.query(
       `
-      SELECT id, clock_in, break_start, break_end, project, task
+      SELECT id, clock_in, break_start, break_end 
       FROM attendance_logs
       WHERE employee_id = ?
         AND log_date = CURDATE()
@@ -99,20 +101,17 @@ router.post("/clock-out", verifyToken, async (req, res) => {
     const a = rows[0];
     const now = new Date();
 
-    let workedMinutes = Math.floor(
-      (now - new Date(a.clock_in)) / 60000
-    );
-
+    // ... (Time calculation logic remains the same) ...
+    let workedMinutes = Math.floor((now - new Date(a.clock_in)) / 60000);
     let breakMinutes = 0;
     if (a.break_start && a.break_end) {
-      breakMinutes = Math.floor(
-        (new Date(a.break_end) - new Date(a.break_start)) / 60000
-      );
+      breakMinutes = Math.floor((new Date(a.break_end) - new Date(a.break_start)) / 60000);
     }
-
     workedMinutes = Math.max(workedMinutes - breakMinutes, 0);
     const workedHours = Number((workedMinutes / 60).toFixed(2));
 
+    // 2. UPDATE ATTENDANCE LOGS WITH PROJECT & TASK
+    // We add project = ? and task = ? here to save them to the attendance table too
     await conn.query(
       `
       UPDATE attendance_logs
@@ -120,19 +119,23 @@ router.post("/clock-out", verifyToken, async (req, res) => {
         clock_out = ?,
         total_work_minutes = ?,
         total_break_minutes = ?,
-        status = 'COMPLETED'
+        status = 'COMPLETED',
+        project = ?, 
+        task = ?
       WHERE id = ?
       `,
-      [now, workedMinutes, breakMinutes, a.id]
+      [now, workedMinutes, breakMinutes, project, task, a.id]
     );
 
+    // 3. INSERT INTO TIMESHEETS USING NEW VARIABLES
+    // Use 'project' and 'task' from req.body, NOT 'a.project'
     await conn.query(
       `
       INSERT IGNORE INTO timesheets
         (employee_id, work_date, project, task, hours, status, day_type, submitted_at)
       VALUES (?, DATE(?), ?, ?, ?, 'SUBMITTED', 'P', NOW())
       `,
-      [employee_id, a.clock_in, a.project, a.task, workedHours]
+      [employee_id, a.clock_in, project, task, workedHours]
     );
 
     await conn.commit();
@@ -145,7 +148,6 @@ router.post("/clock-out", verifyToken, async (req, res) => {
     if (conn) conn.release();
   }
 });
-
 /* =====================================================
    TODAY STATUS (FIXED PRECISION)
 ===================================================== */

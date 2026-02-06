@@ -1,33 +1,65 @@
 <div class="team-wrapper">
-    <div class="team-stats-grid">
-        <div class="team-stat-card">
+    <div class="team-stats">
+        <div class="team-stat">
             <small>Total Members</small>
             <b id="statTeamCount">0</b>
         </div>
-        <div class="team-stat-card">
+        <div class="team-stat">
             <small>Online Now</small>
-            <b id="statOnlineCount" class="status-online">0</b>
+            <b id="statOnlineCount" class="text-success">0</b>
         </div>
-        <div class="team-stat-card">
-            <small>Pending Leaves</small>
-            <b id="statPendingLeaves">0</b>
-        </div>
-    </div>
-
-    <div class="org-toolbar-container">
-        <div class="search-wrapper">
-            <i class="fas fa-search"></i>
-            <input type="text" id="orgSearchInput" placeholder="Search by name, role, or department...">
-        </div>
-        <div class="action-buttons">
-            <button class="btn-outline" onclick="window.teamActions.expandAll()">Expand All</button>
-            <button class="btn-outline" onclick="window.teamActions.collapseAll()">Collapse All</button>
+        <div class="team-stat">
+            <small>Departments</small>
+            <b id="statDeptCount">0</b>
         </div>
     </div>
 
-    <div class="chart-card">
-        <div id="orgTreeContainer">
-            <div class="text-center py-5">Loading organizational chart...</div>
+    <div class="org-tree">
+        <div class="org-section">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="org-section-title mb-0">Organization Structure</h3>
+                <div class="d-flex gap-2">
+                    <input type="text" id="orgSearchInput" class="form-control form-control-sm" style="width: 200px;" placeholder="Search name or role...">
+                    <button class="btn btn-sm btn-light border" onclick="window.teamActions.expandAll()" title="Expand All">➕</button>
+                    <button class="btn btn-sm btn-light border" onclick="window.teamActions.collapseAll()" title="Collapse All">➖</button>
+                </div>
+            </div>
+            
+            <div id="orgTreeContainer" class="org-scroll-wrapper">
+                <div class="text-center py-5 text-muted">Loading organizational chart...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="profileModal" class="modal-overlay hidden">
+    <div class="modal-card">
+        <button class="modal-close" onclick="window.teamActions.closeModal()">&times;</button>
+        
+        <div class="modal-header">
+            <div class="modal-avatar" id="modalAvatar"></div>
+            <div class="modal-status" id="modalStatus">Online</div>
+        </div>
+
+        <div class="modal-body">
+            <h3 id="modalName">Employee Name</h3>
+            <p id="modalRole">Designation</p>
+            
+            <div class="modal-divider"></div>
+            
+            <div class="modal-info-row">
+                <span class="label">ID</span>
+                <span class="value" id="modalId">--</span>
+            </div>
+            <div class="modal-info-row">
+                <span class="label">Manager</span>
+                <span class="value" id="modalManager">--</span>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="alert('Message feature coming soon!')">Message</button>
+                <button class="btn-secondary" onclick="window.teamActions.closeModal()">Close</button>
+            </div>
         </div>
     </div>
 </div>

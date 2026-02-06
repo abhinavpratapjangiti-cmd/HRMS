@@ -5,11 +5,11 @@ const ExcelJS = require("exceljs");
 const { verifyToken } = require("../middleware/auth");
 
 /* =====================================================
-   1️⃣ MY TIMESHEETS – CALENDAR (UI)
+   1️⃣ MY TIMESHEETS – CALENDAR (CORRECTED)
 ===================================================== */
 router.get("/my/calendar", verifyToken, (req, res) => {
   const { month } = req.query;
-  const empId = req.user.employee_id;
+  const empId = req.user.employee_id; // Ensure this matches your token structure
 
   if (!empId || !month) {
     return res.status(400).json({ message: "Employee or month missing" });
@@ -24,29 +24,39 @@ router.get("/my/calendar", verifyToken, (req, res) => {
       FROM calendar
       WHERE work_date < LAST_DAY(CONCAT(?, '-01'))
     )
-    SELECT
+    SELECT 
       c.work_date,
       DAYNAME(c.work_date) AS day,
-      CASE WHEN ts.status = 'Approved' THEN TIME(al.clock_in) END AS start_time,
-      CASE WHEN ts.status = 'Approved' THEN TIME(al.clock_out) END AS end_time,
-      CASE WHEN ts.status = 'Approved' THEN ts.project END AS project,
-      CASE WHEN ts.status = 'Approved' THEN ts.task END AS task,
+      
+      -- 1. SHOW DATA REGARDLESS OF STATUS
+      -- We want the user to see what they submitted immediately
+      al.clock_in AS start_time,
+      al.clock_out AS end_time,
+      ts.project, 
+      ts.task,
       ts.hours,
-      ts.status,
-      CASE
+      
+      -- 2. STATUS IS KEY
+      -- If no timesheet exists, it's empty. If it exists, show the status.
+      COALESCE(ts.status, '') AS status,
+
+      -- 3. DETERMINE ROW TYPE
+      CASE 
+        -- If there is a timesheet entry (Submitted OR Approved), treat it as Present ('P')
+        WHEN ts.id IS NOT NULL THEN 'P' 
         WHEN h.holiday_date IS NOT NULL THEN 'HOL'
         WHEN DAYOFWEEK(c.work_date) IN (1,7) THEN 'WO'
-        WHEN ts.status = 'Approved' THEN 'P'
-        ELSE ''
+        ELSE '' 
       END AS type
+
     FROM calendar c
-    LEFT JOIN attendance_logs al
-      ON al.employee_id = ?
-     AND al.log_date = c.work_date
-    LEFT JOIN timesheets ts
-      ON ts.employee_id = ?
-     AND ts.work_date = c.work_date
-    LEFT JOIN holidays h
+    LEFT JOIN attendance_logs al 
+      ON al.employee_id = ? 
+      AND al.log_date = c.work_date
+    LEFT JOIN timesheets ts 
+      ON ts.employee_id = ? 
+      AND ts.work_date = c.work_date
+    LEFT JOIN holidays h 
       ON h.holiday_date = c.work_date
     ORDER BY c.work_date
     `,
@@ -58,7 +68,6 @@ router.get("/my/calendar", verifyToken, (req, res) => {
       res.status(500).json({ message: "DB error" });
     });
 });
-
 /* =====================================================
    2️⃣ TEAM APPROVAL – API
 ===================================================== */
@@ -142,7 +151,7 @@ router.put("/:id/status", verifyToken, (req, res) => {
 });
 
 /* =====================================================
-   4️⃣ MY TIMESHEET – OFFICIAL EXCEL
+   4️⃣ MY TIMESHEET – OFFICIAL EXCEL (FIXED TIME FORMAT)
 ===================================================== */
 router.get("/my/calendar/excel", verifyToken, (req, res) => {
   const { month } = req.query;
@@ -155,11 +164,8 @@ router.get("/my/calendar/excel", verifyToken, (req, res) => {
   let emp;
 
   db.query(
-    `
-    SELECT id, name, department, designation, work_location, client_name
-    FROM employees
-    WHERE id = ?
-    `,
+    `SELECT id, name, department, designation, work_location, client_name 
+     FROM employees WHERE id = ?`,
     [empId]
   )
     .then(([[row]]) => {
@@ -173,29 +179,34 @@ router.get("/my/calendar/excel", verifyToken, (req, res) => {
           FROM calendar
           WHERE work_date < LAST_DAY(CONCAT(?, '-01'))
         )
-        SELECT
+        SELECT 
           c.work_date,
           DAYNAME(c.work_date) AS day,
-          CASE WHEN ts.status = 'Approved' THEN TIME(al.clock_in) END AS start_time,
-          CASE WHEN ts.status = 'Approved' THEN TIME(al.clock_out) END AS end_time,
-          CASE WHEN ts.status = 'Approved' THEN ts.project END AS project,
-          CASE WHEN ts.status = 'Approved' THEN ts.task END AS task,
+          
+          -- ✅ FIX: Format as String (e.g., "09:30 AM")
+          DATE_FORMAT(al.clock_in, '%h:%i %p') AS start_time,
+          DATE_FORMAT(al.clock_out, '%h:%i %p') AS end_time,
+          
+          ts.project,
+          ts.task,
           ts.hours,
-          ts.status,
-          CASE
+          COALESCE(ts.status, '') AS status,
+          
+          CASE 
+            WHEN ts.id IS NOT NULL THEN 'P'
             WHEN h.holiday_date IS NOT NULL THEN 'HOL'
             WHEN DAYOFWEEK(c.work_date) IN (1,7) THEN 'WO'
-            WHEN ts.status = 'Approved' THEN 'P'
-            ELSE ''
+            ELSE '' 
           END AS type
+
         FROM calendar c
-        LEFT JOIN attendance_logs al
-          ON al.employee_id = ?
-         AND al.log_date = c.work_date
-        LEFT JOIN timesheets ts
-          ON ts.employee_id = ?
-         AND ts.work_date = c.work_date
-        LEFT JOIN holidays h
+        LEFT JOIN attendance_logs al 
+          ON al.employee_id = ? 
+          AND al.log_date = c.work_date
+        LEFT JOIN timesheets ts 
+          ON ts.employee_id = ? 
+          AND ts.work_date = c.work_date
+        LEFT JOIN holidays h 
           ON h.holiday_date = c.work_date
         ORDER BY c.work_date
         `,
@@ -207,17 +218,11 @@ router.get("/my/calendar/excel", verifyToken, (req, res) => {
       const sh = wb.addWorksheet("Timesheet");
 
       sh.columns = [
-        { width: 14 },
-        { width: 12 },
-        { width: 14 },
-        { width: 14 },
-        { width: 22 },
-        { width: 30 },
-        { width: 14 },
-        { width: 10 },
-        { width: 18 }
+        { width: 14 }, { width: 12 }, { width: 14 }, { width: 14 },
+        { width: 22 }, { width: 30 }, { width: 14 }, { width: 10 }, { width: 18 }
       ];
 
+      // ... (Header Styles remain the same) ...
       sh.mergeCells("A1:I1");
       sh.getCell("A1").value = "LOVAS IT";
       sh.getCell("A1").font = { bold: true, size: 14 };
@@ -232,8 +237,8 @@ router.get("/my/calendar/excel", verifyToken, (req, res) => {
       sh.addRow([]);
 
       const header = sh.addRow([
-        "Date","Day","Start Time","End Time","Project",
-        "Task","Total Time","Type","Remarks"
+        "Date", "Day", "Start Time", "End Time", "Project",
+        "Task", "Total Time", "Type", "Remarks"
       ]);
       header.font = { bold: true };
 
@@ -241,13 +246,13 @@ router.get("/my/calendar/excel", verifyToken, (req, res) => {
         sh.addRow([
           r.work_date.toLocaleDateString("en-GB"),
           r.day,
-          r.type === "P" ? r.start_time : "—",
-          r.type === "P" ? r.end_time : "—",
-          r.type === "P" ? r.project : "—",
-          r.type === "P" ? r.task : "—",
-          r.type === "P" ? r.hours : "—",
+          r.type === "P" ? r.start_time : "—", // Now renders "11:33 AM"
+          r.type === "P" ? r.end_time : "—",   // Now renders "11:35 AM"
+          r.type === "P" ? (r.project || "—") : "—",
+          r.type === "P" ? (r.task || "—") : "—",
+          r.type === "P" ? (r.hours || "0") : "—",
           r.type || "—",
-          ""
+          r.status 
         ]);
       });
 
@@ -268,25 +273,25 @@ router.get("/my/calendar/excel", verifyToken, (req, res) => {
       res.status(500).json({ message: "Excel error" });
     });
 });
-
 /* =====================================================
-   5️⃣ TEAM TIMESHEET EXCEL
+   5️⃣ TEAM TIMESHEET EXCEL (FIXED)
 ===================================================== */
 router.get("/export/team/excel", verifyToken, (req, res) => {
   const { month } = req.query;
 
   db.query(
     `
-    SELECT
+    SELECT 
       e.name AS employee,
       t.work_date,
       t.project,
       t.task,
-      t.hours
+      t.hours,
+      t.status -- Helpful to see the status in the export
     FROM timesheets t
     JOIN employees e ON e.id = t.employee_id
     WHERE DATE_FORMAT(t.work_date, '%Y-%m') = ?
-      AND t.status = 'Approved'
+    -- ❌ REMOVED: AND t.status = 'Approved' 
     ORDER BY e.name, t.work_date
     `,
     [month]
@@ -300,21 +305,30 @@ router.get("/export/team/excel", verifyToken, (req, res) => {
         { header: "Date", key: "work_date", width: 15 },
         { header: "Project", key: "project", width: 25 },
         { header: "Task", key: "task", width: 30 },
-        { header: "Hours", key: "hours", width: 10 }
+        { header: "Hours", key: "hours", width: 10 },
+        { header: "Status", key: "status", width: 15 } // Added status column
       ];
 
       rows.forEach(r => sh.addRow(r));
       sh.getRow(1).font = { bold: true };
 
-      return wb.xlsx.writeBuffer();
+      res.setHeader(
+        "Content-Type",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      );
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename=Team_Timesheet_${month}.xlsx`
+      );
+
+      return wb.xlsx.write(res);
     })
-    .then(buffer => res.end(buffer))
+    .then(() => res.end())
     .catch(err => {
       console.error("TEAM EXCEL ERROR:", err);
       res.status(500).json({ message: "Excel error" });
     });
 });
-
 /* =====================================================
    6️⃣ PENDING TIMESHEETS (MY TEAM)
 ===================================================== */
