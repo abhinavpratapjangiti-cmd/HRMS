@@ -1,103 +1,103 @@
-card-header">Employees
-emp.name
-employee-grid employee-header mb-2
-employee-grid
-employee-header mb-2
-Reporting Manager
-forEach(emp
-No manager
-/balance
-No leave data
-loadleave
-loadleavebalance
-loadLeaveBalance
-sql, params
-rows
-.promise().query
-BASE_SELECT
-${BASE_SELECT}
-clock_out
-holiday
-/holiday
-./routes/notifications
-password"
-Create Employee
-User ID missing
-Create failed
-res.json()
- failed
-loadEmployees()
-toUpperCase
-EMPLOYEE
-localStorage.user.role
- refreshHomeLayout
-refreshHomeLayout
-localStorage
-sectionGreeting
-sectionManager
-showInboxSafely
-homeInboxCard
-attendance
-/holidays/nearest
-holidays/nearest
-nearest
-card holiday-card
-api.get("/thought/today")
-T00:00:00
-homePage
-ard holiday-card
-holiday-card
-DB error
-return res.status(500
-upload.single("cv
- upload.single("cv")
-router.post("/cv
-t("/something"
-"/something"
-employeeId
-today/
-today
-backend/public/assets/js/pages$ nano attendance.js
-updateWorked()
-r.log_date
-total_work_minutes
-ORDER BY log_date DESC
-attendance_logs
-log_date DESC
-toFixed(2) : "0.00"
-LIMIT 30
-/history/:employee_id
-60).toFixed(2)
-formatDate(d)
-formatTime
-authHeaders()
-formatdate
-formatDate
-loadAttendanceHistory(
-completed
-a.total_break_minutes
-.card
-fetch('/api/manager/pending-requests')
-pending
-manager/pending-requests
-manager
-pending-requests
-fetch('/api/manager/
-/api/attendance/inbox
-/attendance
-/attendance/today
-/today",
-Em
+leave
+const { userId, clockInTime } = req.body;
+db.query("INSERT INTO
+forgot-password
+fetch('/api/auth/reset-password', {
+keeper
+acceptance
+approve
+router.get("/pending-timesheets-list", verifyToken, async (req, res) => {  try {    const isAdmin = ["ADMIN", "HR"].includes(req.user.role);    const userId = req.user.id;    const [empRow] = await db.query(      `SELECT id FROM employees WHERE user_id = ? LIMIT 1`,      [userId]    );    if (!empRow.length) {      return res.status(404).json({ message: "Employee not found" });    }    const managerId = empRow[0].id;    const query = isAdmin      ? `        SELECT e.name, t.status        FROM timesheets t        JOIN employees e ON t.employee_id = e.id        WHERE t.status = 'PENDING'      `      : `        SELECT e.name, t.status        FROM timesheets t        JOIN employees e ON t.employee_id = e.id        WHERE t.status = 'PENDING'          AND e.manager_id = ?      `;    const [rows] = isAdmin      ? await db.query(query)      : await db.query(query, [managerId]);    res.json(rows);  } catch (err) {    console.error("❌ pending-timesheets-list:", err);    res.status(500).json({ error: err.message });  }});
+intern
+router.get("/attendance/today", verifyToken, async (req, res) => {
+const statusColor
+Present
+listEl.innerHTML = data.map
+tryinit
+function tryInit()
+view
+<div class="col-md-4 d-none" id="homeInboxCard">
+" id="homeInboxCard"
+approle
+applyrole
+fetch("/api/leave/balance")
+loadLeaveBalance()
+renderLeaveBalance()
+router.get("/balance", async (req, res) => {
+.get("/balance"
+function loadLeaveBalance()
+<script src="assets/js/pages/home.js"></script>
+assets/js/pages/home.js
+/home.js
+99
+"Notauthorized
+res.status(403).json({
+await notificationService.createNotification({  user_id: manager_id,  message: `New leave request from ${from_date} to ${to_date}`});
+New leave request from
+createNotification
+normalizedAction
+ normalizedAction
+Invalid action
+  SELECT l.employee_id, e.manager_id
+role === "manager" && leave.manager_id
+Clock Out
+/* === NOTIFY MANAGER === */
+apply
+document.addEventListener("click"
+const API_BASE = "http://16.16.18.115:5000"
+Go to Approvals
+api/notifications/
+notifications/mark-read
+fetch(`${API_BASE}/api/notifications
+ markAsRead
+api/notifications/mark-read
+notifications
+mark
+markAsRead
+notificationId
+/mark_all_read`
+All caught up!
+renderNotifications
+WHERE user_id IN (${placeholders})
+handleMarkAllRead
+handler
+ getHeaders
+notification_pop
+let timerInterval
+oAction
+window.__triggerHomeInit = function() {
+WHERE t.status = 'Submitted'
+if (!["Approved", "Rejected"].includes(status))
+WHERE id = ? AND status = 'Submitted'
+WHERE DATE_FORMAT(t.work_date, '%Y-%m') = ?
+WHERE t.status = 'PENDING'
+"APPROVED", "REJECTED"
+pendingTimesheetsCard
+pendingTimesheetsCount: "/api/dashboard/pending-timesheets",
+pendingTimesheetsCard:
+590
+100
+INITIALIZATION & LISTENERS
+"pending-leaves-list"
+APPROVED" : "REJECTED
+/pending/my-team
+window.location = "index.html";
+index.html
+window.location
+.location.hash.includes("#/home
+trainee
+staff
+Staff
+Trainee
+modalRole
+employeee
 Employee
-snapshot
-window.saveEdit
-Super
-Admin
-Hr
-Hr Admin
-HR Admin
-<p>${escapeHtml(node.designation || node.department || "")}</p>
+admin
+ssh -i hrms-key.pem ubuntu@16.16.18.115
 await db.promise().query
+filename
+post
+await db.promise().query(
+db.promise().query(
 
 
 y

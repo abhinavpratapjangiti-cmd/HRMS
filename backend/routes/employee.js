@@ -206,8 +206,8 @@ router.put("/:id", verifyToken, async (req, res) => {
   try {
     // 1. Update the 'employees' table
     await db.query(
-      `UPDATE employees 
-       SET name = ?, email = ?, department = ?, manager_id = ? 
+      `UPDATE employees
+       SET name = ?, email = ?, department = ?, manager_id = ?
        WHERE id = ?`,
       [name, email, department, manager_id || null, id]
     );

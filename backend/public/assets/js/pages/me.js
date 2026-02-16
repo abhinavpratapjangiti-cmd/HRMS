@@ -149,15 +149,18 @@ function bindCVUpload() {
 
     statusEl.innerText = "Uploading…";
 
+// ... inside bindCVUpload ...
     try {
-      const fd = new FormData();           // ✅ FIX
-      fd.append("cv", fileInput.files[0]); // ✅ FIX
+      const fd = new FormData();
+      fd.append("cv", fileInput.files[0]); 
 
       await apiPostForm("/documents/cv", fd);
       statusEl.innerText = "Uploaded";
-    } catch {
+    } catch (error) { // Capture the error object
+      console.error("CV Upload Error:", error); // Log it to console
       statusEl.innerText = "Upload failed";
     }
+// ...
 
     fileInput.value = "";
   };

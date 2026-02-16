@@ -1,0 +1,29 @@
+0 verbose cli /usr/bin/node /usr/bin/npm
+1 info using npm@10.8.2
+2 info using node@v18.20.8
+3 silly config load:file:/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/home/ubuntu/.npmrc
+5 silly config load:file:/usr/etc/npmrc
+6 verbose title npm install dayjs
+7 verbose argv "install" "dayjs"
+8 verbose logfile logs-max:10 dir:/home/ubuntu/.npm/_logs/2026-02-10T11_12_58_183Z-
+9 verbose logfile /home/ubuntu/.npm/_logs/2026-02-10T11_12_58_183Z-debug-0.log
+10 silly packumentCache heap:492044288 maxSize:123011072 maxEntrySize:61505536
+11 silly logfile start cleaning logs, removing 1 files
+12 silly logfile done cleaning log files
+13 silly idealTree buildDeps
+14 silly fetch manifest dayjs@^1.11.19
+15 silly packumentCache full:https://registry.npmjs.org/dayjs cache-miss
+16 http fetch GET 200 https://registry.npmjs.org/dayjs 111ms (cache revalidated)
+17 silly packumentCache full:https://registry.npmjs.org/dayjs set size:483478 disposed:false
+18 silly placeDep ROOT dayjs@1.11.19 REPLACE for:  want: ^1.11.19
+19 silly reify moves {}
+20 silly audit bulk request { dayjs: [ '1.11.19' ] }
+21 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 192ms
+22 silly audit report {}
+23 verbose cwd /home/ubuntu
+24 verbose os Linux 6.14.0-1018-aws
+25 verbose node v18.20.8
+26 verbose npm  v10.8.2
+27 verbose exit 0
+28 info ok

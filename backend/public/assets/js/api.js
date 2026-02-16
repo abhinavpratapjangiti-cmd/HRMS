@@ -61,35 +61,48 @@
   /* =========================
       THE API OBJECT
   ========================= */
-  const api = {
-    get: function (path) {
-      return withTimeout(
-        fetch(apiUrl(path), {
-          method: "GET",
-          headers: authHeaders()
-        }).then(res => {
-          if (!res.ok) throw new Error("HTTP " + res.status + " at " + path);
-          return safeJson(res, path);
-        }),
-        path
-      );
-    },
-
-    post: function (path, body) {
-      return fetch(apiUrl(path), {
-        method: "POST",
-        headers: authHeaders({ "Content-Type": "application/json" }),
-        body: JSON.stringify(body || {})
+const api = {
+  get: function (path) {
+    return withTimeout(
+      fetch(apiUrl(path), {
+        method: "GET",
+        headers: authHeaders()
       }).then(res => {
-        if (!res.ok) throw new Error("HTTP " + res.status);
+        if (!res.ok) throw new Error("HTTP " + res.status + " at " + path);
         return safeJson(res, path);
-      });
-    }
-  };
+      }),
+      path
+    );
+  },
+
+  post: function (path, body) {
+    return fetch(apiUrl(path), {
+      method: "POST",
+      headers: authHeaders({ "Content-Type": "application/json" }),
+      body: JSON.stringify(body || {})
+    }).then(res => {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return safeJson(res, path);
+    });
+  },
+
+  postForm: function (path, formData) {
+    return fetch(apiUrl(path), {
+      method: "POST",
+      headers: authHeaders(), // ⚠️ DO NOT set Content-Type manually
+      body: formData
+    }).then(res => {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    });
+  }
+};
+
 
   window.api = api;
   window.apiGet = api.get;
   window.apiPost = api.post;
+window.apiPostForm = api.postForm; 
 
   console.log("✅ api.js initialized at " + BASE_URL);
 })();

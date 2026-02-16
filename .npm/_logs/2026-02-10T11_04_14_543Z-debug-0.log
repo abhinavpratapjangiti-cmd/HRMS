@@ -1,0 +1,35 @@
+0 verbose cli /usr/bin/node /usr/bin/npm
+1 info using npm@10.8.2
+2 info using node@v18.20.8
+3 silly config load:file:/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/home/ubuntu/.npmrc
+5 silly config load:file:/usr/etc/npmrc
+6 verbose title npm install dayjs
+7 verbose argv "install" "dayjs"
+8 verbose logfile logs-max:10 dir:/home/ubuntu/.npm/_logs/2026-02-10T11_04_14_543Z-
+9 verbose logfile /home/ubuntu/.npm/_logs/2026-02-10T11_04_14_543Z-debug-0.log
+10 silly packumentCache heap:492044288 maxSize:123011072 maxEntrySize:61505536
+11 silly logfile start cleaning logs, removing 2 files
+12 silly logfile done cleaning log files
+13 silly idealTree buildDeps
+14 silly fetch manifest dayjs@*
+15 silly packumentCache full:https://registry.npmjs.org/dayjs cache-miss
+16 http fetch GET 200 https://registry.npmjs.org/npm 128ms
+17 http fetch GET 200 https://registry.npmjs.org/dayjs 131ms (cache miss)
+18 silly packumentCache full:https://registry.npmjs.org/dayjs set size:undefined disposed:false
+19 silly placeDep ROOT dayjs@1.11.19 OK for:  want: *
+20 silly reify moves {}
+21 silly tarball no local data for dayjs@https://registry.npmjs.org/dayjs/-/dayjs-1.11.19.tgz. Extracting by manifest.
+22 http fetch GET 200 https://registry.npmjs.org/dayjs/-/dayjs-1.11.19.tgz 135ms (cache miss)
+23 silly ADD node_modules/dayjs
+24 verbose cwd /home/ubuntu
+25 verbose os Linux 6.14.0-1018-aws
+26 verbose node v18.20.8
+27 verbose npm  v10.8.2
+28 notice
+28 notice New [31mmajor[39m version of npm available! [31m10.8.2[39m -> [34m11.9.0[39m
+28 notice Changelog: [34mhttps://github.com/npm/cli/releases/tag/v11.9.0[39m
+28 notice To update run: [4mnpm install -g npm@11.9.0[24m
+28 notice  { force: true, [Symbol(proc-log.meta)]: true }
+29 verbose exit 0
+30 info ok

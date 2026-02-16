@@ -49,7 +49,7 @@
       overflow: hidden;
       margin-bottom: 24px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      height: 100%; /* Ensure equal height in grid */
+      height: 100%;
     }
     .card-header {
       background: #ffffff;
@@ -116,39 +116,6 @@
     .employee-row:last-child { border-bottom: none; }
     .employee-row:hover { background: #f9fafb; }
 
-    .user-avatar-placeholder {
-      width: 40px;
-      height: 40px;
-      background: #e0e7ff;
-      color: #4f46e5;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.1rem;
-      margin-right: 12px;
-    }
-
-    /* --- Stats Section --- */
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 0;
-      border-bottom: 1px dashed #e5e7eb;
-    }
-    .stat-row:last-child { border-bottom: none; }
-    .stat-value { font-weight: 700; font-size: 1.1rem; color: #111827; }
-
-    /* --- Badges --- */
-    .badge-custom {
-      font-weight: 500;
-      letter-spacing: 0.025em;
-      padding: 6px 12px;
-      border-radius: 6px;
-    }
-
     /* --- Modal --- */
     .modal-content { border-radius: 16px; border: none; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
     .modal-header { border-bottom: 1px solid #f3f4f6; padding: 20px 24px; }
@@ -160,7 +127,8 @@
 
 <body>
 
-<div class="container-fluid p-4" style="max-width: 1800px;"> <div class="page-header">
+<div class="container-fluid p-4" style="max-width: 1800px;"> 
+  <div class="page-header">
     <div class="d-flex align-items-center gap-3">
       <div class="bg-primary bg-opacity-10 p-2 rounded-circle text-primary">
         <i class="fa-solid fa-users fa-lg"></i>
@@ -171,7 +139,7 @@
       </div>
     </div>
     <button class="btn btn-outline-primary fw-medium" onclick="window.refreshAll()">
-      <i class="fa fa-sync-alt me-2"></i> Refresh Data
+      <i class="fa fa-sync-alt me-2"></i> Show Data
     </button>
   </div>
 
@@ -204,7 +172,7 @@
 
                 <h6 class="text-primary text-uppercase small fw-bold mb-3 border-bottom pb-2">Employment Details</h6>
                 <div class="row g-3 mb-4">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label class="form-label small">Department</label>
                         <select id="department" class="form-select">
                             <option value="IT" selected>IT & Engineering</option>
@@ -215,17 +183,21 @@
                             <option value="Operations">Operations</option>
                         </select>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label class="form-label small">Role</label>
                         <select id="role" class="form-select">
                             <option value="intern">Intern</option>
-			    <option value="employee" selected>Employee</option>
-                            <option value="Manager">Manager</option>
+                            <option value="employee" selected>Employee</option>
+                            <option value="manager">Manager</option>
                             <option value="hr">HR</option>
                             <option value="admin">Admin</option>
                         </select>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <label class="form-label small">Designation</label>
+                        <input type="text" id="designation" class="form-control" placeholder="e.g. Trainee">
+                    </div>
+                    <div class="col-md-3">
                         <label class="form-label small">Client / Project</label>
                         <input type="text" id="client" class="form-control" placeholder="e.g. Internal">
                     </div>
@@ -313,13 +285,13 @@
         <div class="row g-3">
             <div class="col-12">
                 <label class="form-label small">Full Name</label>
-                <input id="edit-name" class="form-control bg-light" disabled>
-                <div class="form-text">Name cannot be changed here. Contact IT support.</div>
+                <input id="edit-name" class="form-control">
             </div>
             <div class="col-12">
                 <label class="form-label small">Email Address</label>
-                <input id="edit-email" class="form-control bg-light" disabled>
+                <input id="edit-email" class="form-control">
             </div>
+            
             <div class="col-md-6">
                 <label class="form-label small">System Role</label>
                 <select id="edit-role" class="form-select border-primary">
@@ -330,19 +302,25 @@
                     <option value="admin">Admin</option>
                 </select>
             </div>
+            
             <div class="col-md-6">
                 <label class="form-label small">Department</label>
-                <select id="edit-department" class="form-select" disabled>
+                <select id="edit-department" class="form-select">
                     <option value="IT">IT</option>
                     <option value="Sales">Sales</option>
                     <option value="HR">HR</option>
                     <option value="Marketing">Marketing</option>
-                    <option value="finance">Finance</option>
+                    <option value="Finance">Finance</option>
                     <option value="Operations">Operations</option>
                 </select>
             </div>
-            <div class="col-12 mt-4">
-                <h6 class="text-primary text-uppercase small fw-bold border-bottom pb-2 mb-3">Reporting Structure</h6>
+            
+            <div class="col-md-6 mt-3">
+                <label class="form-label small">Designation</label>
+                <input type="text" id="edit-designation" class="form-control">
+            </div>
+
+            <div class="col-md-6 mt-3">
                 <label class="form-label small">Direct Manager</label>
                 <select id="edit-manager" class="form-select">
                     <option value="">No reporting manager</option>
@@ -369,17 +347,16 @@
         setTimeout(() => {
             // Find the Refresh button
             const refreshBtn = document.querySelector('button[onclick="window.refreshAll()"]');
-            
+
             if (refreshBtn) {
                 console.log("Auto-clicking Refresh to bypass tracking prevention...");
                 refreshBtn.click();
             } else {
-                // Fallback: Try calling the function directly if button isn't found
                 if (typeof window.refreshAll === 'function') {
                     window.refreshAll();
                 }
             }
-        }, 1000); 
+        }, 1000);
     });
 </script>
 </body>

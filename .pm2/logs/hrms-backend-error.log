@@ -1,675 +1,1501 @@
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 1\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
 }
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 1\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 1\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 2\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 1\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-CV fetch error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:83:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 2\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-CV fetch error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:83:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 2\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 1\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 1\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-CV fetch error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:83:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-CV fetch error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-CV fetch error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:83:29
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-CV fetch error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:83:29
-    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-CV fetch error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:83:29
-    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
-    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 1\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 1\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 1\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 1\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 1\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 2\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 2\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-CV list error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:122:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-CV fetch error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-CV fetch error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:83:29
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-CV fetch error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:83:29
-    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-CV fetch error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:83:29
-    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
-    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 2\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-CV list error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:122:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 2\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 2\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-CV list error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:122:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-CV fetch error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:83:29
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-CV list error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:122:29
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-CV list error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:122:29
-    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-CV list error: TypeError: db.promise is not a function
-    at /home/ubuntu/backend/routes/documents.js:122:29
-    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
-    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
-    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 2\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
 }
-team summary error: Error: Unknown column 'l.start_date' in 'on clause'
-    at PromisePool.query (/home/ubuntu/backend/node_modules/mysql2/lib/promise/pool.js:36:22)
-    at /home/ubuntu/backend/routes/attendance.js:248:29
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
     at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
     at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
-    at verifyToken (/home/ubuntu/backend/middleware/auth.js:72:5)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
-  code: 'ER_BAD_FIELD_ERROR',
-  errno: 1054,
-  sql: '\n' +
-    '      SELECT\n' +
-    '        COUNT(DISTINCT e.id) AS total,\n' +
-    '        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,\n' +
-    '        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave\n' +
-    '      FROM employees e\n' +
-    '      LEFT JOIN attendance_logs al\n' +
-    '        ON al.employee_id = e.id\n' +
-    '        AND al.log_date = CURDATE()\n' +
-    '      LEFT JOIN leaves l\n' +
-    '        ON l.employee_id = e.id\n' +
-    "        AND l.status = 'APPROVED'\n" +
-    '        AND CURDATE() BETWEEN l.start_date AND l.end_date\n' +
-    '      WHERE e.manager_id = 2\n' +
-    '      ',
-  sqlState: '42S22',
-  sqlMessage: "Unknown column 'l.start_date' in 'on clause'"
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-15T17:31:24.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
+}
+verifyToken error: TokenExpiredError: jwt expired
+    at /home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:190:21
+    at getSecret (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:97:14)
+    at module.exports [as verify] (/home/ubuntu/backend/node_modules/jsonwebtoken/verify.js:101:10)
+    at verifyToken (/home/ubuntu/backend/middleware/auth.js:22:25)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/ubuntu/backend/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/ubuntu/backend/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/ubuntu/backend/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/home/ubuntu/backend/node_modules/express/lib/router/index.js:175:3)
+    at router (/home/ubuntu/backend/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/home/ubuntu/backend/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/ubuntu/backend/node_modules/express/lib/router/index.js:328:13)
+    at /home/ubuntu/backend/node_modules/express/lib/router/index.js:286:9 {
+  expiredAt: 2026-02-14T11:14:12.000Z
 }

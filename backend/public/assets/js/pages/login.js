@@ -1,4 +1,4 @@
-const API = "/api";
+const API = "/api"; // or "http://16.16.18.115:5000/api" if needed
 
 document.addEventListener("DOMContentLoaded", function () {
   var form = document.getElementById("loginForm");
@@ -33,13 +33,24 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-console.log("Login successful, token stored");
+      console.log("Login successful, token stored");
+
+      // ---------------------------------------------------------
+      // 🔥 RESTART NOTIFICATIONS IMMEDIATELY
+      // This wakes up notifications.js now that we have a valid token
+      // ---------------------------------------------------------
+      if (window.startNotificationPolling) {
+          console.log("Restarting notification polling...");
+          window.startNotificationPolling();
+      }
 
       // redirect to home
       window.location.href = "/#home";
 
     } catch (err) {
+      console.error(err);
       alert("Server error");
     }
   });
 });
+

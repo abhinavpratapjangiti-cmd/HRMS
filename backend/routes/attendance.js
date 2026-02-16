@@ -1,76 +1,286 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../db");
+const db = require("../db"); // Ensure this is your promise-based DB pool
 const { verifyToken } = require("../middleware/auth");
+const dayjs = require("dayjs");
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+// CONFIG: Force Server Logic to IST
+const TIMEZONE = "Asia/Kolkata";
 
 /* =====================================================
-   CLOCK IN
+   HELPER FUNCTIONS
+===================================================== */
+function getNowIST() {
+  return dayjs().tz(TIMEZONE);
+}
+
+function getBusinessDate() {
+  // Shifts "day start" to 4 AM to handle late-night shifts
+  return getNowIST().subtract(4, "hour").format("YYYY-MM-DD");
+}
+
+function getLocalTimestamp() {
+  return getNowIST().format("YYYY-MM-DD HH:mm:ss");
+}
+
+/* =====================================================
+   🔔 UNIVERSAL NOTIFICATION HELPER
+   Target: Self + Manager + HR/Admins
+===================================================== */
+async function notifyAllParties(conn, employeeId, actionType, details = "") {
+    try {
+        // 1. Get Employee & Manager Info
+        const [empRows] = await conn.query(`
+            SELECT 
+                e.user_id as empUserId, 
+                e.name as empName, 
+                m.user_id as mgrUserId 
+            FROM employees e
+            LEFT JOIN employees m ON e.manager_id = m.id
+            WHERE e.id = ?
+        `, [employeeId]);
+
+        if (!empRows.length) return;
+        const { empUserId, empName, mgrUserId } = empRows[0];
+
+        // 2. Get All HRs & Admins
+        const [hrRows] = await conn.query(`
+            SELECT id FROM users WHERE role IN ('HR', 'ADMIN')
+        `);
+
+        // 3. Prepare Recipient List (Set handles duplicates)
+        const recipients = new Set();
+        if (empUserId) recipients.add(empUserId); // Self
+        if (mgrUserId) recipients.add(mgrUserId); // Manager
+        hrRows.forEach(hr => recipients.add(hr.id)); // HRs
+
+        // 4. Construct Messages
+        const timeStr = dayjs().tz(TIMEZONE).format("hh:mm A");
+        let msgSelf = "";
+        let msgOthers = ""; // For Manager & HR
+
+        switch(actionType) {
+            case "CLOCK_IN":
+                msgSelf = `You clocked in at ${timeStr}.`;
+                msgOthers = `🟢 ${empName} clocked in at ${timeStr}.`;
+                break;
+            case "CLOCK_OUT":
+                msgSelf = `You clocked out at ${timeStr}. Duration: ${details}`;
+                msgOthers = `🔴 ${empName} clocked out at ${timeStr}. Work: ${details}`;
+                break;
+            case "BREAK_START":
+                msgSelf = `You started a break at ${timeStr}.`;
+                msgOthers = `☕ ${empName} is on break (${timeStr}).`;
+                break;
+            case "BREAK_END":
+                msgSelf = `You ended your break at ${timeStr}.`;
+                msgOthers = `▶️ ${empName} resumed work (${timeStr}).`;
+                break;
+        }
+
+        // 5. Batch Insert
+        const values = [];
+        recipients.forEach(uid => {
+            const message = (uid === empUserId) ? msgSelf : msgOthers;
+            values.push([uid, message, 0, new Date()]);
+        });
+
+        if (values.length > 0) {
+            await conn.query(
+                `INSERT INTO notifications (user_id, message, is_read, created_at) VALUES ?`,
+                [values]
+            );
+        }
+
+    } catch (err) {
+        console.error("Notification Error:", err.message);
+    }
+}
+
+/* =====================================================
+   1. CLOCK IN
 ===================================================== */
 router.post("/clock-in", verifyToken, async (req, res) => {
-  const { employee_id, project, task } = req.body;
+  const employee_id = req.user.employee_id || req.body.employee_id;
+  // Restore: Capture optional GPS and Project from body (Zero Omitted Logic)
+  const { latitude, longitude, project } = req.body; 
 
-  if (!employee_id) {
-    return res.status(400).json({ error: "employee_id required" });
-  }
+  if (!employee_id) return res.status(400).json({ error: "Invalid Employee ID" });
 
+  let conn;
   try {
-    // Auto-close any open sessions from previous days
-    await db.query(
-      `
-      UPDATE attendance_logs
-      SET
-        clock_out = DATE_ADD(clock_in, INTERVAL 1 MINUTE),
-        total_work_minutes = 1,
-        total_break_minutes = 0,
-        status = 'COMPLETED'
-      WHERE employee_id = ?
-        AND clock_out IS NULL
-        AND log_date < CURDATE()
-      `,
-      [employee_id]
+    conn = await db.getConnection();
+    await conn.beginTransaction();
+
+    const businessDate = getBusinessDate();
+    const now = getLocalTimestamp();
+
+    // 1. ZOMBIE CHECK: Auto-close sessions older than yesterday
+    await conn.query(
+        `UPDATE attendance_logs 
+         SET clock_out = DATE_ADD(clock_in, INTERVAL 12 HOUR), status = 'COMPLETED', task = 'Auto-closed (System)' 
+         WHERE employee_id = ? AND clock_out IS NULL AND log_date < ?`,
+        [employee_id, businessDate]
     );
 
-    const [active] = await db.query(
-      `
-      SELECT id
-      FROM attendance_logs
-      WHERE employee_id = ?
-        AND log_date = CURDATE()
-        AND clock_out IS NULL
-      LIMIT 1
-      `,
-      [employee_id]
+    // 2. Check Active Session
+    const [active] = await conn.query(
+      `SELECT id FROM attendance_logs 
+       WHERE employee_id = ? AND log_date = ? AND clock_out IS NULL 
+       FOR UPDATE`,
+      [employee_id, businessDate]
     );
 
     if (active.length) {
-      return res.status(400).json({ error: "Already clocked in" });
+      await conn.rollback();
+      return res.status(400).json({ message: "Already clocked in today" });
     }
 
-    await db.query(
-      `
-      INSERT INTO attendance_logs
-        (employee_id, log_date, clock_in, project, task, status)
-      VALUES (?, CURDATE(), NOW(), ?, ?, 'WORKING')
-      `,
-      [employee_id, project || null, task || null]
+    // 3. Insert Log
+    await conn.query(
+      `INSERT INTO attendance_logs 
+       (employee_id, log_date, clock_in, status, total_break_minutes, created_at, latitude, longitude, project) 
+       VALUES (?, ?, ?, 'WORKING', 0, NOW(), ?, ?, ?)`,
+      [employee_id, businessDate, now, latitude || null, longitude || null, project || null]
     );
 
-    res.json({ status: "CLOCKED_IN" });
+    // 4. Notify
+    await notifyAllParties(conn, employee_id, "CLOCK_IN");
+
+    await conn.commit();
+    res.json({ status: "WORKING", clock_in: now, message: "Clocked In Successfully" });
+
   } catch (err) {
-    console.error("clock-in error:", err);
-    res.status(500).json({ error: "Clock-in failed" });
+    if (conn) await conn.rollback();
+    console.error("Clock In Error:", err);
+    res.status(500).json({ error: "Server Error" });
+  } finally {
+    if (conn) conn.release();
   }
 });
 
 /* =====================================================
-   CLOCK OUT (CORRECTED)
+   2. TAKE BREAK
+===================================================== */
+router.post("/take-break", verifyToken, async (req, res) => {
+  const employee_id = req.user.employee_id;
+  let conn;
+
+  try {
+    conn = await db.getConnection();
+    await conn.beginTransaction();
+
+    const businessDate = getBusinessDate();
+    const now = getLocalTimestamp();
+
+    const [rows] = await conn.query(
+      `SELECT id, status FROM attendance_logs 
+       WHERE employee_id = ? AND log_date = ? AND clock_out IS NULL 
+       ORDER BY id DESC LIMIT 1 FOR UPDATE`,
+      [employee_id, businessDate]
+    );
+
+    if (!rows.length) {
+      await conn.rollback();
+      return res.status(400).json({ message: "No active session found." });
+    }
+
+    const log = rows[0];
+
+    if (log.status === "ON_BREAK") {
+      await conn.rollback();
+      return res.status(400).json({ message: "You are already on break." });
+    }
+
+    await conn.query(
+      `UPDATE attendance_logs SET status = 'ON_BREAK', break_start = ? WHERE id = ?`,
+      [now, log.id]
+    );
+    
+    await notifyAllParties(conn, employee_id, "BREAK_START");
+
+    await conn.commit();
+    res.json({ status: "ON_BREAK", message: "Break Started" });
+
+  } catch (err) {
+    if (conn) await conn.rollback();
+    res.status(500).json({ error: "Server Error" });
+  } finally {
+    if (conn) conn.release();
+  }
+});
+
+/* =====================================================
+   3. END BREAK
+===================================================== */
+router.post("/end-break", verifyToken, async (req, res) => {
+  const employee_id = req.user.employee_id;
+  let conn;
+
+  try {
+    conn = await db.getConnection();
+    await conn.beginTransaction();
+
+    const businessDate = getBusinessDate();
+    const now = getLocalTimestamp();
+
+    const [rows] = await conn.query(
+      `SELECT id, status, break_start, total_break_minutes 
+       FROM attendance_logs 
+       WHERE employee_id = ? AND log_date = ? AND clock_out IS NULL 
+       ORDER BY id DESC LIMIT 1 FOR UPDATE`,
+      [employee_id, businessDate]
+    );
+
+    if (!rows.length || rows[0].status !== "ON_BREAK") {
+      await conn.rollback();
+      return res.status(400).json({ message: "You are not on break." });
+    }
+
+    const log = rows[0];
+
+    // Calc Duration
+    const start = dayjs(log.break_start);
+    const end = dayjs(now);
+    const durationMins = end.diff(start, "minute"); 
+    const newTotal = (Number(log.total_break_minutes) || 0) + Math.max(0, durationMins);
+
+    await conn.query(
+      `UPDATE attendance_logs 
+       SET status = 'WORKING', break_start = NULL, total_break_minutes = ? 
+       WHERE id = ?`,
+      [newTotal, log.id]
+    );
+
+    await notifyAllParties(conn, employee_id, "BREAK_END");
+
+    await conn.commit();
+    res.json({ status: "WORKING", message: "Welcome Back!" });
+
+  } catch (err) {
+    if (conn) await conn.rollback();
+    res.status(500).json({ error: "Server Error" });
+  } finally {
+    if (conn) conn.release();
+  }
+});
+
+/* =====================================================
+   4. CLOCK OUT (With Timesheet Auto-Insert)
 ===================================================== */
 router.post("/clock-out", verifyToken, async (req, res) => {
-  // 1. EXTRACT project and task FROM REQUEST BODY
-  const { employee_id, project, task } = req.body; 
+  const employee_id = req.user.employee_id || req.body.employee_id;
+  // ACCEPT BOTH: Project & Task Summary
+  const { project, task } = req.body; // Mapped from frontend
 
-  if (!employee_id) {
-    return res.status(400).json({ error: "employee_id required" });
+  // 1. Validation: Ensure BOTH are provided
+  if (!project || !project.trim() || !task || !task.trim()) {
+      return res.status(400).json({ message: "Mandatory: Please enter BOTH Project Name and Task Summary." });
   }
 
   let conn;
@@ -78,206 +288,140 @@ router.post("/clock-out", verifyToken, async (req, res) => {
     conn = await db.getConnection();
     await conn.beginTransaction();
 
-    // Select existing attendance record
+    const businessDate = getBusinessDate();
+    const now = getLocalTimestamp();
+
     const [rows] = await conn.query(
-      `
-      SELECT id, clock_in, break_start, break_end 
-      FROM attendance_logs
-      WHERE employee_id = ?
-        AND log_date = CURDATE()
-        AND clock_out IS NULL
-      ORDER BY id DESC
-      LIMIT 1
-      FOR UPDATE
-      `,
-      [employee_id]
+      `SELECT * FROM attendance_logs 
+       WHERE employee_id = ? AND log_date = ? AND clock_out IS NULL 
+       ORDER BY id DESC LIMIT 1 FOR UPDATE`,
+      [employee_id, businessDate]
     );
 
     if (!rows.length) {
       await conn.rollback();
-      return res.status(400).json({ error: "No active attendance" });
+      return res.status(400).json({ message: "No active session." });
     }
 
-    const a = rows[0];
-    const now = new Date();
+    const log = rows[0];
 
-    // ... (Time calculation logic remains the same) ...
-    let workedMinutes = Math.floor((now - new Date(a.clock_in)) / 60000);
-    let breakMinutes = 0;
-    if (a.break_start && a.break_end) {
-      breakMinutes = Math.floor((new Date(a.break_end) - new Date(a.break_start)) / 60000);
+    // 2. Handle Break Logic if Clocking Out directly from Break
+    let totalBreakMins = Number(log.total_break_minutes) || 0;
+    if (log.status === "ON_BREAK" && log.break_start) {
+        const currentBreakMins = dayjs(now).diff(dayjs(log.break_start), "minute");
+        totalBreakMins += Math.max(0, currentBreakMins);
     }
-    workedMinutes = Math.max(workedMinutes - breakMinutes, 0);
-    const workedHours = Number((workedMinutes / 60).toFixed(2));
 
-    // 2. UPDATE ATTENDANCE LOGS WITH PROJECT & TASK
-    // We add project = ? and task = ? here to save them to the attendance table too
+    // 3. Net Work Time
+    const start = dayjs(log.clock_in);
+    const end = dayjs(now);
+    const totalSessionMins = end.diff(start, "minute"); 
+    const netWorkMins = Math.max(0, totalSessionMins - totalBreakMins);
+    
+    // Calculate decimal hours for timesheet (e.g., 8.5)
+    const workHrsDecimal = (netWorkMins / 60).toFixed(2);
+
+    // 4. Update Attendance Log
     await conn.query(
-      `
-      UPDATE attendance_logs
-      SET
-        clock_out = ?,
-        total_work_minutes = ?,
-        total_break_minutes = ?,
-        status = 'COMPLETED',
-        project = ?, 
-        task = ?
-      WHERE id = ?
-      `,
-      [now, workedMinutes, breakMinutes, project, task, a.id]
+      `UPDATE attendance_logs 
+       SET clock_out = ?, 
+           status = 'COMPLETED', 
+           total_work_minutes = ?, 
+           total_break_minutes = ?, 
+           task = ?,
+           project = ? 
+       WHERE id = ?`,
+      [now, netWorkMins, totalBreakMins, task, project, log.id]
     );
 
-    // 3. INSERT INTO TIMESHEETS USING NEW VARIABLES
-    // Use 'project' and 'task' from req.body, NOT 'a.project'
+    // 5. AUTO-INSERT TO TIMESHEETS TABLE 🚀
+    // FIX: Using 'work_date' and 'SUBMITTED' (uppercase) to match schema
     await conn.query(
-      `
-      INSERT IGNORE INTO timesheets
-        (employee_id, work_date, project, task, hours, status, day_type, submitted_at)
-      VALUES (?, DATE(?), ?, ?, ?, 'SUBMITTED', 'P', NOW())
-      `,
-      [employee_id, a.clock_in, project, task, workedHours]
+      `INSERT INTO timesheets 
+       (employee_id, work_date, project, task, hours, status, submitted_at, created_at) 
+       VALUES (?, ?, ?, ?, ?, 'SUBMITTED', NOW(), NOW())`,
+      [employee_id, businessDate, project, task, workHrsDecimal]
     );
+
+    // 6. Notify All
+    const workHrs = Math.floor(netWorkMins/60);
+    const workMinsStr = netWorkMins%60;
+    const durationStr = `${workHrs}h ${workMinsStr}m`;
+    await notifyAllParties(conn, employee_id, "CLOCK_OUT", durationStr);
 
     await conn.commit();
-    res.json({ status: "CLOCKED_OUT", hours: workedHours });
+    res.json({ status: "COMPLETED", message: "Clocked Out & Timesheet Submitted Successfully!" });
+
   } catch (err) {
     if (conn) await conn.rollback();
-    console.error("clock-out error:", err);
-    res.status(500).json({ error: "Clock-out failed" });
+    console.error("Clock Out Error:", err);
+    res.status(500).json({ error: "Server Error" });
   } finally {
     if (conn) conn.release();
   }
 });
+
 /* =====================================================
-   TODAY STATUS (FIXED PRECISION)
+   5. GET TODAY'S STATUS
 ===================================================== */
 router.get("/today", verifyToken, async (req, res) => {
+  const employee_id = req.user.employee_id;
+  const businessDate = getBusinessDate();
+
+  try {
+    const [rows] = await db.query(
+      `SELECT * FROM attendance_logs 
+       WHERE employee_id = ? AND log_date = ? 
+       ORDER BY id DESC LIMIT 1`,
+      [employee_id, businessDate]
+    );
+
+    if (!rows.length) {
+      return res.json({ status: "NOT_STARTED", clock_in: null, total_break_seconds: 0 });
+    }
+
+    const log = rows[0];
+    const totalBreakSeconds = (Number(log.total_break_minutes) || 0) * 60;
+
+    let finalWorkedSeconds = 0;
+    if (log.status === "COMPLETED") {
+        finalWorkedSeconds = (Number(log.total_work_minutes) || 0) * 60;
+    }
+
+    res.json({
+      status: log.clock_out ? "COMPLETED" : log.status,
+      clock_in: log.clock_in,
+      break_start: log.break_start, 
+      total_break_seconds: totalBreakSeconds,
+      worked_seconds: finalWorkedSeconds, 
+      break_seconds: totalBreakSeconds 
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: "Server Error" });
+  }
+});
+
+/* =====================================================
+   6. GET HISTORY
+===================================================== */
+router.get("/history/me", verifyToken, async (req, res) => {
   const employee_id = req.user.employee_id;
 
   try {
     const [rows] = await db.query(
-      `
-      SELECT
-        clock_in,
-        clock_out,
-        total_work_minutes,
-        total_break_minutes
-      FROM attendance_logs
-      WHERE employee_id = ?
-        AND log_date = CURDATE()
-      ORDER BY id DESC
-      LIMIT 1
-      `,
+      `SELECT log_date, clock_in, clock_out, total_work_minutes, total_break_minutes, 
+         CASE 
+            WHEN clock_out IS NULL THEN 'Working'
+            WHEN total_work_minutes < 240 THEN 'Half Day'
+            ELSE 'Present' 
+         END as status
+       FROM attendance_logs WHERE employee_id = ? ORDER BY log_date DESC LIMIT 30`,
       [employee_id]
     );
-
-    if (!rows.length) {
-      return res.json({
-        status: "NOT_STARTED",
-        clock_in: null,
-        worked_seconds: 0,
-        break_minutes: 0
-      });
-    }
-
-    const a = rows[0];
-    const now = new Date();
-
-    // 🔥 FIX: Calculate SECONDS for accurate live timer
-    let workedSeconds;
-    
-    if (a.clock_out) {
-        // If completed, use stored minutes (converted to seconds)
-        workedSeconds = (a.total_work_minutes || 0) * 60;
-    } else {
-        // If working, calculate real-time seconds difference
-        workedSeconds = Math.floor((now - new Date(a.clock_in)) / 1000);
-    }
-
-    res.json({
-      status: a.clock_out ? "COMPLETED" : "WORKING",
-      clock_in: a.clock_in, // Matches FE expectation
-      worked_seconds: Math.max(workedSeconds, 0), // Matches FE expectation
-      break_minutes: a.total_break_minutes || 0
-    });
-
-  } catch (err) {
-    console.error("today error:", err);
-    res.status(500).json({ error: "Failed to fetch attendance" });
-  }
-});
-
-/* =====================================================
-   HISTORY
-===================================================== */
-router.get("/history/:employee_id", verifyToken, async (req, res) => {
-  try {
-    const [rows] = await db.query(
-      `
-      SELECT
-        log_date,
-        clock_in,
-        clock_out,
-        CASE
-          WHEN clock_out IS NULL
-            THEN TIMESTAMPDIFF(MINUTE, clock_in, NOW())
-          ELSE TIMESTAMPDIFF(MINUTE, clock_in, clock_out)
-        END AS work_minutes
-      FROM attendance_logs
-      WHERE employee_id = ?
-      ORDER BY log_date DESC
-      LIMIT 30
-      `,
-      [req.params.employee_id]
-    );
-
     res.json(rows);
   } catch (err) {
-    console.error("history error:", err);
-    res.status(500).json([]);
-  }
-});
-
-/* =====================================================
-   TEAM SUMMARY
-===================================================== */
-router.get("/team/summary", verifyToken, async (req, res) => {
-  try {
-    const managerId = req.user.employee_id || req.user.id;
-
-    const [rows] = await db.query(
-      `
-      SELECT
-        COUNT(DISTINCT e.id) AS total,
-        COUNT(DISTINCT CASE WHEN al.id IS NOT NULL THEN e.id END) AS present,
-        COUNT(DISTINCT CASE WHEN l.id IS NOT NULL THEN e.id END) AS on_leave
-      FROM employees e
-      LEFT JOIN attendance_logs al
-        ON al.employee_id = e.id
-        AND al.log_date = CURDATE()
-      LEFT JOIN leaves l
-        ON l.employee_id = e.id
-        AND l.status = 'APPROVED'
-        AND CURDATE() BETWEEN l.start_date AND l.end_date
-      WHERE e.manager_id = ?
-      `,
-      [managerId]
-    );
-
-    const r = rows[0] || {};
-    const total = Number(r.total || 0);
-    const present = Number(r.present || 0);
-    const onLeave = Number(r.on_leave || 0);
-
-    res.json({
-      total,
-      present,
-      on_leave: onLeave,
-      absent: Math.max(total - present - onLeave, 0)
-    });
-  } catch (err) {
-    console.error("team summary error:", err);
-    res.status(500).json({ error: "Failed to fetch team summary" });
+    res.status(500).json({ error: "Server Error" });
   }
 });
 

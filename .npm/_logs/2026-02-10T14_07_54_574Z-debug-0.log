@@ -1,0 +1,262 @@
+0 verbose cli /usr/bin/node /usr/bin/npm
+1 info using npm@10.8.2
+2 info using node@v18.20.8
+3 silly config load:file:/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/home/ubuntu/.npmrc
+5 silly config load:file:/usr/etc/npmrc
+6 verbose title npm install socket.io
+7 verbose argv "install" "socket.io"
+8 verbose logfile logs-max:10 dir:/home/ubuntu/.npm/_logs/2026-02-10T14_07_54_574Z-
+9 verbose logfile /home/ubuntu/.npm/_logs/2026-02-10T14_07_54_574Z-debug-0.log
+10 silly packumentCache heap:492044288 maxSize:123011072 maxEntrySize:61505536
+11 silly logfile start cleaning logs, removing 1 files
+12 silly logfile done cleaning log files
+13 silly idealTree buildDeps
+14 silly fetch manifest socket.io@*
+15 silly packumentCache full:https://registry.npmjs.org/socket.io cache-miss
+16 http fetch GET 200 https://registry.npmjs.org/socket.io 115ms (cache miss)
+17 silly packumentCache full:https://registry.npmjs.org/socket.io set size:undefined disposed:false
+18 silly placeDep ROOT socket.io@4.8.3 OK for:  want: *
+19 silly fetch manifest accepts@~1.3.4
+20 silly packumentCache full:https://registry.npmjs.org/accepts cache-miss
+21 http fetch GET 200 https://registry.npmjs.org/accepts 33ms (cache miss)
+22 silly packumentCache full:https://registry.npmjs.org/accepts set size:undefined disposed:false
+23 silly fetch manifest base64id@~2.0.0
+24 silly packumentCache full:https://registry.npmjs.org/base64id cache-miss
+25 http fetch GET 200 https://registry.npmjs.org/base64id 83ms (cache miss)
+26 silly packumentCache full:https://registry.npmjs.org/base64id set size:undefined disposed:false
+27 silly fetch manifest cors@~2.8.5
+28 silly packumentCache full:https://registry.npmjs.org/cors cache-miss
+29 http fetch GET 200 https://registry.npmjs.org/cors 41ms (cache miss)
+30 silly packumentCache full:https://registry.npmjs.org/cors set size:undefined disposed:false
+31 silly fetch manifest engine.io@~6.6.0
+32 silly packumentCache full:https://registry.npmjs.org/engine.io cache-miss
+33 http fetch GET 200 https://registry.npmjs.org/engine.io 38ms (cache miss)
+34 silly packumentCache full:https://registry.npmjs.org/engine.io set size:undefined disposed:false
+35 silly fetch manifest socket.io-adapter@~2.5.2
+36 silly packumentCache full:https://registry.npmjs.org/socket.io-adapter cache-miss
+37 http fetch GET 200 https://registry.npmjs.org/socket.io-adapter 34ms (cache miss)
+38 silly packumentCache full:https://registry.npmjs.org/socket.io-adapter set size:undefined disposed:false
+39 silly fetch manifest socket.io-parser@~4.2.4
+40 silly packumentCache full:https://registry.npmjs.org/socket.io-parser cache-miss
+41 http fetch GET 200 https://registry.npmjs.org/socket.io-parser 29ms (cache miss)
+42 silly packumentCache full:https://registry.npmjs.org/socket.io-parser set size:undefined disposed:false
+43 silly placeDep ROOT accepts@1.3.8 OK for: socket.io@4.8.3 want: ~1.3.4
+44 silly placeDep ROOT base64id@2.0.0 OK for: socket.io@4.8.3 want: ~2.0.0
+45 silly placeDep ROOT cors@2.8.6 OK for: socket.io@4.8.3 want: ~2.8.5
+46 silly placeDep ROOT engine.io@6.6.5 OK for: socket.io@4.8.3 want: ~6.6.0
+47 silly placeDep ROOT socket.io-adapter@2.5.6 OK for: socket.io@4.8.3 want: ~2.5.2
+48 silly placeDep ROOT socket.io-parser@4.2.5 OK for: socket.io@4.8.3 want: ~4.2.4
+49 silly fetch manifest mime-types@~2.1.34
+50 silly packumentCache full:https://registry.npmjs.org/mime-types cache-miss
+51 http fetch GET 200 https://registry.npmjs.org/mime-types 43ms (cache miss)
+52 silly packumentCache full:https://registry.npmjs.org/mime-types set size:undefined disposed:false
+53 silly fetch manifest negotiator@0.6.3
+54 silly packumentCache full:https://registry.npmjs.org/negotiator cache-miss
+55 http fetch GET 200 https://registry.npmjs.org/negotiator 30ms (cache miss)
+56 silly packumentCache full:https://registry.npmjs.org/negotiator set size:undefined disposed:false
+57 silly fetch manifest object-assign@^4
+58 silly packumentCache full:https://registry.npmjs.org/object-assign cache-miss
+59 http fetch GET 200 https://registry.npmjs.org/object-assign 39ms (cache miss)
+60 silly packumentCache full:https://registry.npmjs.org/object-assign set size:undefined disposed:false
+61 silly fetch manifest vary@^1
+62 silly packumentCache full:https://registry.npmjs.org/vary cache-miss
+63 http fetch GET 200 https://registry.npmjs.org/vary 43ms (cache miss)
+64 silly packumentCache full:https://registry.npmjs.org/vary set size:undefined disposed:false
+65 silly fetch manifest @types/cors@^2.8.12
+66 silly packumentCache full:https://registry.npmjs.org/@types%2fcors cache-miss
+67 http fetch GET 200 https://registry.npmjs.org/@types%2fcors 43ms (cache miss)
+68 silly packumentCache full:https://registry.npmjs.org/@types%2fcors set size:undefined disposed:false
+69 silly fetch manifest @types/node@>=10.0.0
+70 silly packumentCache full:https://registry.npmjs.org/@types%2fnode cache-miss
+71 http fetch GET 200 https://registry.npmjs.org/@types%2fnode 151ms (cache miss)
+72 silly packumentCache full:https://registry.npmjs.org/@types%2fnode set size:undefined disposed:false
+73 silly fetch manifest cookie@~0.7.2
+74 silly packumentCache full:https://registry.npmjs.org/cookie cache-miss
+75 http fetch GET 200 https://registry.npmjs.org/cookie 36ms (cache miss)
+76 silly packumentCache full:https://registry.npmjs.org/cookie set size:undefined disposed:false
+77 silly fetch manifest engine.io-parser@~5.2.1
+78 silly packumentCache full:https://registry.npmjs.org/engine.io-parser cache-miss
+79 http fetch GET 200 https://registry.npmjs.org/engine.io-parser 64ms (cache miss)
+80 silly packumentCache full:https://registry.npmjs.org/engine.io-parser set size:undefined disposed:false
+81 silly fetch manifest ws@~8.18.3
+82 silly packumentCache full:https://registry.npmjs.org/ws cache-miss
+83 http fetch GET 200 https://registry.npmjs.org/ws 46ms (cache miss)
+84 silly packumentCache full:https://registry.npmjs.org/ws set size:undefined disposed:false
+85 silly fetch manifest @socket.io/component-emitter@~3.1.0
+86 silly packumentCache full:https://registry.npmjs.org/@socket.io%2fcomponent-emitter cache-miss
+87 http fetch GET 200 https://registry.npmjs.org/@socket.io%2fcomponent-emitter 61ms (cache miss)
+88 silly packumentCache full:https://registry.npmjs.org/@socket.io%2fcomponent-emitter set size:undefined disposed:false
+89 silly placeDep ROOT mime-types@2.1.35 OK for: accepts@1.3.8 want: ~2.1.34
+90 silly placeDep ROOT negotiator@0.6.3 OK for: accepts@1.3.8 want: 0.6.3
+91 silly fetch manifest mime-db@1.52.0
+92 silly packumentCache full:https://registry.npmjs.org/mime-db cache-miss
+93 http fetch GET 200 https://registry.npmjs.org/mime-db 27ms (cache miss)
+94 silly packumentCache full:https://registry.npmjs.org/mime-db set size:undefined disposed:false
+95 silly placeDep ROOT object-assign@4.1.1 OK for: cors@2.8.6 want: ^4
+96 silly placeDep ROOT vary@1.1.2 OK for: cors@2.8.6 want: ^1
+97 silly fetch manifest bufferutil@^4.0.1
+98 silly packumentCache full:https://registry.npmjs.org/bufferutil cache-miss
+99 http fetch GET 200 https://registry.npmjs.org/bufferutil 35ms (cache miss)
+100 silly packumentCache full:https://registry.npmjs.org/bufferutil set size:undefined disposed:false
+101 silly fetch manifest utf-8-validate@>=5.0.2
+102 silly packumentCache full:https://registry.npmjs.org/utf-8-validate cache-miss
+103 http fetch GET 200 https://registry.npmjs.org/utf-8-validate 34ms (cache miss)
+104 silly packumentCache full:https://registry.npmjs.org/utf-8-validate set size:undefined disposed:false
+105 silly placeDep ROOT @types/cors@2.8.19 OK for: engine.io@6.6.5 want: ^2.8.12
+106 silly placeDep ROOT @types/node@25.2.2 OK for: engine.io@6.6.5 want: >=10.0.0
+107 silly placeDep ROOT cookie@0.7.2 OK for: engine.io@6.6.5 want: ~0.7.2
+108 silly placeDep ROOT engine.io-parser@5.2.3 OK for: engine.io@6.6.5 want: ~5.2.1
+109 silly placeDep ROOT ws@8.18.3 OK for: engine.io@6.6.5 want: ~8.18.3
+110 silly fetch manifest @types/node@*
+111 silly packumentCache full:https://registry.npmjs.org/@types%2fnode cache-miss
+112 http fetch GET 200 https://registry.npmjs.org/@types%2fnode 31ms (cache hit)
+113 silly packumentCache full:https://registry.npmjs.org/@types%2fnode set size:10847993 disposed:false
+114 silly fetch manifest undici-types@~7.16.0
+115 silly packumentCache full:https://registry.npmjs.org/undici-types cache-miss
+116 http fetch GET 200 https://registry.npmjs.org/undici-types 29ms (cache miss)
+117 silly packumentCache full:https://registry.npmjs.org/undici-types set size:undefined disposed:false
+118 silly placeDep ROOT undici-types@7.16.0 OK for: @types/node@25.2.2 want: ~7.16.0
+119 silly placeDep ROOT mime-db@1.52.0 OK for: mime-types@2.1.35 want: 1.52.0
+120 silly placeDep ROOT @socket.io/component-emitter@3.1.2 OK for: socket.io-parser@4.2.5 want: ~3.1.0
+121 silly reify moves {}
+122 silly audit bulk request {
+122 silly audit   '@ioredis/commands': [ '1.5.0' ],
+122 silly audit   '@msgpackr-extract/msgpackr-extract-darwin-arm64': [ '3.0.3' ],
+122 silly audit   '@msgpackr-extract/msgpackr-extract-darwin-x64': [ '3.0.3' ],
+122 silly audit   '@msgpackr-extract/msgpackr-extract-linux-arm': [ '3.0.3' ],
+122 silly audit   '@msgpackr-extract/msgpackr-extract-linux-arm64': [ '3.0.3' ],
+122 silly audit   '@msgpackr-extract/msgpackr-extract-linux-x64': [ '3.0.3' ],
+122 silly audit   '@msgpackr-extract/msgpackr-extract-win32-x64': [ '3.0.3' ],
+122 silly audit   bull: [ '4.16.5' ],
+122 silly audit   'cluster-key-slot': [ '1.1.2' ],
+122 silly audit   'cron-parser': [ '4.9.0' ],
+122 silly audit   dayjs: [ '1.11.19' ],
+122 silly audit   debug: [ '4.4.3' ],
+122 silly audit   denque: [ '2.1.0' ],
+122 silly audit   'detect-libc': [ '2.1.2' ],
+122 silly audit   'get-port': [ '5.1.1' ],
+122 silly audit   ioredis: [ '5.9.2' ],
+122 silly audit   lodash: [ '4.17.23' ],
+122 silly audit   'lodash.defaults': [ '4.2.0' ],
+122 silly audit   'lodash.isarguments': [ '3.1.0' ],
+122 silly audit   luxon: [ '3.7.2' ],
+122 silly audit   ms: [ '2.1.3' ],
+122 silly audit   msgpackr: [ '1.11.8' ],
+122 silly audit   'msgpackr-extract': [ '3.0.3' ],
+122 silly audit   'node-gyp-build-optional-packages': [ '5.2.2' ],
+122 silly audit   'redis-errors': [ '1.2.0' ],
+122 silly audit   'redis-parser': [ '3.0.0' ],
+122 silly audit   semver: [ '7.7.4' ],
+122 silly audit   'standard-as-callback': [ '2.1.0' ],
+122 silly audit   uuid: [ '8.3.2' ],
+122 silly audit   'socket.io': [ '4.8.3' ],
+122 silly audit   accepts: [ '1.3.8' ],
+122 silly audit   base64id: [ '2.0.0' ],
+122 silly audit   cors: [ '2.8.6' ],
+122 silly audit   'engine.io': [ '6.6.5' ],
+122 silly audit   'socket.io-adapter': [ '2.5.6' ],
+122 silly audit   'socket.io-parser': [ '4.2.5' ],
+122 silly audit   'mime-types': [ '2.1.35' ],
+122 silly audit   negotiator: [ '0.6.3' ],
+122 silly audit   'object-assign': [ '4.1.1' ],
+122 silly audit   vary: [ '1.1.2' ],
+122 silly audit   '@types/cors': [ '2.8.19' ],
+122 silly audit   '@types/node': [ '25.2.2' ],
+122 silly audit   cookie: [ '0.7.2' ],
+122 silly audit   'engine.io-parser': [ '5.2.3' ],
+122 silly audit   ws: [ '8.18.3' ],
+122 silly audit   'undici-types': [ '7.16.0' ],
+122 silly audit   'mime-db': [ '1.52.0' ],
+122 silly audit   '@socket.io/component-emitter': [ '3.1.2' ]
+122 silly audit }
+123 verbose reify failed optional dependency /home/ubuntu/node_modules/@msgpackr-extract/msgpackr-extract-win32-x64
+124 silly reify mark deleted [
+124 silly reify   '/home/ubuntu/node_modules/@msgpackr-extract/msgpackr-extract-win32-x64'
+124 silly reify ]
+125 verbose reify failed optional dependency /home/ubuntu/node_modules/@msgpackr-extract/msgpackr-extract-linux-arm64
+126 silly reify mark deleted [
+126 silly reify   '/home/ubuntu/node_modules/@msgpackr-extract/msgpackr-extract-linux-arm64'
+126 silly reify ]
+127 verbose reify failed optional dependency /home/ubuntu/node_modules/@msgpackr-extract/msgpackr-extract-linux-arm
+128 silly reify mark deleted [
+128 silly reify   '/home/ubuntu/node_modules/@msgpackr-extract/msgpackr-extract-linux-arm'
+128 silly reify ]
+129 verbose reify failed optional dependency /home/ubuntu/node_modules/@msgpackr-extract/msgpackr-extract-darwin-x64
+130 silly reify mark deleted [
+130 silly reify   '/home/ubuntu/node_modules/@msgpackr-extract/msgpackr-extract-darwin-x64'
+130 silly reify ]
+131 verbose reify failed optional dependency /home/ubuntu/node_modules/@msgpackr-extract/msgpackr-extract-darwin-arm64
+132 silly reify mark deleted [
+132 silly reify   '/home/ubuntu/node_modules/@msgpackr-extract/msgpackr-extract-darwin-arm64'
+132 silly reify ]
+133 silly tarball no local data for @socket.io/component-emitter@https://registry.npmjs.org/@socket.io/component-emitter/-/component-emitter-3.1.2.tgz. Extracting by manifest.
+134 silly tarball no local data for mime-db@https://registry.npmjs.org/mime-db/-/mime-db-1.52.0.tgz. Extracting by manifest.
+135 silly tarball no local data for undici-types@https://registry.npmjs.org/undici-types/-/undici-types-7.16.0.tgz. Extracting by manifest.
+136 silly tarball no local data for engine.io-parser@https://registry.npmjs.org/engine.io-parser/-/engine.io-parser-5.2.3.tgz. Extracting by manifest.
+137 silly tarball no local data for cookie@https://registry.npmjs.org/cookie/-/cookie-0.7.2.tgz. Extracting by manifest.
+138 silly tarball no local data for @types/node@https://registry.npmjs.org/@types/node/-/node-25.2.2.tgz. Extracting by manifest.
+139 silly tarball no local data for ws@https://registry.npmjs.org/ws/-/ws-8.18.3.tgz. Extracting by manifest.
+140 silly tarball no local data for @types/cors@https://registry.npmjs.org/@types/cors/-/cors-2.8.19.tgz. Extracting by manifest.
+141 silly tarball no local data for vary@https://registry.npmjs.org/vary/-/vary-1.1.2.tgz. Extracting by manifest.
+142 silly tarball no local data for object-assign@https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz. Extracting by manifest.
+143 silly tarball no local data for negotiator@https://registry.npmjs.org/negotiator/-/negotiator-0.6.3.tgz. Extracting by manifest.
+144 silly tarball no local data for mime-types@https://registry.npmjs.org/mime-types/-/mime-types-2.1.35.tgz. Extracting by manifest.
+145 silly tarball no local data for socket.io-parser@https://registry.npmjs.org/socket.io-parser/-/socket.io-parser-4.2.5.tgz. Extracting by manifest.
+146 silly tarball no local data for socket.io-adapter@https://registry.npmjs.org/socket.io-adapter/-/socket.io-adapter-2.5.6.tgz. Extracting by manifest.
+147 silly tarball no local data for engine.io@https://registry.npmjs.org/engine.io/-/engine.io-6.6.5.tgz. Extracting by manifest.
+148 silly tarball no local data for cors@https://registry.npmjs.org/cors/-/cors-2.8.6.tgz. Extracting by manifest.
+149 silly tarball no local data for base64id@https://registry.npmjs.org/base64id/-/base64id-2.0.0.tgz. Extracting by manifest.
+150 silly tarball no local data for accepts@https://registry.npmjs.org/accepts/-/accepts-1.3.8.tgz. Extracting by manifest.
+151 silly tarball no local data for socket.io@https://registry.npmjs.org/socket.io/-/socket.io-4.8.3.tgz. Extracting by manifest.
+152 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 210ms
+153 silly audit report {}
+154 http fetch GET 200 https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz 199ms (cache miss)
+155 http fetch GET 200 https://registry.npmjs.org/vary/-/vary-1.1.2.tgz 206ms (cache miss)
+156 http fetch GET 200 https://registry.npmjs.org/base64id/-/base64id-2.0.0.tgz 199ms (cache miss)
+157 http fetch GET 200 https://registry.npmjs.org/mime-types/-/mime-types-2.1.35.tgz 207ms (cache miss)
+158 http fetch GET 200 https://registry.npmjs.org/@types/cors/-/cors-2.8.19.tgz 214ms (cache miss)
+159 http fetch GET 200 https://registry.npmjs.org/negotiator/-/negotiator-0.6.3.tgz 213ms (cache miss)
+160 http fetch GET 200 https://registry.npmjs.org/@socket.io/component-emitter/-/component-emitter-3.1.2.tgz 223ms (cache miss)
+161 http fetch GET 200 https://registry.npmjs.org/accepts/-/accepts-1.3.8.tgz 209ms (cache miss)
+162 http fetch GET 200 https://registry.npmjs.org/cors/-/cors-2.8.6.tgz 212ms (cache miss)
+163 http fetch GET 200 https://registry.npmjs.org/cookie/-/cookie-0.7.2.tgz 224ms (cache miss)
+164 http fetch GET 200 https://registry.npmjs.org/mime-db/-/mime-db-1.52.0.tgz 251ms (cache miss)
+165 http fetch GET 200 https://registry.npmjs.org/socket.io-adapter/-/socket.io-adapter-2.5.6.tgz 242ms (cache miss)
+166 http fetch GET 200 https://registry.npmjs.org/socket.io-parser/-/socket.io-parser-4.2.5.tgz 252ms (cache miss)
+167 http fetch GET 200 https://registry.npmjs.org/engine.io-parser/-/engine.io-parser-5.2.3.tgz 275ms (cache miss)
+168 http fetch GET 200 https://registry.npmjs.org/ws/-/ws-8.18.3.tgz 275ms (cache miss)
+169 http fetch GET 200 https://registry.npmjs.org/engine.io/-/engine.io-6.6.5.tgz 276ms (cache miss)
+170 http fetch GET 200 https://registry.npmjs.org/undici-types/-/undici-types-7.16.0.tgz 289ms (cache miss)
+171 http fetch GET 200 https://registry.npmjs.org/socket.io/-/socket.io-4.8.3.tgz 299ms (cache miss)
+172 http fetch GET 200 https://registry.npmjs.org/@types/node/-/node-25.2.2.tgz 333ms (cache miss)
+173 silly ADD node_modules/@socket.io/component-emitter
+174 silly ADD node_modules/mime-db
+175 silly ADD node_modules/undici-types
+176 silly ADD node_modules/ws
+177 silly ADD node_modules/engine.io-parser
+178 silly ADD node_modules/cookie
+179 silly ADD node_modules/@types/node
+180 silly ADD node_modules/@types/cors
+181 silly ADD node_modules/vary
+182 silly ADD node_modules/object-assign
+183 silly ADD node_modules/negotiator
+184 silly ADD node_modules/mime-types
+185 silly ADD node_modules/socket.io-parser
+186 silly ADD node_modules/socket.io-adapter
+187 silly ADD node_modules/engine.io
+188 silly ADD node_modules/cors
+189 silly ADD node_modules/base64id
+190 silly ADD node_modules/accepts
+191 silly ADD node_modules/socket.io
+192 silly ADD
+193 silly ADD
+194 silly ADD
+195 silly ADD
+196 silly ADD
+197 verbose cwd /home/ubuntu
+198 verbose os Linux 6.14.0-1018-aws
+199 verbose node v18.20.8
+200 verbose npm  v10.8.2
+201 verbose exit 0
+202 info ok

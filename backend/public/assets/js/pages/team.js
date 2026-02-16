@@ -36,7 +36,7 @@
                     <div class="org-card ${roleClass}" onclick="window.teamActions.viewProfile(${emp.id})">
                         <div class="org-avatar">${emp.name.charAt(0)}</div>
                         <span class="org-name">${emp.name}</span>
-                        <span class="org-role">${emp.designation || 'Staff'}</span>
+                        <span class="org-role">${emp.designation || 'Admin'}</span>
                     </div>`;
 
             if (children.length > 0) {
@@ -92,7 +92,7 @@
                     return `
                     <div class="card p-3 mb-2 text-center shadow-sm" style="width: 280px; border-left: 5px solid ${isSelected ? '#4f46e5' : '#ccc'};">
                         <h5 class="mb-1" style="font-weight:700">${node.name}</h5>
-                        <p class="text-muted mb-0 small">${node.designation || 'Staff'}</p>
+                        <p class="text-muted mb-0 small">${node.designation || 'Admin'}</p>
                         ${isTop ? '<span class="badge bg-warning text-dark mt-2">👑 Top Level</span>' : ''}
                         ${isSelected ? '<span class="badge bg-primary mt-2">🎯 Selected</span>' : ''}
                     </div>
@@ -121,7 +121,7 @@
             const mgr = allEmployees.find(m => m.id == emp.manager_id);
 
             document.getElementById("modalName").innerText = emp.name;
-            document.getElementById("modalRole").innerText = emp.designation || 'Staff';
+            document.getElementById("modalRole").innerText = emp.designation || 'Admin';
             if(document.getElementById("modalId")) document.getElementById("modalId").innerText = `#${emp.id}`;
             document.getElementById("modalManager").innerText = mgr ? mgr.name : 'None';
             document.getElementById("modalAvatar").innerText = emp.name.charAt(0);

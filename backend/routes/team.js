@@ -105,4 +105,66 @@ router.get("/path/:id", verifyToken, async (req, res) => {
     }
 });
 
+router.get("/attendance/today", verifyToken, async (req, res) => {
+  try {
+
+    const userId = req.user.id;
+
+    // Get logged-in employee id
+    const [empRow] = await db.query(
+      `SELECT id FROM employees WHERE user_id = ? LIMIT 1`,
+      [userId]
+    );
+
+    if (!empRow.length) {
+      return res.status(404).json({ message: "Employee not found" });
+    }
+
+    const myEmpId = empRow[0].id;
+
+    // Get team (manager + subordinates)
+    const [rows] = await db.query(`
+      WITH RECURSIVE team_tree AS (
+        SELECT id FROM employees WHERE id = ?
+        UNION ALL
+        SELECT e.id
+        FROM employees e
+        INNER JOIN team_tree t ON e.manager_id = t.id
+      )
+      SELECT 
+        e.id,
+        e.name,
+        al.clock_in,
+        al.clock_out
+      FROM employees e
+      JOIN team_tree tt ON tt.id = e.id
+      LEFT JOIN attendance_logs al 
+        ON al.employee_id = e.id
+        AND al.log_date = CURDATE()
+    `, [myEmpId]);
+
+    const result = rows.map(r => {
+      let status = "Absent";
+
+      if (r.clock_in && !r.clock_out) {
+        status = "Working";
+      } else if (r.clock_in && r.clock_out) {
+        status = "Clocked Out";
+      }
+
+      return {
+        name: r.name,
+        status
+      };
+    });
+
+    res.json(result);
+
+  } catch (err) {
+    console.error("Team Attendance Error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 module.exports = router;

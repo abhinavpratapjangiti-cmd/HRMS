@@ -13,7 +13,7 @@ const getHeaders = () => ({
    ========================================= */
 document.addEventListener("DOMContentLoaded", () => {
     console.log("HRMS Manager Initialized");
-    // The HTML auto-click script will trigger refreshAll(), but we call it here too just in case.
+    // Trigger initial load
     if (typeof window.refreshAll === 'function') {
         window.refreshAll();
     }
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 window.refreshAll = function() {
     loadEmployees();
     loadStats();
-    loadDepartmentDistribution(); 
+    loadDepartmentDistribution();
 };
 
 /* =========================================
@@ -30,7 +30,6 @@ window.refreshAll = function() {
    ========================================= */
 async function loadEmployees() {
     const tableBody = document.getElementById("employeesList");
-    // Show spinner while loading
     tableBody.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary" role="status"></div><div class="mt-2 text-muted">Loading directory...</div></div>';
 
     try {
@@ -39,7 +38,6 @@ async function loadEmployees() {
         if (!res.ok) throw new Error(`Server returned ${res.status}`);
 
         const data = await res.json();
-        // Handle different possible response structures (array vs object)
         const employees = Array.isArray(data) ? data : (data.employees || data.users || []);
 
         if (employees.length === 0) {
@@ -66,6 +64,7 @@ async function loadStats() {
         const statsBox = document.getElementById("orgStats");
 
         if (statsBox && data) {
+            // Backend now handles the correct "Managers" and "Active" counts logic
             statsBox.innerHTML = `
                 <div class="stat-row"><span>Total Employees</span><span class="fw-bold">${data.total || 0}</span></div>
                 <div class="stat-row"><span>Managers</span><span class="fw-bold">${data.managers || 0}</span></div>
@@ -79,7 +78,7 @@ async function loadStats() {
 
 async function loadDepartmentDistribution() {
     let container = document.getElementById("deptDistribution");
-    // Fallback: search by text if ID is missing
+    // Fallback search if ID is missing (robustness)
     if (!container) {
          const allDivs = document.querySelectorAll('.card-body');
          for (let div of allDivs) {
@@ -121,7 +120,7 @@ function renderTable(employees) {
     container.innerHTML = "";
 
     employees.forEach(emp => {
-        // Safe Data Extraction with Fallbacks
+        // Safe Data Extraction
         const name = emp.name || emp.username || "Unknown";
         const email = emp.email || "No Email";
         const role = emp.role || "employee";
@@ -129,22 +128,25 @@ function renderTable(employees) {
         const employeeId = emp.employee_id || emp.id;
         const department = emp.department || "IT";
         const managerId = emp.manager_id || "";
-        
-        // Handle Manager Name safely
+        const designation = emp.designation || ""; 
         const managerName = emp.manager_name || "No Manager";
 
-        // Create Row Element
         const row = document.createElement("div");
         row.className = "employee-row border-bottom py-3";
-        
-        // Grid Layout Calculation (Total = 12 columns)
-        // Name(3) + Role(2) + Status(2) + Reporting Manager(3) + Actions(2)
+
+        // Escape strings to prevent JS syntax errors in onclick
+        const safeName = name.replace(/'/g, "\\'");
+        const safeEmail = email.replace(/'/g, "\\'");
+        const safeRole = role.replace(/'/g, "\\'");
+        const safeDept = department.replace(/'/g, "\\'");
+        const safeDesig = designation.replace(/'/g, "\\'");
+
         row.innerHTML = `
             <div class="row align-items-center">
-                
                 <div class="col-md-3">
                     <div class="fw-bold text-dark text-truncate" title="${name}">${name}</div>
                     <div class="small text-muted text-truncate" title="${email}">${email}</div>
+                    ${designation ? `<div class="small text-primary fst-italic text-truncate">${designation}</div>` : ''}
                 </div>
 
                 <div class="col-md-2">
@@ -169,10 +171,10 @@ function renderTable(employees) {
                 <div class="col-md-2 text-end">
                     <button class="btn btn-sm btn-outline-primary me-1"
                             title="Edit User"
-                            onclick="window.openEditModal('${userId}', '${employeeId}', '${name}', '${email}', '${role}', '${managerId}', '${department}')">
+                            onclick="window.openEditModal('${userId}', '${employeeId}', '${safeName}', '${safeEmail}', '${safeRole}', '${managerId}', '${safeDept}', '${safeDesig}')">
                         <i class="fa fa-edit"></i>
                     </button>
-                    <button class="btn btn-sm btn-outline-danger" 
+                    <button class="btn btn-sm btn-outline-danger"
                             title="Delete User"
                             onclick="window.deleteEmployee('${employeeId}')">
                         <i class="fa fa-trash"></i>
@@ -187,10 +189,10 @@ function updateManagerDropdown(employees) {
     const createSelect = document.getElementById("createManager");
     const editSelect = document.getElementById("edit-manager");
     const defaultOption = '<option value="">No reporting manager</option>';
-    
-    // Filter for people who can be managers (Admin, HR, Manager)
+
+    // Allow Admin, HR, Manager, and technically 'intern' if they are set as a manager in DB
     const managers = employees.filter(e => ['manager', 'admin', 'hr'].includes((e.role || '').toLowerCase()));
-    
+
     const managerOptions = managers.map(m => `<option value="${m.employee_id || m.id}">${m.name}</option>`).join('');
 
     if (createSelect) createSelect.innerHTML = defaultOption + managerOptions;
@@ -198,15 +200,18 @@ function updateManagerDropdown(employees) {
 }
 
 function calculateStatsLocally(employees) {
+    // This is a visual fallback. The real source of truth is the loadStats() function 
+    // which calls the backend, but this updates the UI instantly if the user just created someone.
     const statsBox = document.getElementById("orgStats");
-    // Only update if it's still showing the "Loading..." text
     if (statsBox && statsBox.innerText.includes("Loading")) {
         const total = employees.length;
         const managers = employees.filter(e => (e.role || '').toLowerCase() === 'manager').length;
+        const active = employees.filter(e => e.active).length;
+
         statsBox.innerHTML = `
             <div class="stat-row"><span>Total Employees</span><span class="fw-bold">${total}</span></div>
             <div class="stat-row"><span>Managers</span><span class="fw-bold">${managers}</span></div>
-            <div class="stat-row text-success"><span>Active Users</span><span class="fw-bold">${total}</span></div>
+            <div class="stat-row text-success"><span>Active Users</span><span class="fw-bold">${active}</span></div>
         `;
     }
 }
@@ -216,18 +221,17 @@ function calculateStatsLocally(employees) {
    ========================================= */
 window.createUser = async function() {
     const btn = document.getElementById("createBtn");
-    const nameInput = document.getElementById("name");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-
+    
+    // Gather values
     const payload = {
-        name: nameInput ? nameInput.value.trim() : "",
-        email: emailInput ? emailInput.value.trim() : "",
-        password: passwordInput ? passwordInput.value : "Welcome123",
-        role: document.getElementById("role") ? document.getElementById("role").value : "employee",
-        department: document.getElementById("department") ? document.getElementById("department").value : "IT",
-        client_name: document.getElementById("client") ? document.getElementById("client").value : "Internal",
-        manager_id: document.getElementById("createManager") ? document.getElementById("createManager").value : null
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        password: document.getElementById("password").value || "Welcome123",
+        role: document.getElementById("role").value,
+        department: document.getElementById("department").value,
+        designation: document.getElementById("designation") ? document.getElementById("designation").value.trim() : "",
+        client_name: document.getElementById("client").value || "Internal",
+        manager_id: document.getElementById("createManager").value || null
     };
 
     if (!payload.name || !payload.email) {
@@ -248,11 +252,12 @@ window.createUser = async function() {
         if (res.ok) {
             alert("User created successfully!");
             // Clear inputs
-            if(nameInput) nameInput.value = "";
-            if(emailInput) emailInput.value = "";
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+            if(document.getElementById("designation")) document.getElementById("designation").value = "";
             refreshAll();
         } else {
-            // This is where "Invalid role" alert comes from
             alert("Error: " + (result.message || "Failed to create user"));
         }
     } catch (e) {
@@ -263,22 +268,28 @@ window.createUser = async function() {
     }
 };
 
-window.openEditModal = function(userId, employeeId, name, email, role, managerId, department) {
-    document.getElementById("edit-id").value = userId;          
-    document.getElementById("edit-emp-id").value = employeeId; 
+window.openEditModal = function(userId, employeeId, name, email, role, managerId, department, designation) {
+    // Populate hidden IDs
+    document.getElementById("edit-id").value = userId;
+    document.getElementById("edit-emp-id").value = employeeId;
+    
+    // Populate Editable Fields
     document.getElementById("edit-name").value = name;
     document.getElementById("edit-email").value = email;
     document.getElementById("edit-role").value = (role || 'employee').toLowerCase();
+    
+    // Check existence before setting value to avoid null errors
+    if(document.getElementById("edit-department")) document.getElementById("edit-department").value = department || "IT";
+    if(document.getElementById("edit-designation")) document.getElementById("edit-designation").value = designation || "";
+    if(document.getElementById("edit-manager")) document.getElementById("edit-manager").value = managerId || "";
 
-    const deptEl = document.getElementById("edit-department");
-    if (deptEl) deptEl.value = department || "IT";
-
-    const managerEl = document.getElementById("edit-manager");
-    if (managerEl) managerEl.value = managerId || "";
-
+    // Show Bootstrap Modal
     const modalEl = document.getElementById('editModal');
     if (modalEl) {
-        const modal = new bootstrap.Modal(modalEl);
+        let modal = bootstrap.Modal.getInstance(modalEl);
+        if (!modal) {
+            modal = new bootstrap.Modal(modalEl);
+        }
         modal.show();
     }
 };
@@ -286,13 +297,19 @@ window.openEditModal = function(userId, employeeId, name, email, role, managerId
 window.saveEdit = async function() {
     const userId = document.getElementById("edit-id").value;
     const employeeId = document.getElementById("edit-emp-id").value;
+    
+    // Get Editable Values
+    const newName = document.getElementById("edit-name").value.trim();
+    const newEmail = document.getElementById("edit-email").value.trim();
     const newRole = document.getElementById("edit-role").value;
-    const newManager = document.getElementById("edit-manager").value;
+    const newDept = document.getElementById("edit-department").value;
+    const newDesignation = document.getElementById("edit-designation").value.trim();
+    const newManager = document.getElementById("edit-manager").value || null;
 
     try {
         const promises = [];
 
-        // 1. Update Role
+        // 1. Update User Role (Access Level)
         if (newRole) {
             promises.push(
                 fetch(`${API_BASE}/api/users/${userId}/role`, {
@@ -303,16 +320,23 @@ window.saveEdit = async function() {
             );
         }
 
-        // 2. Update Reporting Manager
-        if (newManager !== undefined) {
-             promises.push(
-                fetch(`${API_BASE}/api/users/${employeeId}/manager`, {
-                    method: "PATCH",
-                    headers: getHeaders(),
-                    body: JSON.stringify({ manager_id: newManager || null })
-                })
-            );
-        }
+        // 2. Update Employee Profile Details (Consolidated Request)
+        // This includes Name, Email, Dept, Designation, and Manager
+        const employeePayload = {
+            name: newName,
+            email: newEmail,
+            department: newDept,
+            designation: newDesignation,
+            manager_id: newManager
+        };
+
+        promises.push(
+            fetch(`${API_BASE}/api/users/${employeeId}`, { 
+                method: "PATCH", 
+                headers: getHeaders(),
+                body: JSON.stringify(employeePayload)
+            })
+        );
 
         await Promise.all(promises);
 
@@ -325,7 +349,7 @@ window.saveEdit = async function() {
 
     } catch (e) {
         console.error(e);
-        alert("Network Error: Could not connect to server.");
+        alert("Network Error: Could not connect to server or update failed.");
     }
 };
 
@@ -335,11 +359,9 @@ window.deleteEmployee = async function(employeeId) {
     }
 
     try {
-        console.log(`Attempting to delete employee ID: ${employeeId}`);
-
         const response = await fetch(`${API_BASE}/api/users/${employeeId}`, {
             method: 'DELETE',
-            headers: getHeaders() 
+            headers: getHeaders()
         });
 
         const result = await response.json();
@@ -350,7 +372,6 @@ window.deleteEmployee = async function(employeeId) {
         } else {
             alert(`Error: ${result.message}`);
         }
-
     } catch (error) {
         console.error("Delete failed:", error);
         alert("Server error. Please check the console.");

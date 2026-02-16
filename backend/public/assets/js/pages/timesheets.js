@@ -1,5 +1,5 @@
 /* =====================================================
-   TIMESHEETS – MY + TEAM APPROVAL (FINAL, LOCKED)
+   TIMESHEETS – MY + TEAM APPROVAL (FINAL, HARDENED)
    Compatible with OPTION A (Recursive Calendar)
 ===================================================== */
 
@@ -16,8 +16,50 @@ console.log("🚀 timesheets.js LOADED — FINAL");
   window.__timesheetsLoaded = true;
 
   /* =====================================================
+     API HELPERS (ADDED – FIXES apiPut ERROR)
+  ===================================================== */
+
+  async function apiGet(url) {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`/api${url}`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || "GET request failed");
+    }
+
+    return res.json();
+  }
+
+  async function apiPut(url, body) {
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`/api${url}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || "PUT request failed");
+    }
+
+    return res.json();
+  }
+
+  /* =====================================================
      HELPERS
   ===================================================== */
+
   function getUserRole() {
     try {
       return (JSON.parse(localStorage.getItem("user"))?.role || "").toLowerCase();
@@ -46,9 +88,15 @@ console.log("🚀 timesheets.js LOADED — FINAL");
     return new Date(date).toLocaleDateString("en-IN");
   }
 
+  function normalizeStatus(status) {
+    if (!status) return "";
+    return status.toUpperCase();
+  }
+
   /* =====================================================
      MY TIMESHEETS
   ===================================================== */
+
   let myInitDone = false;
 
   function initMyTimesheets() {
@@ -99,7 +147,6 @@ console.log("🚀 timesheets.js LOADED — FINAL");
     const tbody = document.getElementById("timesheetBody");
     if (!tbody) return;
 
-    /* ❌ DO NOT CALL API IF MONTH IS EMPTY */
     if (!month) {
       renderEmptyTimesheet();
       toggleMyExcel(false);
@@ -123,13 +170,13 @@ console.log("🚀 timesheets.js LOADED — FINAL");
 
       tbody.innerHTML = rows.map(r => {
         const type = r.type || "";
-        const status = r.status || "";
+        const status = normalizeStatus(r.status);
 
         const rowClass =
           type === "HOL" ? "table-warning" :
           type === "WO"  ? "table-secondary" :
-          status === "Approved" ? "table-success" :
-          status === "Rejected" ? "table-danger" :
+          status === "APPROVED" ? "table-success" :
+          status === "REJECTED" ? "table-danger" :
           "";
 
         const typeBadge =
@@ -139,9 +186,9 @@ console.log("🚀 timesheets.js LOADED — FINAL");
           `<span class="text-muted">—</span>`;
 
         const statusBadge =
-          status === "Approved"  ? `<span class="badge bg-success">Approved</span>` :
-          status === "Rejected"  ? `<span class="badge bg-danger">Rejected</span>` :
-          status === "Submitted" ? `<span class="badge bg-warning text-dark">Submitted</span>` :
+          status === "APPROVED"  ? `<span class="badge bg-success">Approved</span>` :
+          status === "REJECTED"  ? `<span class="badge bg-danger">Rejected</span>` :
+          status === "SUBMITTED" ? `<span class="badge bg-warning text-dark">Submitted</span>` :
           `<span class="text-muted">—</span>`;
 
         const hours =
@@ -190,6 +237,7 @@ console.log("🚀 timesheets.js LOADED — FINAL");
   /* =====================================================
      TEAM APPROVAL
   ===================================================== */
+
   async function loadApprovalTimesheets() {
     const tbody = document.getElementById("approvalTable");
     const monthInput = document.getElementById("approvalMonth");
@@ -221,11 +269,11 @@ console.log("🚀 timesheets.js LOADED — FINAL");
             </td>
             <td class="text-end">
               <button class="btn btn-sm btn-success me-2"
-                onclick="updateTimesheetStatus(${r.id}, 'Approved')">
+                onclick="updateTimesheetStatus(${r.id}, 'APPROVED')">
                 Approve
               </button>
               <button class="btn btn-sm btn-danger"
-                onclick="updateTimesheetStatus(${r.id}, 'Rejected')">
+                onclick="updateTimesheetStatus(${r.id}, 'REJECTED')">
                 Reject
               </button>
             </td>
@@ -240,13 +288,20 @@ console.log("🚀 timesheets.js LOADED — FINAL");
 
   window.updateTimesheetStatus = async function (id, status) {
     if (!confirm(`Mark timesheet as ${status}?`)) return;
-    await apiPut(`/timesheets/${id}/status`, { status });
-    loadApprovalTimesheets();
+
+    try {
+      await apiPut(`/timesheets/${id}/status`, { status });
+      loadApprovalTimesheets();
+    } catch (err) {
+      console.error("STATUS UPDATE FAILED:", err);
+      alert("Failed to update status");
+    }
   };
 
   /* =====================================================
      EXCEL DOWNLOADS
   ===================================================== */
+
   function downloadExcel(url, filename) {
     const token = localStorage.getItem("token");
 
@@ -273,6 +328,7 @@ console.log("🚀 timesheets.js LOADED — FINAL");
   window.downloadMyTimesheetExcel = () => {
     const m = document.getElementById("myTimesheetMonth")?.value;
     if (!m) return;
+
     downloadExcel(
       `/api/timesheets/my/calendar/excel?month=${m}`,
       `Timesheet-${m}.xlsx`
@@ -282,6 +338,7 @@ console.log("🚀 timesheets.js LOADED — FINAL");
   window.downloadTeamTimesheetExcel = () => {
     const m = document.getElementById("approvalMonth")?.value;
     if (!m) return;
+
     downloadExcel(
       `/api/timesheets/export/team/excel?month=${m}`,
       `Team-Timesheets-${m}.xlsx`
@@ -291,6 +348,7 @@ console.log("🚀 timesheets.js LOADED — FINAL");
   /* =====================================================
      PAGE INIT (CALLED BY ROUTER)
   ===================================================== */
+
   window.initTimesheets = function () {
     const role = getUserRole();
 

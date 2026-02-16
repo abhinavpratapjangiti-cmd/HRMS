@@ -1,6 +1,7 @@
 /* ======================================================
-   notifications.js — FINAL, REALTIME + POLLING (FIXED)
-   BOOTSTRAP-SAFE, SPA-SAFE (ES5)
+   notifications.js — PRODUCTION READY
+   REALTIME (SOCKET.IO) + SAFE FALLBACK
+   SPA SAFE | BOOTSTRAP SAFE | TOKEN SAFE
 ====================================================== */
 
 console.log("notifications.js loaded");
@@ -9,9 +10,13 @@ console.log("notifications.js loaded");
   if (window.__notificationsInitialized) return;
   window.__notificationsInitialized = true;
 
+  var API_BASE = "http://16.16.18.115:5000";
   var pollTimer = null;
+  var socket = null;
+  var seenNotificationIds = {};
 
-  /* ================= NOTIFICATION SOUND ================= */
+  /* ================= SOUND SYSTEM ================= */
+
   var notificationSound = new Audio("/assets/sounds/notification.mp3");
   notificationSound.volume = 0.6;
 
@@ -26,12 +31,10 @@ console.log("notifications.js loaded");
         notificationSound.pause();
         notificationSound.currentTime = 0;
         audioUnlocked = true;
-        console.log("🔊 Notification sound unlocked");
       })
       .catch(function () {});
   }
 
-  // Browser autoplay requirement
   document.addEventListener("click", unlockNotificationAudio, { once: true });
   document.addEventListener("keydown", unlockNotificationAudio, { once: true });
 
@@ -39,20 +42,33 @@ console.log("notifications.js loaded");
     if (!audioUnlocked) return;
 
     var now = Date.now();
-    if (now - lastSoundAt < 1500) return; // anti-spam
+    if (now - lastSoundAt < 1500) return;
     lastSoundAt = now;
 
     notificationSound.currentTime = 0;
     notificationSound.play().catch(function () {});
   }
 
-  /* ================= AUTH HEADERS ================= */
+  /* ================= AUTH ================= */
+
   function authHeaders() {
     var token = localStorage.getItem("token");
-    return token ? { Authorization: "Bearer " + token } : {};
+    return token
+      ? {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token
+        }
+      : {};
   }
 
-  /* ================= HELPERS ================= */
+  function getUser() {
+    try {
+      return JSON.parse(localStorage.getItem("user") || "{}");
+    } catch (e) {
+      return {};
+    }
+  }
+
   function $(id) {
     return document.getElementById(id);
   }
@@ -62,27 +78,27 @@ console.log("notifications.js loaded");
     return isNaN(d.getTime()) ? "--" : d.toLocaleString();
   }
 
-  /* ================= BOOTSTRAP DROPDOWN CONTROL ================= */
-  function closeNotificationDropdown() {
-    if (!window.bootstrap) return;
+  /* ================= LOAD NOTIFICATIONS ================= */
 
-    var toggle = document.querySelector(
-      ".dropdown > [data-bs-toggle='dropdown']"
-    );
-    if (!toggle) return;
 
-    var instance = bootstrap.Dropdown.getInstance(toggle);
-    if (instance && toggle.getAttribute("aria-expanded") === "true") {
-      instance.hide();
+function loadNotifications() {
+    // 1. SAFETY CHECK: If no token, don't even try to fetch.
+    if (!localStorage.getItem("token")) {
+       console.log("No token found. Pausing notification polling.");
+       stopPolling(); 
+       return;
     }
-  }
 
-  /* ======================================================
-     LOAD NOTIFICATIONS (UNREAD ONLY) — API (RECOVERY)
-  ====================================================== */
-  function loadNotifications() {
-    fetch("/api/notifications", { headers: authHeaders() })
+    fetch(API_BASE + "/api/notifications", {
+      headers: authHeaders()
+    })
       .then(function (r) {
+        // 2. KILL SWITCH: If server says 401, stop the loop.
+        if (r.status === 401) {
+          console.warn("Session expired. Stopping polling.");
+          stopPolling(); 
+          return [];
+        }
         if (!r.ok) throw new Error("Notification API failed");
         return r.json();
       })
@@ -91,12 +107,13 @@ console.log("notifications.js loaded");
         console.error("Notifications load failed:", err);
       });
   }
-
   function renderNotifications(list) {
     var box = $("notificationList");
     var badge = $("notificationBadge");
 
     if (!box || !badge) return;
+
+    seenNotificationIds = {};
 
     if (!Array.isArray(list) || list.length === 0) {
       box.innerHTML =
@@ -110,8 +127,10 @@ console.log("notifications.js loaded");
     badge.classList.remove("d-none");
 
     var html = "";
+
     for (var i = 0; i < list.length; i++) {
       var n = list[i];
+      seenNotificationIds[n.id] = true;
 
       html +=
         "<div class='notification-item unread' data-id='" + n.id + "'>" +
@@ -133,44 +152,59 @@ console.log("notifications.js loaded");
     box.innerHTML = html;
   }
 
-  /* ======================================================
-     🔔 REALTIME EVENTS (CORRECT FIX)
-  ====================================================== */
-  function initNotificationEvents() {
-    if (window.__notificationEventAttached) return;
-    window.__notificationEventAttached = true;
+  /* ================= SOCKET INIT ================= */
 
-    console.log("🔔 Notification event listener attached");
+  function initSocketConnection() {
+    if (typeof io === "undefined") {
+      console.warn("Socket.io client missing. Polling only.");
+      return;
+    }
 
-    window.addEventListener("ws:message", function (e) {
-      try {
-        var payload = JSON.parse(e.detail);
+    var user = getUser();
+    if (!user.id) return;
 
-        // New backend format
-        if (payload.event === "notification" && payload.data) {
-          injectLiveNotification(payload.data);
-          return;
-        }
+    socket = io(API_BASE, {
+      query: { userId: user.id },
+      transports: ["websocket", "polling"],
+      reconnectionAttempts: 5
+    });
 
-        // Legacy format
-        if (payload.type === "NOTIFICATION") {
-          injectLiveNotification(payload);
-        }
-      } catch (err) {
-        console.error("Notification event parse failed:", err);
-      }
+    socket.on("connect", function () {
+      console.log("🔌 Socket connected");
+    });
+
+    socket.on("notification_pop", function (data) {
+console.log("🔥 Notification event received:", data);      
+if (!data || !data.id) return;
+
+      // Prevent duplicates
+      if (seenNotificationIds[data.id]) return;
+      seenNotificationIds[data.id] = true;
+
+      injectLiveNotification(data);
+    });
+
+    socket.on("disconnect", function () {
+      console.warn("Socket disconnected");
     });
   }
 
+  /* ================= LIVE INJECTION ================= */
+
   function injectLiveNotification(n) {
-    playNotificationSound(); // 🔔 SOUND (only addition)
+    playNotificationSound();
+
+    if (typeof showToast === "function") {
+      showToast(n.message, "info");
+    } else if ("Notification" in window && Notification.permission === "granted") {
+      new Notification("HRMS Alert", { body: n.message });
+    }
 
     var box = $("notificationList");
     var badge = $("notificationBadge");
 
     if (!box || !badge) return;
 
-    // Remove empty state
     if (
       box.children.length === 1 &&
       box.children[0].classList.contains("text-muted")
@@ -180,7 +214,7 @@ console.log("notifications.js loaded");
 
     var div = document.createElement("div");
     div.className = "notification-item unread";
-    div.setAttribute("data-id", n.id || "");
+    div.setAttribute("data-id", n.id);
 
     div.innerHTML =
       "<div class='fw-semibold'>" +
@@ -189,10 +223,10 @@ console.log("notifications.js loaded");
       "<div>" + n.message + "</div>" +
       "<div class='d-flex justify-content-between align-items-center mt-1'>" +
         "<small class='text-muted'>" +
-          formatDate(n.created_at) +
+          formatDate(n.created_at || new Date()) +
         "</small>" +
         "<button class='btn btn-link p-0 small mark-read' data-id='" +
-          (n.id || "") +
+          n.id +
         "'>Mark as read</button>" +
       "</div>";
 
@@ -203,9 +237,8 @@ console.log("notifications.js loaded");
     badge.classList.remove("d-none");
   }
 
-  /* ======================================================
-     MARK AS READ (OPTIMISTIC)
-  ====================================================== */
+  /* ================= MARK AS READ ================= */
+
   document.addEventListener("click", function (e) {
     var btn = e.target.closest(".mark-read");
     if (!btn) return;
@@ -217,40 +250,32 @@ console.log("notifications.js loaded");
 
     if (item) item.remove();
 
-    fetch("/api/notifications/" + id + "/read", {
+    fetch(API_BASE + "/api/notifications/" + id + "/read", {
       method: "PUT",
       headers: authHeaders()
     }).then(function () {
+      delete seenNotificationIds[id];
       loadNotifications();
-      autoCloseIfEmpty();
     });
   });
 
-  function autoCloseIfEmpty() {
-    var box = $("notificationList");
-    if (!box || box.children.length !== 0) return;
-    closeNotificationDropdown();
-  }
+  /* ================= MARK ALL ================= */
 
-  /* ======================================================
-     MARK ALL AS READ
-  ====================================================== */
   function markAllNotificationsRead() {
-    fetch("/api/notifications/read-all", {
+    fetch(API_BASE + "/api/notifications/read-all", {
       method: "PUT",
       headers: authHeaders()
     }).then(function () {
+      seenNotificationIds = {};
       loadNotifications();
-      closeNotificationDropdown();
     });
   }
 
-  /* ======================================================
-     POLLING (FALLBACK ONLY)
-  ====================================================== */
+  /* ================= POLLING ================= */
+
   function startPolling() {
     stopPolling();
-    pollTimer = setInterval(loadNotifications, 30000);
+    pollTimer = setInterval(loadNotifications, 5000);
   }
 
   function stopPolling() {
@@ -260,36 +285,15 @@ console.log("notifications.js loaded");
     }
   }
 
-/* ======================================================
-   GLOBAL EXPORTS
-====================================================== */
-window.loadNotifications = loadNotifications;
-window.markAllNotificationsRead = markAllNotificationsRead;
-window.stopNotificationPolling = stopPolling;
+  /* ================= INIT ================= */
 
-/* =========================
-   SAFE SPA INIT (ONCE)
-========================= */
-(function () {
-  if (window.__notificationsInit) return;
-  window.__notificationsInit = true;
+  loadNotifications();
+  initSocketConnection();
+  startPolling();
 
-  function init() {
-    if (typeof window.loadNotifications === "function") {
-      window.loadNotifications();
-    }
-    startPolling();
-    initNotificationEvents();
-  }
+  window.loadNotifications = loadNotifications;
+  window.markAllNotificationsRead = markAllNotificationsRead;
+  window.stopNotificationPolling = stopPolling;
+  window.startNotificationPolling = startPolling;
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
 })();
-
-/* =========================
-   CLOSE FILE WRAPPER
-========================= */
-})();   // ← THIS WAS MISSING

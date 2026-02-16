@@ -154,32 +154,11 @@
     grid-template-columns: 1fr;
   }
 }
-.card {
-  background-color: #ffffff;
-  border-radius: 12px; /* Softer, modern corners */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Very subtle shadow, not harsh */
-  padding: 20px;
-  border: none; /* Remove any default borders */
-}
-.dashboard-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
-  gap: 24px; /* Space between cards */
-  padding: 24px;
-  background-color: #f4f6f9; /* Light grey background is CRITICAL for contrast */
+.attendance-clickable {
+  transition: all 0.2s ease;
 }
 
-/* The Banner spans all 4 columns */
-.banner-section {
-  grid-column: span 4;
-}
-
-/* The Stat Cards take 1 column each */
-.stat-card {
-  grid-column: span 1;
-}
-
-/* The Bottom sections take 2 columns each */
-.large-card {
-  grid-column: span 2;
+.attendance-clickable:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }

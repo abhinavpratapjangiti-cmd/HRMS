@@ -1,88 +1,61 @@
 /* =====================================================
-   websocket.js — HRMS FE REALTIME
-   FINAL • SPA SAFE • HARD REFRESH SAFE
+   websocket.js — HRMS FE REALTIME (SOCKET.IO VERSION)
 ===================================================== */
 (function () {
   if (window.__wsInitialized) return;
   window.__wsInitialized = true;
 
-  let ws = null;
+  let socket = null;
   let reconnectTimer = null;
-  let connecting = false;
 
   function getToken() {
     return localStorage.getItem("token");
   }
 
   function connect() {
-    if (connecting) return;
-
     const token = getToken();
     if (!token) return;
 
-    connecting = true;
+    if (socket) return;
 
-    const protocol = location.protocol === "https:" ? "wss://" : "ws://";
-    const url =
-      protocol +
-      location.host +
-      "/?token=" +
-      encodeURIComponent(token);
+    socket = io({
+      query: {
+        token: token
+      },
+      transports: ["websocket"],
+      reconnection: true,
+      reconnectionAttempts: Infinity,
+      reconnectionDelay: 3000
+    });
 
-    try {
-      ws = new WebSocket(url);
-    } catch (e) {
-      connecting = false;
-      return;
-    }
+    socket.on("connect", () => {
+      console.log("🔌 Socket.IO connected");
+      window.socket = socket;
+    });
 
-    ws.onopen = function () {
-      console.log("🔌 WebSocket connected");
-      connecting = false;
-      window.socket = ws;
-    };
+    socket.on("disconnect", () => {
+      console.warn("🔌 Socket.IO disconnected");
+    });
 
-    ws.onmessage = function (evt) {
+    socket.on("connect_error", (err) => {
+      console.error("Socket connect error:", err.message);
+    });
+
+    socket.on("message", (data) => {
       window.dispatchEvent(
-        new CustomEvent("ws:message", { detail: evt.data })
+        new CustomEvent("ws:message", { detail: data })
       );
-    };
-
-    ws.onclose = function () {
-      console.warn("🔌 WebSocket closed");
-      cleanup();
-
-      if (!getToken()) return;
-
-      reconnectTimer = setTimeout(connect, 3000);
-    };
-
-    ws.onerror = function () {
-      // onclose will handle cleanup + retry
-    };
+    });
   }
 
-  function cleanup() {
-    connecting = false;
-    if (ws) {
-      ws.onopen = ws.onclose = ws.onerror = ws.onmessage = null;
-      ws = null;
-    }
-    window.socket = null;
-    clearTimeout(reconnectTimer);
-    reconnectTimer = null;
-  }
-
-  // Manual close (used on logout)
   window.closeWS = function () {
-    if (!ws) return;
-    ws.onclose = null;
-    ws.close();
-    cleanup();
-    console.log("🔌 WebSocket manually closed");
+    if (!socket) return;
+    socket.disconnect();
+    socket = null;
+    window.socket = null;
+    console.log("🔌 Socket manually closed");
   };
 
-  // Wait for token ONCE
   function waitForToken() {
     if (!getToken()) {
       setTimeout(waitForToken, 500);
@@ -93,3 +66,4 @@
 
   waitForToken();
 })();
+

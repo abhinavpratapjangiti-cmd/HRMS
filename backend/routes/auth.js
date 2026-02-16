@@ -7,6 +7,7 @@ const db = require("../db");
 const { verifyToken } = require("../middleware/auth");
 const transporter = require("../utils/mailer");
 
+
 /* =========================
    ENV GUARDS
 ========================= */
@@ -238,7 +239,7 @@ router.post("/change-password", verifyToken, (req, res) => {
 
 /* =========================
    FORGOT PASSWORD
-========================= */
+========================= 
 router.post("/forgot-password", (req, res) => {
   const { email } = req.body;
 
@@ -294,9 +295,10 @@ router.post("/forgot-password", (req, res) => {
     });
 });
 
-/* =========================
+ =========================
    RESET PASSWORD
-========================= */
+=============================
+
 router.post("/reset-password", (req, res) => {
   const { token, newPassword } = req.body;
 
@@ -331,6 +333,161 @@ router.post("/reset-password", (req, res) => {
       console.error("RESET PASSWORD ERROR:", err);
       res.status(500).json({ message: "Password reset failed" });
     });
+});
+=============================================================================== //
+
+/* =====================================================
+   1️⃣ CHECK STATUS / CREATE REQUEST
+===================================================== */
+router.post("/check-reset-status", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: "EMAIL REQUIRED" });
+    }
+
+    // 1️⃣ Verify user exists and active
+    const [users] = await db.query(
+      "SELECT id FROM users WHERE email = ? AND is_active = 1 LIMIT 1",
+      [email]
+    );
+
+    if (!users.length) {
+      return res.status(404).json({ message: "EMAIL NOT FOUND" });
+    }
+
+    const userId = users[0].id;
+
+    // 2️⃣ Get latest request (any status)
+    const [latest] = await db.query(
+      `SELECT id, status
+       FROM password_reset_requests
+       WHERE user_id = ?
+       ORDER BY id DESC
+       LIMIT 1`,
+      [userId]
+    );
+
+    if (latest.length) {
+      const status = latest[0].status;
+
+      // If already approved → allow frontend to move to step 2
+      if (status === "APPROVED") {
+        return res.json({ status: "APPROVED" });
+      }
+
+      // If waiting
+      if (status === "PENDING") {
+        return res.json({ status: "PENDING" });
+      }
+
+      // If rejected
+      if (status === "REJECTED") {
+        return res.json({ status: "REJECTED" });
+      }
+    }
+
+    // 3️⃣ No active request → create new PENDING
+    const [insertResult] = await db.query(
+      "INSERT INTO password_reset_requests (user_id, status) VALUES (?, 'PENDING')",
+      [userId]
+    );
+
+    const requestId = insertResult.insertId;
+
+    // 4️⃣ Notify ALL Admin + HR
+    const [admins] = await db.query(
+      "SELECT id FROM users WHERE role IN ('admin','hr')"
+    );
+
+    for (let admin of admins) {
+      await db.query(
+        `INSERT INTO notifications (user_id, type, message, is_read)
+         VALUES (?, 'password_request', ?, 0)`,
+        [
+          admin.id,
+          `🔔 Password Reset Requested by: ${email} (Request ID: ${requestId})`
+        ]
+      );
+    }
+
+    return res.json({ status: "REQUEST_SENT" });
+
+  } catch (err) {
+    console.error("CHECK STATUS ERROR:", err);
+    return res.status(500).json({ message: "SERVER ERROR" });
+  }
+});
+
+
+/* =====================================================
+   2️⃣ FINAL PASSWORD RESET (ONLY IF APPROVED)
+   - Atomic approval consumption
+   - Marks COMPLETED safely
+===================================================== */
+router.post("/reset-password-approved", async (req, res) => {
+  try {
+    const { email, newPassword } = req.body;
+
+    if (!email || !newPassword) {
+      return res.status(400).json({ message: "MISSING FIELDS" });
+    }
+
+    // 1️⃣ Find latest APPROVED request
+    const [rows] = await db.query(
+      `SELECT r.id AS request_id, u.id AS user_id
+       FROM password_reset_requests r
+       JOIN users u ON r.user_id = u.id
+       WHERE u.email = ?
+       AND r.status = 'APPROVED'
+       ORDER BY r.id DESC
+       LIMIT 1`,
+      [email]
+    );
+
+    if (!rows.length) {
+      return res.status(403).json({
+        message: "PERMISSION DENIED OR NOT APPROVED YET"
+      });
+    }
+
+    const { request_id, user_id } = rows[0];
+
+    // 2️⃣ Hash password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // 3️⃣ Use transaction for safety
+    await db.query("START TRANSACTION");
+
+    // Update user password
+    await db.query(
+      "UPDATE users SET password = ? WHERE id = ?",
+      [hashedPassword, user_id]
+    );
+
+    // Mark request as COMPLETED (atomic lock)
+    const [updateResult] = await db.query(
+      `UPDATE password_reset_requests
+       SET status = 'COMPLETED'
+       WHERE id = ? AND status = 'APPROVED'`,
+      [request_id]
+    );
+
+    if (updateResult.affectedRows === 0) {
+      await db.query("ROLLBACK");
+      return res.status(400).json({ message: "REQUEST ALREADY USED" });
+    }
+
+    await db.query("COMMIT");
+
+    return res.json({ message: "PASSWORD UPDATED SUCCESSFULLY" });
+
+  } catch (err) {
+    await db.query("ROLLBACK");
+    console.error("RESET PASSWORD ERROR:", err);
+    return res.status(500).json({ message: "SERVER ERROR" });
+  }
 });
 
 /* =========================

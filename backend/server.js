@@ -2,6 +2,12 @@
  * HRMS SERVER — FINAL, HARDENED & PM2 SAFE
  *************************************************/
 
+/* ----------------------------------------------------
+ * CRITICAL FIX: FORCE NODE TO IST (MATCHES DB)
+ * This prevents the "Time Travel" / Negative Timer bug
+ * ---------------------------------------------------- */
+process.env.TZ = "Asia/Kolkata";
+
 require("dotenv").config();
 
 const express = require("express");
@@ -9,6 +15,7 @@ const cors = require("cors");
 const path = require("path");
 const http = require("http");
 const compression = require("compression");
+const { Server } = require("socket.io"); // 🔥 ADDED: Socket.io Server
 
 /* =========================
    APP INIT
@@ -27,9 +34,9 @@ const db = require("./db");
 ========================= */
 (async () => {
   try {
-    // Using db.execute or db.query depending on your pool setup
+    // This aligns the Database session time with the Node process time
     await db.query("SET time_zone = '+05:30'");
-    console.log("🕒 DB timezone locked to IST");
+    console.log("🕒 DB timezone locked to IST (+05:30)");
   } catch (err) {
     console.error("❌ Failed to set DB timezone:", err);
     process.exit(1);
@@ -39,12 +46,18 @@ const db = require("./db");
 /* =========================
    CRON JOBS
 ========================= */
-require("./cron/timesheetLockCron");
+try {
+  require("./cron/timesheetLockCron");
+  require("./cron/overtimeMonitor"); // ✅ Loads your new overtime logic
+} catch (err) {
+  console.warn("⚠️ Cron job failed to load:", err.message);
+}
 
 /* =========================
-   WEBSOCKET INIT
+   NOTIFICATION SERVICE INIT
 ========================= */
-const { initWebSocket } = require("./routes/wsServer");
+// 🔥 ADDED: Import the initSocket function we created in notificationService
+const { initSocket } = require("./services/notificationService");
 
 /* =========================
    MIDDLEWARE
@@ -60,8 +73,9 @@ app.use(
   })
 );
 
-app.use(express.json({ limit: "5mb" }));
-app.use(express.urlencoded({ extended: true }));
+// Increased limit to 10mb to prevent payload errors on file uploads
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 /* =========================
    STATIC ASSETS
@@ -75,12 +89,15 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 function loadRoute(routePath) {
   try {
     const route = require(routePath);
-    if (!route) throw new Error("Route exported nothing");
+    // Handle both CommonJS (module.exports) and ES Module (export default)
+    if (!route || (typeof route !== "function" && !route.stack)) {
+       throw new Error(`Route file ${routePath} does not export a router`);
+    }
     return route;
   } catch (err) {
     console.error(`❌ Failed to load route: ${routePath}`);
     console.error(err.stack);
-    process.exit(1); 
+    process.exit(1);
   }
 }
 
@@ -143,6 +160,7 @@ app.get("/health", (req, res) => {
   res.json({
     status: "OK",
     environment: NODE_ENV,
+    server_time: new Date().toString(),
     uptime_seconds: Math.floor(process.uptime()),
     timestamp: new Date().toISOString()
   });
@@ -154,7 +172,8 @@ app.get("/health", (req, res) => {
 app.all("/api/*", (req, res) => {
   res.status(404).json({
     message: "API route not found",
-    path: req.originalUrl
+    path: req.originalUrl,
+    hint: "Check if the route is registered in server.js and the path in the route file does not repeat '/api'"
   });
 });
 
@@ -176,7 +195,7 @@ app.use((err, req, res, next) => {
   console.error("❌ Unhandled Error:", err);
   res.status(err.status || 500).json({
     message: "Internal server error",
-    ...(NODE_ENV !== "production" && { error: err.message })
+    ...(NODE_ENV !== "production" && { error: err.message, stack: err.stack })
   });
 });
 
@@ -193,14 +212,34 @@ process.on("uncaughtException", err => {
 });
 
 /* =========================
-   START SERVER (HTTP + WS)
+   START SERVER (HTTP + SOCKET.IO)
 ========================= */
 const server = http.createServer(app);
 
-/* 🔔 ATTACH WEBSOCKET */
-initWebSocket(server);
+// 🔥 PATCHED: Initialize Socket.io with CORS
+const io = new Server(server, {
+  cors: {
+    origin: process.env.CORS_ORIGIN || "*",
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
+
+// 🔥 PATCHED: Pass IO instance to Notification Service
+initSocket(io);
+
+// Optional: Global connection log
+io.on("connection", (socket) => {
+  // Allow client to join a personal room based on their User ID
+  const userId = socket.handshake.query.userId;
+  if (userId) {
+    socket.join(String(userId));
+    console.log(`🔌 User ${userId} connected to Socket`);
+  }
+});
 
 server.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 HRMS running on port ${PORT}`);
   console.log(`🌱 Environment: ${NODE_ENV}`);
+  console.log(`🕒 Server Time: ${new Date().toString()}`);
 });

@@ -1,6 +1,10 @@
 /* =========================
-   ROUTE CONFIG (FINAL)
+   ROUTE CONFIG (FINAL & CACHE BUSTED)
 ========================= */
+
+// 🔥 CRITICAL: Change this number whenever you update code to force all users to get new files
+const CACHE_VERSION = "100"; 
+
 const ROUTES = {
   home: {
     file: "home.html",
@@ -94,7 +98,9 @@ function hasValidToken() {
 }
 
 function setActiveNav(routeKey) {
-  const base = routeKey.split("/")[0];
+  // Handle nested routes (e.g. employee/123 -> employee)
+  const base = routeKey.split("/")[0]; 
+  
   document
     .querySelectorAll(".sidebar a")
     .forEach(l => l.classList.remove("active"));
@@ -116,22 +122,30 @@ function loadPageCSS(routeKey) {
   const link = document.createElement("link");
   link.id = CSS_ID;
   link.rel = "stylesheet";
-  link.href = "/assets/css/pages/" + routeKey + ".css";
-  link.onerror = () =>
-    console.warn("No page CSS for", routeKey);
+  // Add cache buster to CSS too
+  link.href = "/assets/css/pages/" + routeKey + ".css?v=" + CACHE_VERSION;
+  link.onerror = () => console.warn("No page CSS for", routeKey);
 
   document.head.appendChild(link);
 }
 
 /* =========================
-   SCRIPT LOADER (FIXED)
+   SCRIPT LOADER (FIXED & CACHE BUSTED)
 ========================= */
 function loadPageScript(src) {
   return new Promise(resolve => {
     const s = document.createElement("script");
-    s.src = src;
+    
+    // 🔥 CRITICAL FIX: Append version to force fresh load
+    const sep = src.includes("?") ? "&" : "?";
+    s.src = `${src}${sep}v=${CACHE_VERSION}`;
+    
     s.dataset.pageScript = "true";
     s.onload = resolve;
+    s.onerror = () => {
+        console.error("Failed to load script:", src);
+        resolve(); // Resolve anyway to not block the page
+    };
     document.body.appendChild(s);
   });
 }
@@ -146,7 +160,10 @@ function loadRoute() {
   if (!pageContent || navigating) return;
 
   navigating = true;
-  requestAnimationFrame(() => runRoute(pageContent));
+  // Use requestAnimationFrame for smoother UI transition
+  requestAnimationFrame(() => runRoute(pageContent).finally(() => {
+    navigating = false;
+  }));
 }
 
 async function runRoute(pageContent) {
@@ -156,76 +173,86 @@ async function runRoute(pageContent) {
       return;
     }
 
+    // 1. Resolve Route Key
     const rawHash = location.hash || "#/home";
-    const routeKey = rawHash.startsWith("#/")
-      ? rawHash.slice(2).split("?")[0]
-      : rawHash.replace("#", "").split("?")[0];
+    // Clean hash: remove #, remove leading /, remove query params
+    let routeKey = rawHash.replace(/^#\/?/, "").split("?")[0];
+    if (!routeKey) routeKey = "home";
 
     let route = ROUTES[routeKey];
     let params = [];
 
+    // 2. Handle Regex Routes (like employee/123)
     if (!route) {
       for (const key in ROUTES) {
         const r = ROUTES[key];
         if (r.path && r.path.test(routeKey)) {
           route = r;
-          params = routeKey.match(r.path).slice(1);
+          const match = routeKey.match(r.path);
+          if (match) params = match.slice(1);
           break;
         }
       }
     }
 
+    // 3. 404 Handling
     if (!route) {
-      pageContent.innerHTML =
-        "<h4 class='text-center mt-5'>Page not found</h4>";
+      pageContent.innerHTML = "<h4 class='text-center mt-5'>Page not found</h4>";
       return;
     }
 
+    // 4. Role Check
     const role = getUserRole();
-    if (!route.roles.includes(role)) {
-      pageContent.innerHTML =
-        "<h4 class='text-center mt-5'>Access denied</h4>";
+    // Default to empty array if roles not defined, for safety
+    const allowedRoles = route.roles || [];
+    if (!allowedRoles.includes(role)) {
+      pageContent.innerHTML = "<h4 class='text-center mt-5 text-danger'>Access denied</h4>";
       return;
     }
 
-    /* 🧹 CLEAN OLD PAGE SCRIPTS */
+    // 5. Cleanup Old Scripts
     document
       .querySelectorAll("script[data-page-script]")
       .forEach(s => s.remove());
 
     const baseKey = routeKey.split("/")[0];
 
+    // 6. Load CSS
     loadPageCSS(baseKey);
 
-    const res = await fetch("/pages/" + route.file);
+    // 7. Load HTML (With Cache Buster)
+    const res = await fetch(`/pages/${route.file}?v=${CACHE_VERSION}`);
     if (!res.ok) {
-      pageContent.innerHTML =
-        "<h4 class='text-center mt-5'>Failed to load page</h4>";
+      pageContent.innerHTML = "<h4 class='text-center mt-5'>Failed to load page content</h4>";
       return;
     }
 
-    // 🔒 IMPORTANT: read HTML ONCE, no size gating
     const html = await res.text();
-
     pageContent.innerHTML = html;
 
+    // 8. Set Active Nav
     setActiveNav(baseKey);
 
+    // 9. Load Scripts
     const scripts =
       route.scripts ||
       PAGE_SCRIPTS[baseKey] ||
-      ["/assets/js/pages/" + baseKey + ".js"];
+      [`/assets/js/pages/${baseKey}.js`];
 
     for (const src of scripts) {
       await loadPageScript(src);
     }
 
-    /* HOME HOOK */
+    // 10. Trigger Events
+    // Event: route:loaded (For home.js SPA logic)
+    window.dispatchEvent(new Event("route:loaded"));
+
+    /* LEGACY: Home Hook */
     if (baseKey === "home" && typeof window.onHomeRendered === "function") {
       setTimeout(window.onHomeRendered, 0);
     }
 
-    /* LEGACY initX */
+    /* LEGACY: initFunction */
     const fnName =
       "init" +
       baseKey
@@ -235,8 +262,10 @@ async function runRoute(pageContent) {
     if (typeof window[fnName] === "function") {
       window[fnName].apply(null, params);
     }
-  } finally {
-    navigating = false;
+
+  } catch (err) {
+    console.error("Router Error:", err);
+    pageContent.innerHTML = "<h4 class='text-center mt-5 text-danger'>System Error</h4>";
   }
 }
 
@@ -245,6 +274,7 @@ async function runRoute(pageContent) {
 ========================= */
 function hideSidebarItemsByRole() {
   const role = getUserRole();
+  if (!role) return;
 
   const SIDEBAR_RULES = {
     home: ["admin", "hr", "manager", "employee"],
@@ -261,8 +291,9 @@ function hideSidebarItemsByRole() {
 
   document.querySelectorAll(".sidebar a[data-route]").forEach(link => {
     const r = link.dataset.route;
-    if (!SIDEBAR_RULES[r] || !SIDEBAR_RULES[r].includes(role)) {
-      link.remove();
+    // Hide if rule exists AND role is not in list
+    if (SIDEBAR_RULES[r] && !SIDEBAR_RULES[r].includes(role)) {
+      link.remove(); // Or link.classList.add('d-none');
     }
   });
 }
@@ -280,4 +311,3 @@ window.addEventListener("DOMContentLoaded", () => {
     window.populateUserName();
   }
 });
-
