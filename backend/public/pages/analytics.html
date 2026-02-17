@@ -100,22 +100,12 @@
   </ul>
 
   <!-- ================= TAB CONTENT ================= -->
-  <div class="tab-content border border-top-0 p-4 bg-white">
+<div class="tab-content border border-top-0 p-4 bg-white">
 
-    <!-- =================================================
-         BENCH ANALYTICS
-    ================================================== -->
-    <div
-      class="tab-pane fade show active"
-      id="benchTab"
-      role="tabpanel"
-      aria-labelledby="bench-tab"
-    >
-
-      <!-- KPI SUMMARY -->
+    <div class="tab-pane fade show active" id="benchTab" role="tabpanel" aria-labelledby="bench-tab">
+      
       <div id="benchSummary" class="row g-3 mb-4"></div>
 
-      <!-- BENCH BURN TREND -->
       <div class="row mb-4">
         <div class="col-12">
           <div class="card">
@@ -129,10 +119,7 @@
         </div>
       </div>
 
-      <!-- AGING + EMPLOYEE LIST -->
       <div class="row g-4">
-
-        <!-- BENCH AGING -->
         <div class="col-md-5">
           <div class="card h-100">
             <div class="card-body">
@@ -144,7 +131,6 @@
           </div>
         </div>
 
-        <!-- EMPLOYEE LIST -->
         <div class="col-md-7">
           <div class="card h-100">
             <div class="card-body">
@@ -153,72 +139,46 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
 
-    <!-- =================================================
-         CV REPOSITORY
-    ================================================== -->
-    <div
-      class="tab-pane fade"
-      id="cvTab"
-      role="tabpanel"
-      aria-labelledby="cv-tab"
-    >
-
-      <!-- FILTER BAR -->
-      <div class="d-flex flex-wrap gap-2 mb-3 align-items-center">
-        <select aria-label="select"
-          id="skillFilter"
-          class="form-select form-select-sm"
-          style="min-width:220px"
+    <div class="tab-pane fade" id="cvTab" role="tabpanel" aria-labelledby="cv-tab">
+      
+      <div class="search-box" style="margin-bottom: 15px;">
+        <input
+          type="text"
+          id="cvSearchInput"
+          class="form-control"
+          placeholder="🔍 Search by Name, Skill, or Designation..."
+          style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;"
         >
-          <option value="">All Skills</option>
-        </select>
+      </div>
 
-        <div class="ms-auto text-muted small">
-          Filter CVs by primary skill
+      <div id="cvRepository">
+         <div class="text-muted p-3">Loading repository...</div>
+      </div>
+
+    </div> 
+    <div class="tab-pane fade" id="utilTab" role="tabpanel" aria-labelledby="util-tab">
+      
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div id="utilizationStats"></div>
+        </div>
+
+        <div class="col-md-4">
+          <div id="breakEvenStats"></div>
+        </div>
+
+        <div class="col-md-4">
+          <div id="breakEvenInsight"></div>
         </div>
       </div>
 
-      <!-- CV LIST -->
-      <div id="cvRepository"></div>
-
     </div>
 
-    <!-- =================================================
-         UTILIZATION
-    ================================================== -->
-    <div class="row g-4">
 
-  <!-- Utilization KPI -->
-  <div class="col-md-4">
-    <div id="utilizationStats"></div>
-  </div>
-
-  <!-- Break-even KPI -->
-  <div class="col-md-4">
-    <div id="breakEvenStats"></div>
-  </div>
-
-  <!-- Executive Insight -->
-  <div class="col-md-4">
-    <div id="breakEvenInsight"></div>
-  </div>
-
-</div>
-
-    <!-- =================================================
-         EXECUTIVE ACTION PANEL
-    ================================================== -->
-    <div
-      class="tab-pane fade"
-      id="execTab"
-      role="tabpanel"
-      aria-labelledby="exec-tab"
-    >
-
+    <div class="tab-pane fade" id="execTab" role="tabpanel" aria-labelledby="exec-tab">
       <div class="mb-3">
         <h6 class="mb-1">Executive Action Panel</h6>
         <small class="text-muted">
@@ -231,7 +191,6 @@
           Loading executive insights…
         </div>
       </div>
-
     </div>
 
   </div>
@@ -244,4 +203,3 @@
 
 
 </body>
-</html>

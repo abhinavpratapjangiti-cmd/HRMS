@@ -43,8 +43,8 @@ router.post("/cv", verifyToken, upload.single("cv"), async (req, res) => {
     );
 
     await db.query(
-      `INSERT INTO employee_documents
-      (employee_id, doc_type, file_name, file_path, uploaded_by, uploaded_at)
+      `INSERT INTO employee_documents 
+      (employee_id, doc_type, file_name, file_path, uploaded_by, uploaded_at) 
       VALUES (?, 'CV', ?, ?, 'employee', NOW())`,
       [
         req.user.employee_id,
@@ -66,9 +66,9 @@ router.post("/cv", verifyToken, upload.single("cv"), async (req, res) => {
 router.get("/cv/my", verifyToken, async (req, res) => {
   try {
     const [rows] = await db.query(
-      `SELECT file_name, file_path
-       FROM employee_documents
-       WHERE employee_id = ? AND doc_type = 'CV'
+      `SELECT file_name, file_path 
+       FROM employee_documents 
+       WHERE employee_id = ? AND doc_type = 'CV' 
        LIMIT 1`,
       [req.user.employee_id]
     );
@@ -91,16 +91,53 @@ router.get("/cv/my", verifyToken, async (req, res) => {
 });
 
 /* ======================================================
+   LIST ALL EMPLOYEES (With or Without CV)
+   ⚠️ MUST BE ABOVE /:employeeId route!
+====================================================== */
+router.get("/cv/list", verifyToken, async (req, res) => {
+  try {
+    // UPDATED QUERY: Using 'active' column name
+    const sql = `
+      SELECT 
+        d.id as doc_id,
+        e.id as employee_id,
+        d.file_name,
+        d.uploaded_at,
+        e.name,
+        e.skills,
+        e.designation
+      FROM employees e
+      LEFT JOIN employee_documents d 
+        ON e.id = d.employee_id AND d.doc_type = 'CV'
+      WHERE e.active = 1       -- ✅ Changed from is_active to active
+      ORDER BY e.name ASC
+    `;
+
+    const [rows] = await db.query(sql);
+    res.json(rows);
+
+  } catch (err) {
+    console.error("CV List error:", err);
+    res.status(500).json({ message: "Failed to load CV list" });
+  }
+});
+
+/* ======================================================
    DOWNLOAD BY EMPLOYEE ID
+   ⚠️ Catches all other /cv/:id requests
 ====================================================== */
 router.get("/cv/:employeeId", verifyToken, async (req, res) => {
   try {
     const employeeId = Number(req.params.employeeId);
 
+    if (isNaN(employeeId)) {
+      return res.status(400).json({ message: "Invalid Employee ID" });
+    }
+
     const [rows] = await db.query(
-      `SELECT file_name, file_path
-       FROM employee_documents
-       WHERE employee_id = ? AND doc_type = 'CV'
+      `SELECT file_name, file_path 
+       FROM employee_documents 
+       WHERE employee_id = ? AND doc_type = 'CV' 
        LIMIT 1`,
       [employeeId]
     );

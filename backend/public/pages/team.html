@@ -1,14 +1,14 @@
 <div class="team-wrapper">
     <div class="team-stats">
-        <div class="team-stat">
+        <div class="team-stat" id="totalMembersCard">
             <small>Total Members</small>
             <b id="statTeamCount">0</b>
         </div>
-        <div class="team-stat">
+        <div class="team-stat" id="onlineNowCard">
             <small>Online Now</small>
             <b id="statOnlineCount" class="text-success">0</b>
         </div>
-        <div class="team-stat">
+        <div class="team-stat" id="departmentsCard">
             <small>Departments</small>
             <b id="statDeptCount">0</b>
         </div>
@@ -30,6 +30,8 @@
                     <button class="btn btn-sm btn-light border" onclick="window.teamActions.collapseAll()" title="Collapse All">➖</button>
                 </div>
             </div>
+             
+            <div id="activeFilterLabel" class="mb-2 text-muted small d-none"></div>         
 
             <div id="orgTreeContainer" class="org-scroll-wrapper">
                 <div class="text-center py-5 text-muted">Loading organizational chart...</div>

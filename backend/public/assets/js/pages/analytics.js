@@ -240,83 +240,111 @@ function renderBenchEmployeeList(list = []) {
 }
 
 /* =====================================================
-   CV REPOSITORY
+   CV REPOSITORY (Fixed & Search Enabled)
 ===================================================== */
 async function loadCVRepository() {
   const box = document.getElementById("cvRepository");
-  const skillSelect = document.getElementById("skillFilter");
+  const searchInput = document.getElementById("cvSearchInput");
+  
   if (!box) return;
 
   try {
+    // 1. Fetch data from the new backend route
     const list = await apiGet("/documents/cv/list");
 
-    if (!list.length) {
-      box.innerHTML = `<div class="text-muted">No CVs uploaded</div>`;
+    if (!list || !list.length) {
+      box.innerHTML = `<div class="text-muted p-3">No employees found.</div>`;
       return;
     }
 
-   const normalized = list.map(cv => {
-  const rawSkills =
-    cv.Skill_set ||
-    cv.skill_set ||
-    cv.skills ||
-    cv.primary_skills ||
-    "";
+    // 2. Normalize Data (Align with Backend Schema)
+    // Backend returns: { name, skills (string), designation, file_name, employee_id }
+    const normalized = list.map(emp => {
+      // Convert "Java, React" string into an array ["Java", "React"]
+      const skillArray = emp.skills 
+        ? emp.skills.split(",").map(s => s.trim()).filter(Boolean) 
+        : [];
 
-  return {
-    ...cv,
-    skills: typeof rawSkills === "string"
-      ? rawSkills.split(",").map(s => s.trim()).filter(Boolean)
-      : [],
-    experience: cv.experience || cv.total_experience || "—"
-  };
-});
-
-    if (skillSelect && !skillSelect.dataset.loaded) {
-      const skills = extractSkills(normalized);
-      skillSelect.innerHTML =
-        `<option value="">All Skills</option>` +
-        skills.map(s => `<option value="${s}">${s}</option>`).join("");
-
-      skillSelect.dataset.loaded = "true";
-      skillSelect.onchange = () => {
-        const v = skillSelect.value;
-        renderCVTable(
-          v ? normalized.filter(cv => cv.skills.includes(v)) : normalized
-        );
+      return {
+        id: emp.employee_id,
+        name: emp.name || "Unknown",
+        designation: emp.designation || "—",
+        skills: skillArray,
+        hasCV: !!emp.file_name, // true if file_name exists
+        fileName: emp.file_name
       };
+    });
+
+    // 3. Setup Search Listener
+    if (searchInput) {
+      // Remove old listeners to prevent duplicates
+      const newSearch = searchInput.cloneNode(true);
+      searchInput.parentNode.replaceChild(newSearch, searchInput);
+
+      newSearch.addEventListener("keyup", (e) => {
+        const query = e.target.value.toLowerCase();
+        
+        const filtered = normalized.filter(item => 
+          item.name.toLowerCase().includes(query) ||
+          item.designation.toLowerCase().includes(query) ||
+          item.skills.some(skill => skill.toLowerCase().includes(query))
+        );
+        renderCVTable(filtered);
+      });
     }
 
+    // 4. Initial Render
     renderCVTable(normalized);
 
   } catch (err) {
-    console.error(err);
-    box.innerHTML = `<div class="text-muted">Unable to load CV repository</div>`;
+    console.error("CV Load Error:", err);
+    box.innerHTML = `<div class="text-danger p-3">Unable to load CV repository</div>`;
   }
 }
 
 /* =====================================================
-   CV TABLE
+   CV TABLE RENDERER (With Secure Download)
 ===================================================== */
 function renderCVTable(list = []) {
   const box = document.getElementById("cvRepository");
   if (!box) return;
 
+  if (list.length === 0) {
+    box.innerHTML = `<div class="text-muted p-2">No matching records found.</div>`;
+    return;
+  }
+
   box.innerHTML = `
-    <table class="table table-sm">
-      <thead>
+    <table class="table table-hover table-striped align-middle">
+      <thead class="table-light">
         <tr>
           <th>Name</th>
+          <th>Designation</th>
           <th>Skills</th>
-          <th>Experience</th>
+          <th class="text-end">Action</th>
         </tr>
       </thead>
       <tbody>
-        ${list.map(cv => `
+        ${list.map(emp => `
           <tr>
-            <td>${cv.name || "—"}</td>
-            <td>${cv.skills.join(", ") || "—"}</td>
-            <td>${cv.experience || "—"}</td>
+            <td class="fw-bold text-primary">${emp.name}</td>
+            <td>${emp.designation}</td>
+            <td>
+              ${emp.skills.length > 0 
+                ? emp.skills.map(s => `<span class="badge bg-secondary me-1">${s}</span>`).join("") 
+                : '<span class="text-muted small">No skills listed</span>'}
+            </td>
+            <td class="text-end">
+              ${emp.hasCV 
+                ? `<button 
+                      class="btn btn-sm btn-outline-primary" 
+                      onclick="downloadCV(${emp.id}, '${emp.fileName || 'cv.pdf'}')"
+                      title="Download CV">
+                      ⬇ Download
+                   </button>`
+                : `<span class="text-muted small fst-italic">Not Uploaded</span>`
+              }
+            </td>
           </tr>
         `).join("")}
       </tbody>
@@ -353,9 +381,7 @@ function loadUtilization(summary = {}) {
     </div>
   `;
 }
-/* =====================================================
-   EXECUTIVE ACTION PANEL
-===================================================== */
+
 /* =====================================================
    EXECUTIVE ACTION PANEL
 ===================================================== */
@@ -424,4 +450,50 @@ function normalizeAging(a = {}) {
     "31_60": a["31_60"] ?? a.days_31_60 ?? 0,
     "60_plus": a["60_plus"] ?? a.days_60_plus ?? 0
   };
+}
+/* =====================================================
+   SECURE DOWNLOAD HELPER
+===================================================== */
+async function downloadCV(employeeId, fileName) {
+  try {
+    // 1. Get the token from LocalStorage (Adjust key if yours is different, e.g. 'accessToken')
+    const token = localStorage.getItem("token"); 
+    
+    if (!token) {
+      alert("You are logged out. Please login again.");
+      return;
+    }
+
+    // 2. Fetch the file with the Authorization Header
+    const response = await fetch(`/api/documents/cv/${employeeId}`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}` 
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Download failed");
+    }
+
+    // 3. Convert response to a Blob (File object)
+    const blob = await response.blob();
+    
+    // 4. Create a temporary invisible link to trigger the download
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName; // Force the filename
+    document.body.appendChild(a);
+    a.click();
+    
+    // 5. Cleanup
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+
+  } catch (err) {
+    console.error("Download Error:", err);
+    alert("Failed to download CV: " + err.message);
+  }
 }

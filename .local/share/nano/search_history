@@ -1,20 +1,3 @@
-leave
-const { userId, clockInTime } = req.body;
-db.query("INSERT INTO
-forgot-password
-fetch('/api/auth/reset-password', {
-keeper
-acceptance
-approve
-router.get("/pending-timesheets-list", verifyToken, async (req, res) => {  try {    const isAdmin = ["ADMIN", "HR"].includes(req.user.role);    const userId = req.user.id;    const [empRow] = await db.query(      `SELECT id FROM employees WHERE user_id = ? LIMIT 1`,      [userId]    );    if (!empRow.length) {      return res.status(404).json({ message: "Employee not found" });    }    const managerId = empRow[0].id;    const query = isAdmin      ? `        SELECT e.name, t.status        FROM timesheets t        JOIN employees e ON t.employee_id = e.id        WHERE t.status = 'PENDING'      `      : `        SELECT e.name, t.status        FROM timesheets t        JOIN employees e ON t.employee_id = e.id        WHERE t.status = 'PENDING'          AND e.manager_id = ?      `;    const [rows] = isAdmin      ? await db.query(query)      : await db.query(query, [managerId]);    res.json(rows);  } catch (err) {    console.error("❌ pending-timesheets-list:", err);    res.status(500).json({ error: err.message });  }});
-intern
-router.get("/attendance/today", verifyToken, async (req, res) => {
-const statusColor
-Present
-listEl.innerHTML = data.map
-tryinit
-function tryInit()
-view
 <div class="col-md-4 d-none" id="homeInboxCard">
 " id="homeInboxCard"
 approle
@@ -98,6 +81,23 @@ filename
 post
 await db.promise().query(
 db.promise().query(
+bindcv
+bindcvview
+<div class="team-stat">
+initteam
+updateStats(allEmployees);
+v
+<div id="orgTreeContainer" class="org-scroll-wrapper">
+function attachStatFilters()
+initAnalytics
+filter
+FROM employees eWHERE e.active = 1
+acrive
+// Change 'WHERE e.is_active = 1' to this:WHERE e.active = 1
+WHERE e.active = 1
+e.active = 1
+active
+Active Users
 
 
 y

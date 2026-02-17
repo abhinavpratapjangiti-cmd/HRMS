@@ -176,3 +176,17 @@
     border: 1px solid #e5e7eb;
     border-radius: 8px;
 }
+.org-tree {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.org-tree.fade-out {
+    opacity: 0;
+    transform: scale(0.98);
+}
+
+.team-stat.active-stat {
+    background: #eef2ff;
+    border-radius: 8px;
+    padding: 6px 12px;
+}

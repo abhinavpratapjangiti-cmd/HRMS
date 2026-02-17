@@ -1,109 +1,3 @@
-ls
-cd js
-ls
-cd ..cd ..
-cd ..
-ls
-cd routes
-ls
-cd ..
-cd public
-ls
-cd pages
-ls
-cd ..
-cd js
-ls
-cd assets
-ls
-cd ..
-cat index.html
-nano index.html
-pm2 restart all
-cat assets/js/pages/dashboard.js
-nano assets/js/pages/dashboard.js
-cd backend/public/assets
-ls
-cd js
-ls
-cd pages
-ls
-cat backend/public/assets/js/pages/home.js
-nano backend/public/assets/js/pages/home.js
-nano backend/public/assets/js/pages/home.js
-pm2 restart all
-pm2 logs
-cat backend/public/assets/js/pages/dashboard.js
-cat  backend/public/assets/js/pages/home.js
-nano  backend/public/assets/js/pages/home.js
-pm2 restart all
-pm2 logs
-nano  backend/public/assets/js/pages/team.js
-cat  backend/public/assets/js/pages/team.js
-cat  backend/routes/team.js
-nano  backend/routes/thoughts.js
-nano  backend/routes/thought.js
-cat  backend/routes/thought.js
-cat backend/routes/holidays.js
-cat backend/routes/holiday.js
-nano backend/routes/holiday.js
-cat backend/routes/holiday.js
-nano backend/routes/holiday.js
-nano backend/routes/dashboard.js
-cd backend 
-ls
-nano backend/server.js
-nano server.js
-pm2 restart all
-curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJhYmhpbmF2LnByYXRhcEBsb3Zhc2l0LmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiZW1wbG95ZWVfaWQiOjExLCJ0b2tlbl92ZXJzaW9uIjowLCJpYXQiOjE3NzAwMDE4MzQsImV4cCI6MTc3MDA4ODIzNH0.u6S36jfRYCtXfAsdamS5RjGEXZfl3dtgg35msumGwbI" http://16.16.18.115:5000/api/dashboard/home
-nano routes/dashboard.js
-pm2 restart all
-curl -H "Authorization: Bearer YOUR_TOKEN" http://16.16.18.115:5000/api/dashboard/home
-curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJhYmhpbmF2LnByYXRhcEBsb3Zhc2l0LmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiZW1wbG95ZWVfaWQiOjExLCJ0b2tlbl92ZXJzaW9uIjowLCJpYXQiOjE3NzAwMDE4MzQsImV4cCI6MTc3MDA4ODIzNH0.u6S36jfRYCtXfAsdamS5RjGEXZfl3dtgg35msumGwbI" http://16.16.18.115:5000/api/dashboard/home
-cd publis/assets/js/dashboard.js
-cd publis/assets/js/pages/dashboard.js
-catd publis/assets/js/pages/dashboard.js
-cat publis/assets/js/pages/dashboard.js
-cat public/assets/js/pages/dashboard.js
-nano public/assets/js/pages/dashboard.js
-cat public/assets/js/pages/dashboard.js
-nano public/assets/js/pages/dashboard.js
-pm2 restart all
-cd public/assets/js
-cd pages
-ls
-cd ..
-cd pages
-cd ..
-cd pages
-ls
-
-nano home.html
-cd
-pm2 restart all
-pm2 logs
-nano backend/routes/documents.js
-pm2 restart all
-pm2 logs hrms-backend --lines 20
-cat backend/routes/documents.js
-nano backend/routes/documents.js
-pm2 restart all
-pm2 logs hrms-backend --lines 20
-nano backend/routes/documents.js
-pm2 restart all
-pm2 logs
-nano /home/ubuntu/backend/routes/documents.js
-pm2 restart all
-pm2 logs hrms-backend --lines 20
-grep -R "await db.query" routes
-grep -R "db.query(" routes
-nano backend/routes/documents.js
-nano backend/server.js
-nano backend/routes/profile.js
-cd /home/ubuntu/backend
-grep -R "await db.query" routes
-grep -R "await " routes
-pm2 logs
 at loadRoute (/home/ubuntu/backend/server.js:76)
 nano server.js
 pm2 restart all
@@ -1998,3 +1892,109 @@ pm2 restart all
 mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
 nano backend/public/assets/js/pages/me.js
 pm2 restart all
+
+cat backend/public/assets/js/pages/me.js
+nano backend/public/assets/js/pages/me.js
+pm2 restart all
+nano backend/public/pages/me.html
+nano backend/public/pages/change-password.html
+cat backend/public/pages/change-password.html
+nano backend/public/pages/change-password.html
+pm2 restart all
+nano backend/public/assets/js/pages/team.js
+nano backend/public/pages/team.html
+cat backend/public/pages/team.html
+pm2 restart all
+cat backend/public/pages/team.html
+cat backend/public/assets/js/pages/team.js
+nano backend/public/pages/team.html
+nano backend/public/assets/js/pages/team.js
+pm2 restart all\
+pm2 restart all
+nano backend/public/pages/team.html
+nano backend/public/assets/css/team.css
+nano backend/public/assets/css/pages/team.css
+nano backend/public/assets/js/pages/team.js
+pm2 restart all
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+clear
+mysql   -h hrms-db.c1uqkm22szwg.eu-north-1.rds.amazonaws.com   -P 3306   -u admin   -p
+clear
+cat backend/routes/analytics.js
+cd backend/routes
+ls
+analytics-bench.js
+cat analytics-bench.js
+cat analytics-profile.js
+cd
+cat backend/pubic/assets/js/analytics.js
+cat backend/pubic/assets/js/analytics.js
+cat backend/public/assets/js/pages/analytics.js
+cat backend/routes/analytics.js
+nano backend/routes/analytics.js
+cat backend/public/pages/analytics.html
+nano backend/public/pages/analytics.html
+cat backend/public/assets/js/pages/analytics.js
+nano backend/public/assets/js/pages/analytics.js
+pm2 restart all
+nano backend/public/assets/js/pages/analytics.js
+pm2 restart all
+nano backend/public/assets/js/pages/analytics.js
+p,2 restart all
+pm2 restart all
+nano backend/public/assets/js/pages/analytics.js
+cat backend/public/assets/js/pages/analytics.js
+nano backend/public/assets/js/pages/analytics.js
+pm2 restart all
+cat backend/public/assets/js/pages/analytics.js
+nano backend/public/assets/js/pages/analytics.js
+cat backend/public/pages/analytics.html
+cat backend/routes/analytics.js
+nano backend/routes/analytics.js
+nano backend/public/pages/analytics.html
+pm2 restart all
+cat backend/routes/analytics.js
+nano backend/public/pages/analytics.html
+nano backend/routes/analytics.js
+pm2 restart all
+nano backend/routes/analytics.js
+cat backend/routes/analytics.js
+nano backend/routes/analytics.js
+pm2 restart all
+cat backend/routes/analytics.js
+nano backend/routes/analytics.js
+pm2 restart all
+cat backend/routes/documents.js
+nano backend/routes/documents.js
+pm2 restart all
+cat backend/routes/documents.js
+nano backend/routes/documents.js
+pm2 restart all
+nano backend/routes/documents.js
+pm2 restart all
+cat backend/public/pages/analytics.html
+nano backend/public/pages/analytics.html
+nano backend/public/assets/js/pages/analytics.js
+cat backend/public/assets/js/pages/analytics.js
+nano backend/public/assets/js/pages/analytics.js
+pm2 restart all
+cat backend/public/pages/analytics.html
+nano backend/public/pages/analytics.html
+cat backend/public/pages/analytics.html
+nano backend/public/pages/analytics.html
+pm2 restar all
+pm2 restart all
+cat frontend/assets/js/pages/analytics.js
+cat backend/public/assets/js/pages/analytics.js
+nano backend/public/assets/js/pages/analytics.js
+pm2 restart all
+nano backend/public/assets/js/pages/analytics.js
+pm2 restart all
+pm2 logs
+cat backend/services/benchAnalytics.service.js
+nano backend/services/benchAnalytics.service.js
+pm2 restart all
+pm2 logs
+nano backend/services/benchAnalytics.service.js
+pm2 restart all
+grep -r "active"

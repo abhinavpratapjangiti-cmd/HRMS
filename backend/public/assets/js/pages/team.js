@@ -14,6 +14,7 @@
 
             renderFullTree(allEmployees);
             updateStats(allEmployees);
+            attachStatFilters();
 
         } catch (e) {
             console.error("Team Init Error:", e);
@@ -21,6 +22,7 @@
         }
     }
     window.initTeam = initTeam;
+
 
     // --- 1. RECURSIVE TREE RENDERER (Horizontal) ---
     function renderFullTree(list) {
@@ -154,5 +156,76 @@
     document.getElementById("profileModal").addEventListener("click", (e) => {
         if(e.target.id === "profileModal") window.teamActions.closeModal();
     });
+
+function attachStatFilters() {
+
+    const totalCard = document.getElementById("totalMembersCard");
+    const onlineCard = document.getElementById("onlineNowCard");
+    const deptCard = document.getElementById("departmentsCard");
+    const filterLabel = document.getElementById("activeFilterLabel");
+
+    function clearActive() {
+        document.querySelectorAll(".team-stat").forEach(s => s.classList.remove("active-stat"));
+    }
+
+    function animateAndRender(data) {
+        const tree = document.querySelector(".org-tree");
+        if (tree) tree.classList.add("fade-out");
+
+        setTimeout(() => {
+            renderFullTree(data);
+            if (tree) tree.classList.remove("fade-out");
+        }, 200);
+    }
+
+    // --- TOTAL ---
+    totalCard.onclick = () => {
+        clearActive();
+        totalCard.classList.add("active-stat");
+
+        filterLabel.classList.add("d-none");
+
+        animateAndRender(allEmployees);
+        window.teamActions.resetView();
+    };
+
+    // --- ONLINE ---
+    onlineCard.onclick = () => {
+        clearActive();
+        onlineCard.classList.add("active-stat");
+
+        const onlineUsers = allEmployees.filter(e => e.online);
+
+        filterLabel.innerText = `Showing: Online Users (${onlineUsers.length})`;
+        filterLabel.classList.remove("d-none");
+
+        animateAndRender(onlineUsers);
+        window.teamActions.resetView();
+    };
+
+    // --- DEPARTMENTS ---
+    deptCard.onclick = () => {
+        clearActive();
+        deptCard.classList.add("active-stat");
+
+        const depts = [...new Set(allEmployees.map(e => e.designation?.split(" ")[0] || "General"))];
+
+        const selected = prompt("Select Department:\n\n" + depts.join("\n"));
+
+        if (!selected) return;
+
+        const filtered = allEmployees.filter(e =>
+            (e.designation?.split(" ")[0] || "General") === selected
+        );
+
+        filterLabel.innerText = `Showing: ${selected} Department (${filtered.length})`;
+        filterLabel.classList.remove("d-none");
+
+        animateAndRender(filtered);
+        window.teamActions.resetView();
+    };
+}
+
+
 
 })();

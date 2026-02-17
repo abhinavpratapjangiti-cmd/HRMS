@@ -66,9 +66,9 @@ async function loadStats() {
         if (statsBox && data) {
             // Backend now handles the correct "Managers" and "Active" counts logic
             statsBox.innerHTML = `
-                <div class="stat-row"><span>Total Employees</span><span class="fw-bold">${data.total || 0}</span></div>
-                <div class="stat-row"><span>Managers</span><span class="fw-bold">${data.managers || 0}</span></div>
-                <div class="stat-row text-success"><span>Active Users</span><span class="fw-bold">${data.active || 0}</span></div>
+                <div class="stat-row"><span>Total Employees               :</span><span class="fw-bold">${data.total || 0}</span></div>
+                <div class="stat-row"><span>Managers                :</span><span class="fw-bold">${data.managers || 0}</span></div>
+                <div class="stat-row text-success"><span>Employees                :</span><span class="fw-bold">${data.active || 0}</span></div>
             `;
         }
     } catch (e) {
