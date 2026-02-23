@@ -1,5 +1,6 @@
 node_modules/
 .env
-pm2.log
 *.log
-swapfilenode_modules
+*.deb
+.git-credentials
+swapfile
