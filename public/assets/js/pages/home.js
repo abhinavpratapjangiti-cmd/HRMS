@@ -128,6 +128,8 @@ if (!window.location.hash.includes("#/home")) return;
         loadDashboardHome();
         loadTodayTime();
         loadManagerStats();
+        loadThoughtOfTheDay();
+        loadGreeting();
     }, 100);
 };
 
@@ -262,6 +264,68 @@ if (!window.location.hash.includes("#/home")) return;
                 if (el) el.textContent = "—";
             }
         }
+    }
+
+async function loadThoughtOfTheDay() {
+        const thoughtTextEl = document.getElementById("dailyThoughtText");
+
+        // Only check for the text element now
+        if (!thoughtTextEl) return;
+
+        try {
+            const token = localStorage.getItem("token") || localStorage.getItem("access_token");
+            const res = await fetch(`${API_BASE}/api/thought/today`, { 
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                } 
+            });
+            
+            if (!res.ok) throw new Error("Failed to load thought");
+            
+            const data = await res.json();
+
+            // Inject just the thought
+            thoughtTextEl.innerText = `"${data.thought}"`;
+
+        } catch (err) {
+            console.error("Thought fetch error:", err);
+            // Fallback quote without author
+            thoughtTextEl.innerText = '"The secret of getting ahead is getting started."';
+        }
+    }
+
+/* =========================
+       👋 GREETING
+    ========================= */
+    function loadGreeting() {
+      const greetingEl = document.getElementById("greetingText");
+      const subEl = document.getElementById("greetingSub");
+      if (!greetingEl || !subEl) return;
+
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      const name = user?.name ? user.name.split(" ")[0] : "";
+
+      const hour = new Date().getHours();
+      let greeting = "Hello";
+      let sub = "Have a productive day!";
+
+      if (hour >= 5 && hour < 12) {
+        greeting = "🌅 Good Morning";
+        sub = "Let’s start the day strong!";
+      } else if (hour >= 12 && hour < 17) {
+        greeting = "☀️ Good Afternoon";
+        sub = "Hope your day is going great!";
+      } else if (hour >= 17 && hour < 21) {
+        greeting = "🌇 Good Evening";
+        sub = "Time to wrap things up!";
+      } else {
+        greeting = "🌙 Good Night";
+        sub = "Don’t forget to rest well!";
+      }
+
+      greetingEl.innerText = `${greeting}${name ? ", " + name : ""}`;
+      subEl.innerText = sub;
     }
 
     /* =========================================

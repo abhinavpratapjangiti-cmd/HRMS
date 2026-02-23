@@ -338,9 +338,7 @@ router.post("/reset-password", (req, res) => {
 
 /* =====================================================
    1️⃣ CHECK STATUS / CREATE REQUEST
-===================================================== */
-/* =====================================================
-   1️⃣ CHECK STATUS / CREATE REQUEST (User Polling & Request)
+   (User Polling & Request Initiation)
 ===================================================== */
 router.post("/check-reset-status", async (req, res) => {
   try {
@@ -350,7 +348,7 @@ router.post("/check-reset-status", async (req, res) => {
       return res.status(400).json({ message: "EMAIL REQUIRED" });
     }
 
-    // 1️⃣ Verify user exists and active
+    // 1️⃣ Verify user exists and is active
     const [users] = await db.query(
       "SELECT id FROM users WHERE email = ? AND active = 1 LIMIT 1",
       [email]
@@ -398,21 +396,40 @@ router.post("/check-reset-status", async (req, res) => {
     );
 
     const requestId = insertResult.insertId;
+    console.log(`✅ Reset Request Created! ID: ${requestId} for ${email}`);
 
     // 4️⃣ Notify ALL Admin + HR
-    const [admins] = await db.query(
-      "SELECT id FROM users WHERE role IN ('admin','hr')"
-    );
-
-    for (let admin of admins) {
-      await db.query(
-        `INSERT INTO notifications (user_id, type, message, is_read)
-         VALUES (?, 'password_request', ?, 0)`,
-        [
-          admin.id,
-          `🔔 Password Reset Requested by: ${email} (Request ID: ${requestId})`
-        ]
+    try {
+      // Find admins and HR users
+      const [admins] = await db.query(
+        "SELECT id, email FROM users WHERE LOWER(role) IN ('admin', 'hr')"
       );
+
+      console.log(`📣 Found ${admins.length} admins to notify.`);
+
+      if (admins.length === 0) {
+        console.warn("⚠️ WARNING: No users with 'admin' or 'hr' roles found in DB!");
+      }
+
+      for (let admin of admins) {
+        try {
+          await db.query(
+            `INSERT INTO notifications (user_id, type, message, is_read, created_at)
+             VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)`,
+            [
+              admin.id,
+              'password_request',
+              `🔔 Password Reset Requested by: ${email} (Request ID: ${requestId})`,
+              0
+            ]
+          );
+          console.log(`✅ Notification stored for Admin ID: ${admin.id}`);
+        } catch (notifErr) {
+          console.error(`❌ FAILED to insert notification for Admin ${admin.id}:`, notifErr.message);
+        }
+      }
+    } catch (adminQueryErr) {
+      console.error("❌ FAILED to query admins:", adminQueryErr.message);
     }
 
     return res.json({ status: "REQUEST_SENT" });
@@ -423,14 +440,13 @@ router.post("/check-reset-status", async (req, res) => {
   }
 });
 
-
 /* =====================================================
    2️⃣ ADMIN APPROVE / REJECT REQUEST
+   (Admin action from Notification Bell)
 ===================================================== */
 router.post("/admin/resolve-reset", async (req, res) => {
   try {
-    // Note: Ensure this route is protected by admin/hr middleware in production
-    const { request_id, action, admin_id } = req.body; 
+    const { request_id, action, admin_id } = req.body;
 
     // Action must strictly match your ENUM
     if (!['APPROVED', 'REJECTED'].includes(action)) {
@@ -449,7 +465,7 @@ router.post("/admin/resolve-reset", async (req, res) => {
       return res.status(400).json({ message: "REQUEST ALREADY PROCESSED OR NOT FOUND" });
     }
 
-    // Optional: Mark the specific notification as read so it clears the bell
+    // Mark the specific notification as read so it clears from the bell icon
     await db.query(
       "UPDATE notifications SET is_read = 1 WHERE message LIKE ?",
       [`%Request ID: ${request_id}%`]
@@ -462,7 +478,6 @@ router.post("/admin/resolve-reset", async (req, res) => {
     return res.status(500).json({ message: "SERVER ERROR" });
   }
 });
-
 
 /* =====================================================
    3️⃣ FINAL PASSWORD RESET (ONLY IF APPROVED)

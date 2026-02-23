@@ -49,6 +49,7 @@ router.get("/today", (req, res) => {
       // No row → fallback
       return res.json({
         thought: getFallbackThought(),
+        author: "LovasIT Team", // Add this!
         source: "FALLBACK"
       });
     })

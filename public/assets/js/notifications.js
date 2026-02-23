@@ -80,12 +80,11 @@ console.log("notifications.js loaded");
 
   /* ================= LOAD NOTIFICATIONS ================= */
 
-
 function loadNotifications() {
     // 1. SAFETY CHECK: If no token, don't even try to fetch.
     if (!localStorage.getItem("token")) {
        console.log("No token found. Pausing notification polling.");
-       stopPolling(); 
+       stopPolling();
        return;
     }
 
@@ -96,7 +95,7 @@ function loadNotifications() {
         // 2. KILL SWITCH: If server says 401, stop the loop.
         if (r.status === 401) {
           console.warn("Session expired. Stopping polling.");
-          stopPolling(); 
+          stopPolling();
           return [];
         }
         if (!r.ok) throw new Error("Notification API failed");
@@ -107,6 +106,7 @@ function loadNotifications() {
         console.error("Notifications load failed:", err);
       });
   }
+  
   function renderNotifications(list) {
     var box = $("notificationList");
     var badge = $("notificationBadge");
@@ -132,6 +132,20 @@ function loadNotifications() {
       var n = list[i];
       seenNotificationIds[n.id] = true;
 
+      /* 🔥 NEW ADDITION: Extract Request ID and build Approve/Reject buttons safely */
+      var actionButtons = "";
+      if (n.type === 'password_request' || (n.message && n.message.includes('Password Reset Requested'))) {
+        var match = n.message.match(/Request ID:\s*(\d+)/);
+        if (match) {
+          var reqId = match[1];
+          actionButtons = "<div class='mt-2'>" +
+            "<button class='btn btn-success btn-sm me-2 resolve-reset-btn' data-action='APPROVED' data-reqid='" + reqId + "'>Approve</button>" +
+            "<button class='btn btn-danger btn-sm resolve-reset-btn' data-action='REJECTED' data-reqid='" + reqId + "'>Reject</button>" +
+          "</div>";
+        }
+      }
+      /* -------------------------------------------------------------------------- */
+
       html +=
         "<div class='notification-item unread' data-id='" + n.id + "'>" +
           "<div class='fw-semibold'>" +
@@ -146,6 +160,7 @@ function loadNotifications() {
               n.id +
             "'>Mark as read</button>" +
           "</div>" +
+          actionButtons + /* 🔥 NEW ADDITION: Injected securely here */
         "</div>";
     }
 
@@ -174,7 +189,7 @@ function loadNotifications() {
     });
 
     socket.on("notification_pop", function (data) {
-console.log("🔥 Notification event received:", data);      
+console.log("🔥 Notification event received:", data);
 if (!data || !data.id) return;
 
       // Prevent duplicates
@@ -212,6 +227,20 @@ if (!data || !data.id) return;
       box.innerHTML = "";
     }
 
+    /* 🔥 NEW ADDITION: Ensure real-time socket events also get the buttons */
+    var actionButtons = "";
+    if (n.type === 'password_request' || (n.message && n.message.includes('Password Reset Requested'))) {
+      var match = n.message.match(/Request ID:\s*(\d+)/);
+      if (match) {
+        var reqId = match[1];
+        actionButtons = "<div class='mt-2'>" +
+          "<button class='btn btn-success btn-sm me-2 resolve-reset-btn' data-action='APPROVED' data-reqid='" + reqId + "'>Approve</button>" +
+          "<button class='btn btn-danger btn-sm resolve-reset-btn' data-action='REJECTED' data-reqid='" + reqId + "'>Reject</button>" +
+        "</div>";
+      }
+    }
+    /* -------------------------------------------------------------------- */
+
     var div = document.createElement("div");
     div.className = "notification-item unread";
     div.setAttribute("data-id", n.id);
@@ -228,7 +257,8 @@ if (!data || !data.id) return;
         "<button class='btn btn-link p-0 small mark-read' data-id='" +
           n.id +
         "'>Mark as read</button>" +
-      "</div>";
+      "</div>" +
+      actionButtons; /* 🔥 NEW ADDITION: Injected securely here */
 
     box.prepend(div);
 
@@ -270,6 +300,48 @@ if (!data || !data.id) return;
       loadNotifications();
     });
   }
+
+  /* ================= ADMIN RESOLVE PASSWORD RESET ================= */
+  /* 🔥 NEW ADDITION: Event listener to handle the Approve/Reject clicks safely */
+  
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".resolve-reset-btn");
+    if (!btn) return;
+    e.preventDefault();
+
+    var action = btn.getAttribute("data-action");
+    var reqId = btn.getAttribute("data-reqid");
+    var user = getUser();
+
+    if (!confirm("Are you sure you want to " + action.toLowerCase() + " this password request?")) return;
+
+    var originalText = btn.innerHTML;
+    btn.innerHTML = "Processing...";
+    btn.disabled = true;
+
+    // Make sure this matches your auth routes prefix. Assuming /api/auth.
+    fetch(API_BASE + "/api/auth/admin/resolve-reset", { 
+      method: "POST",
+      headers: authHeaders(),
+      body: JSON.stringify({
+          request_id: reqId,
+          action: action,
+          admin_id: user.id || 0
+      })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+        alert(data.message || ("Request " + action));
+        loadNotifications(); // Reload list to update UI and remove notification if marked read on backend
+    })
+    .catch(function(err) {
+        console.error("Resolve error:", err);
+        alert("Error processing request");
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
+  });
+  /* -------------------------------------------------------------------------- */
 
   /* ================= POLLING ================= */
 
