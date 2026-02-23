@@ -166,21 +166,20 @@ router.get("/pending-leaves-list", verifyToken, async (req, res) => {
     try {
         const isAdmin = ["ADMIN", "HR"].includes(req.user.role.toUpperCase());
         const empId = await getEmployeeId(req.user.id);
+        
+        // 🔥 FIX: Added leave_type, start_date, end_date, and total_days to the SELECT
         const query = isAdmin
-          ? `SELECT l.id, e.name, l.reason, l.status FROM leaves l JOIN employees e ON l.employee_id = e.id WHERE l.status = 'PENDING' ORDER BY l.id DESC LIMIT 10`
-          : `SELECT l.id, e.name, l.reason, l.status FROM leaves l JOIN employees e ON l.employee_id = e.id WHERE l.status = 'PENDING' AND e.manager_id = ? ORDER BY l.id DESC LIMIT 10`;
-        const [rows] = isAdmin ? await db.query(query) : await db.query(query, [empId]);
-        res.json(rows);
-    } catch (err) { res.status(500).json({ error: err.message }); }
-});
-
-router.get("/pending-timesheets-list", verifyToken, async (req, res) => {
-    try {
-        const isAdmin = ["ADMIN", "HR"].includes(req.user.role.toUpperCase());
-        const empId = await getEmployeeId(req.user.id);
-        const query = isAdmin
-          ? `SELECT t.id, e.name, 'Week Entry' as reason, t.status FROM timesheets t JOIN employees e ON t.employee_id = e.id WHERE t.status = 'PENDING' LIMIT 10`
-          : `SELECT t.id, e.name, 'Week Entry' as reason, t.status FROM timesheets t JOIN employees e ON t.employee_id = e.id WHERE t.status = 'PENDING' AND e.manager_id = ? LIMIT 10`;
+          ? `SELECT l.id, e.name, l.reason, l.status, l.leave_type, 
+                    l.from_date AS start_date, l.to_date AS end_date, 
+                    DATEDIFF(l.to_date, l.from_date) + 1 AS total_days 
+             FROM leaves l JOIN employees e ON l.employee_id = e.id 
+             WHERE l.status = 'PENDING' ORDER BY l.id DESC LIMIT 10`
+          : `SELECT l.id, e.name, l.reason, l.status, l.leave_type, 
+                    l.from_date AS start_date, l.to_date AS end_date, 
+                    DATEDIFF(l.to_date, l.from_date) + 1 AS total_days 
+             FROM leaves l JOIN employees e ON l.employee_id = e.id 
+             WHERE l.status = 'PENDING' AND e.manager_id = ? ORDER BY l.id DESC LIMIT 10`;
+             
         const [rows] = isAdmin ? await db.query(query) : await db.query(query, [empId]);
         res.json(rows);
     } catch (err) { res.status(500).json({ error: err.message }); }
@@ -190,9 +189,20 @@ router.get("/team-on-leave-list", verifyToken, async (req, res) => {
     try {
         const isAdmin = ["ADMIN", "HR"].includes(req.user.role.toUpperCase());
         const empId = await getEmployeeId(req.user.id);
+        
+        // 🔥 FIX: Added leave_type, start_date, end_date, and total_days to the SELECT
         const query = isAdmin
-          ? `SELECT l.id, e.name, l.reason, 'Approved' as status FROM leaves l JOIN employees e ON l.employee_id = e.id WHERE l.status = 'APPROVED' AND CURDATE() BETWEEN l.from_date AND l.to_date`
-          : `SELECT l.id, e.name, l.reason, 'Approved' as status FROM leaves l JOIN employees e ON l.employee_id = e.id WHERE l.status = 'APPROVED' AND CURDATE() BETWEEN l.from_date AND l.to_date AND e.manager_id = ?`;
+          ? `SELECT l.id, e.name, l.reason, 'Approved' as status, l.leave_type, 
+                    l.from_date AS start_date, l.to_date AS end_date, 
+                    DATEDIFF(l.to_date, l.from_date) + 1 AS total_days 
+             FROM leaves l JOIN employees e ON l.employee_id = e.id 
+             WHERE l.status = 'APPROVED' AND CURDATE() BETWEEN l.from_date AND l.to_date`
+          : `SELECT l.id, e.name, l.reason, 'Approved' as status, l.leave_type, 
+                    l.from_date AS start_date, l.to_date AS end_date, 
+                    DATEDIFF(l.to_date, l.from_date) + 1 AS total_days 
+             FROM leaves l JOIN employees e ON l.employee_id = e.id 
+             WHERE l.status = 'APPROVED' AND CURDATE() BETWEEN l.from_date AND l.to_date AND e.manager_id = ?`;
+             
         const [rows] = isAdmin ? await db.query(query) : await db.query(query, [empId]);
         res.json(rows);
     } catch (err) { res.status(500).json({ error: err.message }); }

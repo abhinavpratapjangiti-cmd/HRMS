@@ -528,14 +528,14 @@ router.get("/pending/my-team/list", verifyToken, (req, res) => {
     return res.status(403).json({ message: "Forbidden" });
   }
 
+// 🔥 FIX: Aliased the columns so the frontend JS automatically understands them
   const sql = `
     SELECT
       t.id,
       e.name,
-      t.work_date,
-      t.project,
-      t.task,
-      t.hours,
+      t.work_date AS date,
+      t.hours AS worked_hours,
+      CONCAT('Project: ', t.project, ' | Task: ', t.task) AS reason,
       t.status
     FROM timesheets t
     JOIN employees e ON e.id = t.employee_id

@@ -274,15 +274,15 @@ async function loadThoughtOfTheDay() {
 
         try {
             const token = localStorage.getItem("token") || localStorage.getItem("access_token");
-            const res = await fetch(`${API_BASE}/api/thought/today`, { 
+            const res = await fetch(`${API_BASE}/api/thought/today`, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + token
-                } 
+                }
             });
-            
+
             if (!res.ok) throw new Error("Failed to load thought");
-            
+
             const data = await res.json();
 
             // Inject just the thought
@@ -433,7 +433,7 @@ async function loadThoughtOfTheDay() {
         container.innerHTML = html;
     }
 
-    function renderAttendanceTable(data, container) {
+function renderAttendanceTable(data, container) {
         const currentUser = getUser();
         const myId = currentUser.id;
         const myName = currentUser.name;
@@ -447,42 +447,60 @@ async function loadThoughtOfTheDay() {
 
         const headerHtml = `
             <div class="d-flex px-3 py-2 border-bottom bg-light fw-bold text-muted small text-uppercase">
-                <div style="width: 40%">Name</div>
-                <div style="width: 30%">Status</div>
-                <div style="width: 30%; text-align: right;">Check-in</div>
+                <div style="width: 60%">Name</div>
+                <div style="width: 40%; text-align: right;">Status</div>
             </div>`;
 
         const rowsHtml = filteredData.map(item => {
-            const isPresent = (item.status || "").toLowerCase() === "present";
-            const statusIcon = isPresent ? "🟢" : "🔴";
+            let rawStatus = (item.status || "").toLowerCase();
+            let displayStatus = item.status || "Not clocked in";
+            let statusIcon = "🔴"; 
+
+            // Issue 1 & 2: Smart Status Colors & Text
+            if (rawStatus === "absent" || rawStatus === "") {
+                displayStatus = "Not clocked in";
+                statusIcon = "🔴";
+            } else if (rawStatus.includes("out")) {
+                statusIcon = "🟠"; // Orange
+            } else if (rawStatus.includes("in") || rawStatus === "present" || rawStatus === "working") {
+                statusIcon = "🟢"; // Green
+            } else if (rawStatus.includes("break")) {
+                statusIcon = "🟡"; // Yellow
+            } else {
+                statusIcon = "🔵"; // Blue for any other status
+            }
+
             return `
             <div class="d-flex align-items-center px-3 py-3 border-bottom hover-bg-light">
-                <div style="width: 40%">
+                <div style="width: 60%">
                     <div class="fw-bold text-dark">${escapeHtml(item.name)}</div>
                     <div class="small text-muted" style="font-size: 0.75rem;">${escapeHtml(item.designation || "Employee")}</div>
                 </div>
-                <div style="width: 30%"><span>${statusIcon} ${escapeHtml(item.status || "Absent")}</span></div>
-                <div style="width: 30%; text-align: right;"><div class="fw-bold font-monospace">${escapeHtml(item.in_time || "--:--")}</div></div>
+                <div style="width: 40%; text-align: right;"><span>${statusIcon} ${escapeHtml(displayStatus)}</span></div>
             </div>`;
         }).join("");
 
         container.innerHTML = headerHtml + rowsHtml;
     }
 
-    function renderGenericList(data, container, endpoint) {
+function renderGenericList(data, container, endpoint) {
         if (!Array.isArray(data) || data.length === 0) {
             container.innerHTML = `<div class="text-center text-muted py-4">No records found</div>`;
             return;
         }
 
+        // Helper to format dates cleanly (e.g., "19 Mar 2026")
+        const shortDate = (dStr) => {
+            const d = safeDate(dStr);
+            return d ? d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+        };
+
         const html = data.map(item => {
             let rightSide = "";
             if (
-    (endpoint.includes("pending-leaves-list") ||
-     endpoint.includes("pending/my-team/list"))
-    && isManager()
-) {
-
+                (endpoint.includes("pending-leaves-list") || endpoint.includes("pending/my-team/list"))
+                && isManager()
+            ) {
                 rightSide = `
                     <div class="btn-group">
                         <button class="btn btn-sm btn-success approve-btn" data-id="${item.id}">Approve</button>
@@ -494,11 +512,40 @@ async function loadThoughtOfTheDay() {
                 rightSide = `<span class="badge ${badgeClass}">${escapeHtml(item.status || "Info")}</span>`;
             }
 
+            // 👇 Fix 2 & 3: Smart Detail Formatting 👇
+            let detailsHTML = escapeHtml(item.reason || "No details");
+
+            // Formatting for LEAVES & TEAM ON LEAVE
+            if (endpoint.includes("pending-leaves-list") || endpoint.includes("team-on-leave-list")) {
+                const lType = item.leave_type || item.type; // Adjust based on your DB column name
+                if (lType || item.start_date) {
+                    const sDate = shortDate(item.start_date);
+                    const eDate = shortDate(item.end_date);
+                    const days = item.total_days ? ` (${item.total_days} days)` : '';
+
+                    let leaveStr = `<strong>${escapeHtml(lType || "Leave")}:</strong> ${sDate}`;
+                    if (sDate !== eDate && eDate) leaveStr += ` to ${eDate}`;
+                    leaveStr += days;
+
+                    if (item.reason) leaveStr += `<br><span style="opacity:0.8">Reason: ${escapeHtml(item.reason)}</span>`;
+                    detailsHTML = leaveStr;
+                }
+            }
+            // Formatting for TIMESHEETS
+            else if (endpoint.includes("pending/my-team/list")) {
+                const tDate = item.date || item.timesheet_date || item.created_at; // Adjust based on your DB column name
+                if (tDate) {
+                    detailsHTML = `<strong>Date:</strong> ${shortDate(tDate)}`;
+                    if (item.worked_hours) detailsHTML += ` &nbsp;|&nbsp; <strong>Hours:</strong> ${escapeHtml(item.worked_hours)}`;
+                    if (item.reason || item.notes) detailsHTML += `<br><span style="opacity:0.8">Note: ${escapeHtml(item.reason || item.notes)}</span>`;
+                }
+            }
+
             return `
             <div class="d-flex justify-content-between align-items-center p-3 border-bottom hover-bg-light">
                 <div>
-                    <div class="fw-semibold text-dark">${escapeHtml(item.name)}</div>
-                    <small class="text-muted d-block">${escapeHtml(item.reason || "No details")}</small>
+                    <div class="fw-semibold text-dark mb-1">${escapeHtml(item.name)}</div>
+                    <small class="text-muted d-block" style="line-height: 1.4;">${detailsHTML}</small>
                 </div>
                 ${rightSide}
             </div>`;
