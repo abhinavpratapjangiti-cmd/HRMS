@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<title>Sankranti – Godavari</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Telugu&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: linear-gradient(to top, #fef3c7, #fde68a, #93c5fd);
+  font-family: "Noto Serif Telugu", system-ui;
+}
+
+.scene {
+  position: fixed;
+  inset: 0;
+}
+
+/* TEXT */
+.message {
+  position: absolute;
+  top: 6%;
+  width: 100%;
+  text-align: center;
+  color: #7c2d12;
+  z-index: 10;
+}
+
+.message h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.message p {
+  font-size: 1.4rem;
+  line-height: 1.9;
+}
+
+/* SVG KITES */
+.kite {
+  position: absolute;
+  width: 90px;
+  animation: fly 18s linear infinite;
+}
+
+.kite.small { width: 55px; opacity: 0.6; }
+.kite.large { width: 120px; }
+
+@keyframes fly {
+  0%   { transform: translate(-20vw, 100vh) rotate(5deg); }
+  25%  { transform: translate(20vw, 60vh) rotate(-8deg); }
+  50%  { transform: translate(45vw, 30vh) rotate(6deg); }
+  75%  { transform: translate(75vw, -10vh) rotate(-6deg); }
+  100% { transform: translate(120vw, -60vh) rotate(4deg); }
+}
+
+/* Bhogi fire glow */
+.fire {
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, #fb923c, transparent 70%);
+  animation: flicker 1.4s infinite alternate;
+}
+
+@keyframes flicker {
+  from { opacity: 0.6; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1.05); }
+}
+</style>
+</head>
+
+<body>
+<div class="scene">
+
+  <!-- TEXT -->
+  <div class="message">
+    <h1>🪁 శుభ సంక్రాంతి 🪁</h1>
+    <p>
+      భోగి మంటలతో బాధలు కాలిపోవాలే,<br>
+      సంక్రాంతితో ఆనందం ఇంట నిండాలే,<br>
+      కనుమతో ఆరోగ్యం, ఐశ్వర్యం ఉండాలే
+    </p>
+    <small>– పిఠాపురం నుంచీ ప్రేమతో 🌾</small>
+  </div>
+
+  <!-- BHOGI FIRE -->
+  <div class="fire"></div>
+
+  <!-- SVG KITE 1 -->
+  <svg class="kite large" style="animation-delay:0s;" viewBox="0 0 100 140">
+    <defs>
+      <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#facc15"/>
+        <stop offset="100%" stop-color="#f97316"/>
+      </linearGradient>
+    </defs>
+    <polygon points="50,0 100,70 50,140 0,70" fill="url(#g1)"/>
+    <path d="M50 140 C60 170, 40 200, 55 240" stroke="#444" stroke-width="2" fill="none"/>
+  </svg>
+
+  <!-- SVG KITE 2 -->
+  <svg class="kite small" style="animation-delay:6s;" viewBox="0 0 100 140">
+    <defs>
+      <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#60a5fa"/>
+        <stop offset="100%" stop-color="#2563eb"/>
+      </linearGradient>
+    </defs>
+    <polygon points="50,0 100,70 50,140 0,70" fill="url(#g2)"/>
+    <path d="M50 140 C45 180, 65 210, 50 250" stroke="#444" stroke-width="2" fill="none"/>
+  </svg>
+
+  <!-- SVG KITE 3 -->
+  <svg class="kite" style="animation-delay:12s;" viewBox="0 0 100 140">
+    <defs>
+      <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#22c55e"/>
+        <stop offset="100%" stop-color="#15803d"/>
+      </linearGradient>
+    </defs>
+    <polygon points="50,0 100,70 50,140 0,70" fill="url(#g3)"/>
+    <path d="M50 140 C55 190, 35 220, 60 260" stroke="#444" stroke-width="2" fill="none"/>
+  </svg>
+
+</div>
+</body>
+</html>

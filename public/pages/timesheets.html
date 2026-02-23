@@ -1,0 +1,111 @@
+<section class="container-fluid py-3">
+
+  <h4 class="mb-0">Timesheets</h4>
+  <small class="text-muted">View, submit and approve timesheets</small>
+
+  <!-- Tabs -->
+  <ul class="nav nav-tabs mt-3" role="tablist">
+    <li class="nav-item">
+      <button
+        class="nav-link active"
+        id="my-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#tab-my"
+        type="button"
+        role="tab">
+        My Timesheets
+      </button>
+    </li>
+
+    <li class="nav-item d-none" id="approvalTab">
+      <button
+        class="nav-link"
+        id="approval-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#tab-approval"
+        type="button"
+        role="tab">
+        Team Approval
+      </button>
+    </li>
+  </ul>
+
+  <!-- TAB CONTENT -->
+  <div class="tab-content pt-3">
+
+    <!-- MY TIMESHEETS -->
+    <div
+      class="tab-pane fade show active"
+      id="tab-my"
+      role="tabpanel">
+      <!-- ADD: Download Excel (Employee) -->
+      <div class="text-end mb-2">
+        <button
+          id="btnDownloadMyExcel"
+          class="btn btn-sm btn-success d-none"
+          onclick="downloadMyTimesheetExcel()">
+          ⬇ Download My Timesheets (Excel)
+        </button>
+      </div>
+
+      <table class="table table-sm table-bordered align-middle">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Day</th>
+            <th>Project</th>
+            <th>Task</th>
+            <th>Hours</th>
+            <th>Type</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="timesheetBody"></tbody>
+      </table>
+    </div>
+
+    <!-- ✅ TEAM APPROVAL (TABLE MUST BE HERE) -->
+    <div
+      class="tab-pane fade"
+      id="tab-approval"
+      role="tabpanel"
+      aria-labelledby="approval-tab">
+
+      <div class="d-flex gap-2 mb-3">
+        <label class="fw-semibold">Month:</label>
+        <input
+          type="month"
+          id="approvalMonth"
+          class="form-control"
+          style="max-width:200px">
+      </div>
+      <!-- ADD: Download Excel (Manager / HR / Admin) -->
+    <div class="text-end mb-2">
+      <button
+        id="btnDownloadTeamExcel"
+        class="btn btn-sm btn-primary d-none"
+        onclick="downloadTeamTimesheetExcel()">
+        ⬇ Download Team Timesheets (Excel)
+      </button>
+    </div>
+
+      <table class="table table-sm table-bordered align-middle">
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Date</th>
+            <th>Project</th>
+            <th>Task</th>
+            <th>Hours</th>
+            <th>Status</th>
+            <th>Type</th>
+            <th class="text-end">Action</th>
+          </tr>
+        </thead>
+        <tbody id="approvalTable"></tbody>
+      </table>
+
+    </div>
+
+  </div>
+</section>

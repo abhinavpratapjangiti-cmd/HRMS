@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin – Upload Salary</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-dark px-3">
+  <span class="navbar-brand">HRMS – Admin</span>
+  <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+</nav>
+
+<div class="container mt-4">
+  <h3>Upload / Update Salary</h3>
+
+  <div class="card p-3 w-50">
+    <input id="employeeId" class="form-control mb-2" placeholder="Employee ID" />
+    <input id="month" type="month" class="form-control mb-2" />
+    <input id="basic" class="form-control mb-2" placeholder="Basic" />
+    <input id="hra" class="form-control mb-2" placeholder="HRA" />
+    <input id="deductions" class="form-control mb-2" placeholder="Deductions" />
+
+    <button class="btn btn-primary" onclick="saveSalary()">Save Salary</button>
+    <p id="msg" class="mt-2"></p>
+  </div>
+</div>
+
+<script src="/assets/js/auth.js"></script>
+<script>
+  requireAuth("admin");
+
+  async function saveSalary() {
+    const payload = {
+      employee_id: employeeId.value,
+      month: month.value,
+      basic: basic.value,
+      hra: hra.value,
+      deductions: deductions.value
+    };
+
+    const res = await fetch("http://localhost:5000/api/payslip", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token")
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+    msg.innerText = data.message || "Saved";
+  }
+</script>
+</body>
+</html>

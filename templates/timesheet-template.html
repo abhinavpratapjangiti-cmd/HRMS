@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Timesheet</title>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      color: #000;
+      padding: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td, th {
+      border: 1px solid #000;
+      padding: 6px 8px;
+      vertical-align: middle;
+    }
+
+    .header {
+      background: #00b0f0;
+      font-weight: bold;
+      text-align: center;
+      font-size: 14px;
+      color: #000;
+    }
+
+    .label {
+      font-weight: bold;
+      width: 260px;
+      white-space: nowrap;
+    }
+
+    .value {
+      height: 22px;
+    }
+
+    .center { text-align: center; }
+    .bold { font-weight: bold; }
+
+    .legend {
+      font-size: 11px;
+    }
+
+    .table-header th {
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .signature-box {
+      height: 26px;
+      border: 1px solid #000;
+    }
+
+    .no-border td {
+      border: none;
+      padding-top: 12px;
+    }
+
+    .wo { background: #d9d9d9; }
+    .hol { background: #ffe699; }
+  </style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<table>
+  <tr>
+    <td class="header" colspan="7">LOVAS IT</td>
+  </tr>
+
+  <tr><td class="label">Employee ID:</td><td colspan="6">{{employee_id}}</td></tr>
+  <tr><td class="label">Employee Name:</td><td colspan="6">{{employee_name}}</td></tr>
+  <tr><td class="label">Department (Team) / Project:</td><td colspan="6">{{department}}</td></tr>
+  <tr><td class="label">Client Name:</td><td colspan="6">{{client_name}}</td></tr>
+  <tr><td class="label">Work Location:</td><td colspan="6">{{work_location}}</td></tr>
+  <tr><td class="label">Designation:</td><td colspan="6">{{designation}}</td></tr>
+  <tr><td class="label">Month &amp; Year:</td><td colspan="6">{{month}}</td></tr>
+
+  <tr>
+    <td class="legend" colspan="7">
+      <b>TYPE:</b>
+      WO - Weekly OFF,
+      P - Present,
+      LE - Leave,
+      COFF - Comp OFF,
+      HOL - Holiday,
+      RE - Release
+    </td>
+  </tr>
+</table>
+
+<br />
+
+<!-- ================= TIMESHEET TABLE ================= -->
+<table>
+  <tr class="table-header">
+    <th>Date</th>
+    <th>Day</th>
+    <th>Start Time</th>
+    <th>End Time</th>
+    <th>Total Time</th>
+    <th>Type</th>
+    <th>Remarks</th>
+  </tr>
+
+  {{days_rows}}
+</table>
+
+<br />
+
+<!-- ================= TOTALS ================= -->
+<table>
+  <tr><td class="label">Total No of Hours</td><td>{{total_hours}}</td><td colspan="5"></td></tr>
+  <tr><td class="label">Total No of Days Worked</td><td>{{total_days}}</td><td colspan="5"></td></tr>
+  <tr><td class="label">Total Number of Leave Taken</td><td>{{total_leaves}}</td><td colspan="5"></td></tr>
+</table>
+
+<br /><br />
+
+<!-- ================= SIGNATURE ================= -->
+<table style="margin-top: 30px;">
+  <tr>
+    <td class="label center">Signature</td>
+    <td class="signature-box"></td>
+  </tr>
+</table>
+
+</body>
+</html>

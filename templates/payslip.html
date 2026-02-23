@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Payslip</title>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      color: #000;
+      padding: 25px;
+    }
+
+    .container {
+      border: 1px solid #000;
+      padding: 15px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #000;
+      padding-bottom: 10px;
+    }
+
+    .logo { width: 90px; }
+
+    .company {
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 15px 0;
+      font-size: 15px;
+      text-transform: uppercase;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+
+    th, td {
+      border: 1px solid #000;
+      padding: 6px;
+    }
+
+    th {
+      background: #f1f1f1;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .highlight {
+      font-weight: bold;
+      font-size: 14px;
+      background: #f9fafb;
+    }
+
+    .footer {
+      margin-top: 25px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .signature { height: 45px; }
+    .stamp { height: 95px; opacity: 0.9; }
+
+    .sign-text {
+      font-size: 11px;
+      text-align: center;
+      margin-top: 3px;
+    }
+
+    .note {
+      text-align: center;
+      font-size: 11px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <img src="{{LOGO_BASE64}}" class="logo" alt="logo">
+    <div class="company">
+      <strong>Lovas IT</strong><br>
+      Pithapuram, Kakinada, AP – 533450<br>
+      www.lovasit.com
+    </div>
+  </div>
+
+  <h2>Payslip for the Month of – {{MONTH}}</h2>
+
+  <!-- EMPLOYEE DETAILS -->
+  <table>
+    <tr>
+      <td><b>Employee Name</b></td><td>{{EMP_NAME}}</td>
+      <td><b>Employee ID</b></td><td>{{EMP_ID}}</td>
+    </tr>
+    <tr>
+      <td><b>Designation</b></td><td>{{DESIGNATION}}</td>
+      <td><b>Department</b></td><td>{{DEPARTMENT}}</td>
+    </tr>
+    <tr>
+      <td><b>Location</b></td><td>{{LOCATION}}</td>
+      <td><b>PAN</b></td><td>{{PAN}}</td>
+    </tr>
+    <tr>
+      <td><b>UAN No.</b></td><td>{{UAN_NO}}</td>
+      <td><b>PF No.</b></td><td>{{PF_NO}}</td>
+    </tr>
+    <tr>
+      <td><b>Working Days</b></td><td>{{WORKING_DAYS}}</td>
+      <td><b>Paid Days</b></td><td>{{PAID_DAYS}}</td>
+    </tr>
+  </table>
+
+  <!-- EARNINGS / DEDUCTIONS -->
+  <table>
+    <tr>
+      <th colspan="2">Earnings</th>
+      <th colspan="2">Deductions</th>
+    </tr>
+
+    <tr>
+      <td>Basic Salary</td><td>{{BASIC}}</td>
+      <td>Provident Fund</td><td>{{PF_AMOUNT}}</td>
+    </tr>
+
+    <tr>
+      <td>House Rent Allowance</td><td>{{HRA}}</td>
+      <td>Professional Tax</td><td>{{PT_AMOUNT}}</td>
+    </tr>
+
+    <tr>
+      <td>Special Allowance</td><td>{{SPECIAL}}</td>
+      <td>Other Deductions</td><td>{{OTHER_DEDUCTIONS}}</td>
+    </tr>
+
+    <tr>
+      <th>Total Earnings (A)</th><th>{{TOTAL_EARNINGS}}</th>
+      <th>Total Deductions (B)</th><th>{{TOTAL_DEDUCTIONS}}</th>
+    </tr>
+  </table>
+
+  <!-- NET PAY -->
+  <table>
+    <tr>
+      <td class="highlight">In-Hand Salary (A − B)</td>
+      <td class="highlight">{{NET_PAY}}</td>
+    </tr>
+  </table>
+
+  <div class="note">
+    This is a system generated payslip.
+  </div>
+
+  <!-- SIGNATURE & STAMP -->
+  <div class="footer">
+    <div>
+      <img src="{{SIGNATURE_BASE64}}" class="signature" alt="signature">
+      <div class="sign-text">Authorized Signatory</div>
+    </div>
+
+    <img src="{{STAMP_BASE64}}" class="stamp" alt="stamp">
+  </div>
+
+</div>
+
+</body>
+</html>

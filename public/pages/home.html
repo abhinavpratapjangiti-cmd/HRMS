@@ -1,0 +1,184 @@
+<div class="container-fluid" id="homePage">
+
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="greeting-banner">
+        <h2>Have A Good Day 👋</h2>
+        <p class="text-muted">Hope you’re having a productive day at work.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-6 mb-3 mb-md-0">
+      <div id="holidayCard" class="card p-4 text-white h-100 shadow-sm border-0 custom-radius"
+           style="background:#ef4444;">
+        <h5 class="opacity-75">Nearest Holiday</h5>
+        <div class="mt-3">
+          <h2 id="holidayName" class="fw-bold mb-1">Loading...</h2>
+          <p id="holidayDate" class="fs-5 opacity-90 mb-0">Please wait</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card p-4 h-100 shadow-sm border-0 custom-radius">
+        <h6 class="text-muted text-uppercase small fw-bold">Time Today</h6>
+        <div class="d-flex justify-content-between align-items-end mt-2">
+          <div>
+            <small class="text-muted">Worked</small>
+            <div id="workedTime" class="fs-4 fw-bold text-dark">00:00</div>
+          </div>
+          <div>
+            <small class="text-muted">Break</small>
+            <div id="breakTime" class="fs-4 fw-bold text-dark">00:00</div>
+          </div>
+          <button id="viewAttendanceBtn"
+                  class="btn btn-outline-primary btn-sm px-3 rounded-pill">
+            View Attendance
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="managerDashboard" class="row mb-4 d-none">
+
+    <div class="col-sm-6 col-md-3 mb-3">
+      <div id="teamAttendanceCard"
+           class="card p-3 h-100 shadow-sm border-0 interactive-card custom-radius">
+        <h6 class="text-muted small">👥 Team Attendance</h6>
+        <div id="teamAttendanceCount" class="fs-3 fw-bold text-primary my-2">—</div>
+        <small class="text-muted" style="font-size: 0.75rem;">Present Today</small>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-3 mb-3">
+      <div id="pendingLeavesCard"
+           class="card p-3 h-100 shadow-sm border-0 interactive-card custom-radius">
+        <h6 class="text-muted small">📝 Pending Leaves</h6>
+        <div id="pendingLeavesCount" class="fs-3 fw-bold text-warning my-2">0</div>
+        <small class="text-muted" style="font-size: 0.75rem;">Requires Action</small>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-3 mb-3">
+      <div id="pendingTimesheetsCard"
+           class="card p-3 h-100 shadow-sm border-0 interactive-card custom-radius">
+        <h6 class="text-muted small">⏳ Pending Timesheets</h6>
+        <div id="pendingTimesheetsCount" class="fs-3 fw-bold text-info my-2">0</div>
+        <small class="text-muted" style="font-size: 0.75rem;">Review Needed</small>
+      </div>
+    </div>
+
+    <div class="col-sm-6 col-md-3 mb-3">
+      <div id="teamOnLeaveCard"
+           class="card p-3 h-100 shadow-sm border-0 interactive-card custom-radius">
+        <h6 class="text-muted small">🏖 Team on Leave</h6>
+        <div id="teamOnLeave" class="fs-3 fw-bold text-danger my-2">—</div>
+        <small class="text-muted" style="font-size: 0.75rem;">Absent Today</small>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row mb-4">
+
+    <div class="col-md-8 mb-3 mb-md-0" id="leaveBalanceCol">
+      <div class="card p-4 h-100 shadow-sm border-0 custom-radius">
+        <h6 class="text-muted text-uppercase small fw-bold mb-4">Leave Balance</h6>
+
+        <div id="leaveBalanceBox" class="row text-center g-3">
+          <div class="col">
+            <span class="text-muted">Loading balances...</span>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <a href="#/leaves" class="text-decoration-none fw-bold text-primary">
+            Apply Leave →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 d-none" id="homeInboxCard">
+      <div class="card p-4 h-100 shadow-sm border-0 custom-radius">
+        <h6 class="text-muted text-uppercase small fw-bold mb-2">Inbox</h6>
+        <p class="text-muted mb-4">Pending approvals & requests</p>
+        <div class="mt-auto">
+<button class="btn btn-primary w-100 py-2"
+        style="background-color: #2563EB; border: none; border-radius: 6px;">
+  Go to Approvals
+</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-6 mb-3 mb-md-0">
+      <div class="card p-4 h-100 shadow-sm border-0 custom-radius">
+        <h6 class="text-muted text-uppercase small fw-bold mb-3">Upcoming Holidays</h6>
+        <ul id="upcomingHolidays" class="list-unstyled m-0">
+          <li class="text-muted small">Loading...</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card p-4 h-100 shadow-sm border-0 custom-radius">
+        <h6 class="text-muted text-uppercase small fw-bold mb-3">💡 Thought of the Day</h6>
+        <figure class="mt-2">
+          <blockquote class="blockquote">
+            <p id="thoughtText" class="fst-italic fs-5 text-dark">Loading thought...</p>
+          </blockquote>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="modal fade" id="dashboardModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold" id="dashboardModalTitle">Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="dashboardModalLoader" class="text-center py-4 d-none">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <div id="dashboardModalList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+  .custom-radius {
+    border-radius: 12px !important;
+  }
+  
+  .interactive-card {
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .interactive-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  /* Helper for hover items inside modal */
+  .hover-bg-light:hover {
+    background-color: #f8f9fa;
+  }
+</style>
