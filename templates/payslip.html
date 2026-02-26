@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; font-size: 12px; color: #000; background: #fff; margin: 0; padding: 20px; }
+        .payslip-container { max-width: 800px; margin: 0 auto; padding: 40px; }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
+        .company-address { text-align: right; font-size: 11px; line-height: 1.5; }
+        .payslip-title { text-align: center; font-weight: bold; font-size: 14px; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #000; padding: 8px; text-align: left; vertical-align: top; }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .font-bold { font-weight: bold; }
+        .summary-section { width: 50%; margin-left: 10%; margin-top: 20px; font-size: 12px; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .summary-total { font-weight: bold; margin-top: 10px; padding-top: 5px; display: flex; justify-content: space-between; }
+        .total-box { border: 1px solid #000; padding: 4px 15px; min-width: 100px; text-align: right; }
+        .footer-note { margin-top: 40px; font-size: 13px; font-weight: bold; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="payslip-container">
+    <div class="header">
+        <img src="${logoUrl}" width="110" height="110" style="width: 110px !important; max-width: 110px !important; height: 110px !important; border-radius: 50%; object-fit: contain; display: block;" alt="" />
+        
+        <div class="company-address">
+            85/A, Near Bhashyam School, Pithapuram,<br>
+            Kakinada District, Andhra Pradesh, 533450.<br>
+            Website: https://www.lovasit.com/
+        </div>
+    </div>
+
+    <div class="payslip-title">Payslip for the Month of {{MONTH}}</div>
+
+    <table>
+        <tr>
+            <td colspan="2" class="text-center font-bold" style="padding: 10px;">
+                {{EMP_NAME}}<br>
+                <span style="font-weight: normal;">{{DESIGNATION}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%; line-height: 1.6;">
+                Emp ID: {{EMP_ID}}<br>
+                Department: {{DEPARTMENT}}<br>
+                No. of Working Days: {{WORKING_DAYS}}<br>
+                Absent days: {{ABSENT_DAYS}}
+            </td>
+            <td style="width: 50%; line-height: 1.6;">
+                PAN: {{PAN}}<br>
+                Location: {{LOCATION}}<br>
+                No. of Paid Days: {{PAID_DAYS}}
+            </td>
+        </tr>
+    </table>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center font-bold" style="width: 35%;">COMPENSATION</th>
+                <th class="text-center font-bold" style="width: 15%;">Amount in Rupees</th>
+                <th class="text-center font-bold" style="width: 35%;">DEDUCTIONS</th>
+                <th class="text-center font-bold" style="width: 15%;">Amount in Rupees</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Basic Salary</td><td class="text-right">{{BASIC}}</td>
+                <td>Provident fund</td><td class="text-right">{{PF_AMOUNT}}</td>
+            </tr>
+            <tr>
+                <td>House Rent Allowance</td><td class="text-right">{{HRA}}</td>
+                <td>Professional Tax</td><td class="text-right">{{PT_AMOUNT}}</td>
+            </tr>
+            <tr>
+                <td>Dearness Allowance</td><td class="text-right">{{DA}}</td>
+                <td>Other Deductions</td><td class="text-right">{{OTHER_DEDUCTIONS}}</td>
+            </tr>
+            <tr>
+                <td>Leave Travel Allowance</td><td class="text-right">{{LTA}}</td>
+                <td></td><td></td>
+            </tr>
+            <tr>
+                <td>Special Allowance</td><td class="text-right">{{SPECIAL}}</td>
+                <td></td><td></td>
+            </tr>
+            <tr>
+                <td>Other Allowances</td><td class="text-right">{{OTHER_ALLOWANCES}}</td>
+                <td></td><td></td>
+            </tr>
+            <tr>
+                <td class="font-bold">Total Earnings</td><td class="text-right font-bold">{{TOTAL_EARNINGS}}</td>
+                <td class="font-bold">Total Deductions</td><td class="text-right font-bold">{{TOTAL_DEDUCTIONS}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="summary-section">
+        <div class="summary-row"><span>Total Amount</span><span>{{TOTAL_EARNINGS}}</span></div>
+        <div class="summary-row"><span>Provident Fund</span><span>-{{PF_AMOUNT}}</span></div>
+        <div class="summary-row"><span>Professional Tax</span><span>-{{PT_AMOUNT}}</span></div>
+        <div class="summary-row"><span>Other Deductions</span><span>-{{OTHER_DEDUCTIONS}}</span></div>
+        
+        <div class="summary-total">
+            <span style="margin-top: 5px;">After Deductions</span>
+            <span class="total-box font-bold">{{NET_PAY}}</span>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Note: This is a system generated Pay Slip and does not require any signature.
+    </div>
+
+</div>
+
+</body>
+</html>

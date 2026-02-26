@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin · User Management</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+</head>
+
+<body class="bg-light">
+
+<div class="container-fluid p-4">
+
+  <!-- HEADER -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4>User Management</h4>
+    <button class="btn btn-outline-secondary btn-sm" onclick="logout()">Logout</button>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- CREATE USER -->
+    <div class="col-lg-4">
+      <div class="card shadow-sm">
+        <div class="card-header">Create New User</div>
+        <div class="card-body">
+
+          <div class="mb-3">
+            <label>Name</label>
+            <input id="name" class="form-control">
+          </div>
+	  
+          <div class="mb-3">
+            <label>Email</label>
+            <input id="email" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label>Password</label>
+            <input id="password" type="password" class="form-control">
+          </div>
+	  <div class="mb-3">
+  <label>Department</label>
+  <input id="department" class="form-control" placeholder="e.g. Data, HR, Finance">
+</div>
+
+<div class="mb-3">
+  <label>Client Name</label>
+  <input id="clientName" class="form-control" placeholder="e.g. Zebra">
+</div>
+
+<div class="mb-3">
+  <label>Work Location</label>
+  <input id="workLocation" class="form-control" placeholder="e.g. Bangalore">
+</div>
+
+          <div class="mb-3">
+            <label>Role</label>
+            <select id="role" class="form-select">
+              <option value="employee">Employee</option>
+              <option value="manager">Manager</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label>Reports To</label>
+            <!-- ✅ FIXED ID -->
+            <select id="createManager" class="form-select">
+              <option value="">No Manager</option>
+            </select>
+            <small id="managerHelp" class="text-muted">
+              Select reporting manager
+            </small>
+          </div>
+
+          <button class="btn btn-primary w-100" onclick="createUser()">
+            Create User
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- USER DIRECTORY -->
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between">
+          <span>User Directory</span>
+          <input
+            id="search"
+            class="form-control form-control-sm w-50"
+            placeholder="Search by name"
+            oninput="filterUsers(this.value)"
+          />
+        </div>
+
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Name</th>
+              <th>Role (Editable)</th>
+              <th>Manager</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="userTable">
+            <tr>
+              <td colspan="4" class="text-center">Loading users...</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="px-3 py-2">
+          <small class="text-muted">
+            Changing a user’s role may affect access, approvals,
+            and reporting hierarchy.
+          </small>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="/assets/js/auth.js"></script>
+
+<script>
+requireAuth("admin");
+
+let users = [];
+let usersLoaded = false;
+
+/* INIT */
+document.addEventListener("DOMContentLoaded", () => {
+  attachRoleListener();
+  loadUsers();
+});
+
+/* ROLE HANDLING */
+function attachRoleListener() {
+  const role = document.getElementById("role");
+  const manager = document.getElementById("createManager");
+  const help = document.getElementById("managerHelp");
+
+  role.addEventListener("change", () => {
+    if (role.value === "admin") {
+      manager.disabled = true;
+      manager.value = "";
+      help.innerText = "Admin users cannot have reporting managers";
+    } else {
+      manager.disabled = false;
+      help.innerText = "Select reporting manager";
+    }
+  });
+}
+
+/* LOAD USERS */
+async function loadUsers() {
+  const table = document.getElementById("userTable");
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/users`, {
+      headers: getAuthHeaders()
+    });
+
+    const data = await res.json();
+
+    users = Array.isArray(data) ? data : [];
+    usersLoaded = true;
+
+    populateManagers();
+    renderUsers(users);
+
+  } catch (err) {
+    console.error("Load users error:", err);
+    table.innerHTML =
+      `<tr><td colspan="4" class="text-center text-danger">
+        Failed to load users
+      </td></tr>`;
+  }
+}
+
+/* POPULATE MANAGERS */
+function populateManagers() {
+  const select = document.getElementById("createManager");
+  select.innerHTML = `<option value="">No Manager</option>`;
+
+  users.forEach(u => {
+    if (u.role === "manager" || u.role === "admin") {
+      select.innerHTML +=
+        `<option value="${u.id}">${escapeHtml(u.name)}</option>`;
+    }
+  });
+}
+
+/* RENDER USERS */
+function renderUsers(data) {
+  const table = document.getElementById("userTable");
+  table.innerHTML = "";
+
+  if (!data.length) {
+    table.innerHTML =
+      `<tr><td colspan="4" class="text-center">No users found</td></tr>`;
+    return;
+  }
+
+  data.forEach(u => {
+    const manager = users.find(m => m.id === u.manager_id);
+
+    table.innerHTML += `
+      <tr>
+        <td>${escapeHtml(u.name)}</td>
+
+        <td>
+          <select class="form-select form-select-sm"
+            onchange="updateUserRole(${u.id}, this.value)">
+            <option value="employee" ${u.role === "employee" ? "selected" : ""}>
+              Employee
+            </option>
+            <option value="manager" ${u.role === "manager" ? "selected" : ""}>
+              Manager
+            </option>
+            <option value="admin" ${u.role === "admin" ? "selected" : ""}>
+              Admin
+            </option>
+          </select>
+        </td>
+
+        <td>${manager ? escapeHtml(manager.name) : "-"}</td>
+
+        <td>
+          <button class="btn btn-sm btn-outline-info"
+            onclick="viewTeam(${u.id}, '${escapeHtml(u.name)}')">
+            Team
+          </button>
+        </td>
+      </tr>`;
+  });
+}
+
+/* SEARCH (SAFE) */
+function filterUsers(text) {
+  if (!usersLoaded) return;
+
+  const value = text.trim().toLowerCase();
+  if (!value) return renderUsers(users);
+
+  renderUsers(
+    users.filter(u =>
+      String(u.name || "").toLowerCase().includes(value)
+    )
+  );
+}
+
+/* =========================
+   CREATE USER (FINAL – WITH DEPT / CLIENT / LOCATION)
+========================= */
+async function createUser() {
+  const nameEl = document.getElementById("name");
+  const emailEl = document.getElementById("email");
+  const passwordEl = document.getElementById("password");
+  const roleEl = document.getElementById("role");
+  const managerEl = document.getElementById("createManager");
+
+  // ✅ NEW FIELDS
+  const departmentEl = document.getElementById("department");
+  const clientNameEl = document.getElementById("clientName");
+  const workLocationEl = document.getElementById("workLocation");
+
+  const payload = {
+    name: nameEl.value.trim(),
+    email: emailEl.value.trim(),
+    password: passwordEl.value,
+    role: roleEl.value,
+
+    // ✅ NEW DATA
+    department: departmentEl.value.trim(),
+    client_name: clientNameEl.value.trim(),
+    work_location: workLocationEl.value.trim(),
+
+    manager_id:
+      roleEl.value === "admin"
+        ? null
+        : (managerEl.value || null)
+  };
+
+  // ✅ VALIDATION
+  if (!payload.name || !payload.email || !payload.password) {
+    alert("Name, Email & Password are required");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/users`, {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Create user failed");
+      return;
+    }
+
+    // ✅ RESET FORM
+    nameEl.value = "";
+    emailEl.value = "";
+    passwordEl.value = "";
+    departmentEl.value = "";
+    clientNameEl.value = "";
+    workLocationEl.value = "";
+    roleEl.value = "employee";
+    managerEl.value = "";
+    managerEl.disabled = false;
+
+    loadUsers();
+
+  } catch (err) {
+    console.error("Create user error:", err);
+    alert("Server error");
+  }
+}
+
+/* VIEW TEAM */
+async function viewTeam(id, name) {
+  const res = await fetch(`${API_BASE_URL}/users/team/${id}`, {
+    headers: getAuthHeaders()
+  });
+  const team = await res.json();
+  alert(team.map(t => t.name).join("\n") || `${name} has no team`);
+}
+
+/* HELPERS */
+function escapeHtml(text) {
+  return String(text || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+</script>
+
+</body>
+</html>

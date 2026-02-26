@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lovas IT HRMS - User Management</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary-color: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg-color: #f3f4f6;
+      --card-border: #e5e7eb;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+    }
+
+    body {
+      background: var(--bg-color);
+      font-family: 'Inter', sans-serif;
+      color: var(--text-main);
+    }
+
+    /* --- Page Header --- */
+    .page-header {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 24px 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .page-title { font-size: 1.5rem; font-weight: 700; color: #1f2937; margin: 0; }
+
+    /* --- Cards --- */
+    .card {
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03);
+      overflow: hidden;
+      margin-bottom: 24px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      height: 100%;
+    }
+    .card-header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--card-border);
+      padding: 16px 24px;
+      font-weight: 600;
+      color: #374151;
+      font-size: 1rem;
+    }
+
+    /* --- Forms & Inputs --- */
+    .form-control, .form-select {
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      padding: 10px 14px;
+      font-size: 0.95rem;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    }
+    .form-label.small {
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    /* --- Buttons --- */
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      padding: 10px 20px;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+    .btn-action {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .btn-action:hover { transform: scale(1.1); }
+
+    /* --- Employee List --- */
+    .employee-row {
+      background: #fff;
+      border-bottom: 1px solid #f3f4f6;
+      padding: 16px 20px;
+      transition: background 0.15s;
+    }
+    .employee-row:last-child { border-bottom: none; }
+    .employee-row:hover { background: #f9fafb; }
+
+    /* --- Modal --- */
+    .modal-content { border-radius: 16px; border: none; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+    .modal-header { border-bottom: 1px solid #f3f4f6; padding: 20px 24px; }
+    .modal-body { padding: 24px; }
+    .modal-footer { border-top: 1px solid #f3f4f6; padding: 16px 24px; }
+
+  </style>
+</head>
+
+<body>
+
+<div class="container-fluid p-4" style="max-width: 1800px;"> 
+  <div class="page-header">
+    <div class="d-flex align-items-center gap-3">
+      <div class="bg-primary bg-opacity-10 p-2 rounded-circle text-primary">
+        <i class="fa-solid fa-users fa-lg"></i>
+      </div>
+      <div>
+        <h1 class="page-title">User Management</h1>
+        <small class="text-muted">Manage system access and employee records</small>
+      </div>
+    </div>
+    <button class="btn btn-outline-primary fw-medium" onclick="window.refreshAll()">
+      <i class="fa fa-sync-alt me-2"></i> Show Data
+    </button>
+  </div>
+
+  <div class="row g-4 mb-4">
+    <div class="col-xl-8">
+      <div class="card h-100">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span><i class="fa-solid fa-user-plus me-2 text-primary"></i> Create New Employee</span>
+        </div>
+        <div class="card-body p-4">
+            <form id="createUserForm" onsubmit="event.preventDefault(); window.createUser();" autocomplete="off">
+                <h6 class="text-primary text-uppercase small fw-bold mb-3 border-bottom pb-2">Personal Information</h6>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label small">Full Name <span class="text-danger">*</span></label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="e.g. Jane Doe" autocomplete="name">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small">Work Email <span class="text-danger">*</span></label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="jane@company.com" autocomplete="email">
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label small">Temporary Password <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="fa fa-lock text-muted"></i></span>
+                            <input type="password" id="password" name="password" class="form-control border-start-0" placeholder="Set initial password" autocomplete="new-password">
+                        </div>
+                    </div>
+                </div>
+
+                <h6 class="text-primary text-uppercase small fw-bold mb-3 border-bottom pb-2">Employment Details</h6>
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <label class="form-label small">Department</label>
+                        <select id="department" class="form-select">
+                            <option value="IT" selected>IT </option>
+                            <option value="Administration">Administration</option>
+                            <option value="Sales">Sales</option>
+                            <option value="HR">Human Resources[HR]</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Operations">Operations</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small">Role</label>
+                        <select id="role" class="form-select">
+                            <option value="intern">Intern</option>
+                            <option value="employee" selected>Employee</option>
+                            <option value="manager">Manager</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small">Designation</label>
+                        <input type="text" id="designation" class="form-control" placeholder="e.g. Trainee">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small">Client / Project</label>
+                        <input type="text" id="client" class="form-control" placeholder="e.g. Internal">
+                    </div>
+                </div>
+
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-8">
+                        <label class="form-label small">Reporting Manager</label>
+                        <select id="createManager" class="form-select">
+                            <option value="">No reporting manager</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" id="createBtn" class="btn btn-primary w-100 shadow-sm">
+                            <i class="fa fa-check-circle me-2"></i> Create New Employee
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-4">
+        <div class="row g-4 h-100">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-chart-pie me-2 text-success"></i> Organisation Snapshot
+                    </div>
+                    <div class="card-body" id="orgStats">
+                        <div class="text-center py-4 text-muted">Loading data...</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa-solid fa-building me-2 text-info"></i> Department Distribution
+                    </div>
+                    <div class="card-body pt-2" id="deptDistribution">
+                        <div class="text-center py-4 text-muted">Loading charts...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <span><i class="fa-solid fa-address-book me-2 text-primary"></i> Employee Directory</span>
+                <div class="input-group input-group-sm" style="width: 300px;">
+                    <span class="input-group-text bg-light"><i class="fa fa-search"></i></span>
+                    <input type="text" class="form-control bg-light" placeholder="Search by name, role or email...">
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+          <div id="employeesList">
+            <div class="text-center py-5 text-muted">
+                <div class="spinner-border text-primary mb-3" role="status"></div>
+                <p>Loading directory...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold"><i class="fa-solid fa-user-pen me-2 text-primary"></i> Edit Employee</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="edit-id"> <input type="hidden" id="edit-emp-id">
+        <div class="row g-3">
+            <div class="col-12">
+                <label class="form-label small">Full Name</label>
+                <input id="edit-name" class="form-control">
+            </div>
+            <div class="col-12">
+                <label class="form-label small">Email Address</label>
+                <input id="edit-email" class="form-control">
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label small">Role</label>
+                <select id="edit-role" class="form-select border-primary">
+                    <option value="intern">Intern</option>
+                    <option value="employee">Employee</option>
+                    <option value="manager">Manager</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label small">Department</label>
+                <select id="edit-department" class="form-select">
+                    <option value="Administration">Administration</option>
+                    <option value="IT">IT</option>
+                    <option value="Sales">Sales</option>
+                    <option value="HR">HR</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Operations">Operations</option>
+                </select>
+            </div>
+            
+            <div class="col-md-6 mt-3">
+                <label class="form-label small">Designation</label>
+                <input type="text" id="edit-designation" class="form-control">
+            </div>
+
+            <div class="col-md-6 mt-3">
+                <label class="form-label small">Direct Manager</label>
+                <select id="edit-manager" class="form-select">
+                    <option value="">No reporting manager</option>
+                </select>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary px-4" onclick="window.saveEdit()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/pages/manage-users.js"></script>
+
+<script>
+    window.addEventListener('load', function() {
+        console.log("Page loaded. Waiting for storage access...");
+
+        // Wait 1000ms (1 second) to let browser security checks finish
+        setTimeout(() => {
+            // Find the Refresh button
+            const refreshBtn = document.querySelector('button[onclick="window.refreshAll()"]');
+
+            if (refreshBtn) {
+                console.log("Auto-clicking Refresh to bypass tracking prevention...");
+                refreshBtn.click();
+            } else {
+                if (typeof window.refreshAll === 'function') {
+                    window.refreshAll();
+                }
+            }
+        }, 1000);
+    });
+</script>
+</body>
+</html>

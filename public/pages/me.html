@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- GLOBAL CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <link rel="stylesheet" href="/assets/css/sidebar.css" />
+  <link rel="stylesheet" href="/assets/css/pages/me.css" />
+<style>
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5); z-index: 1000;
+      display: none; /* Hidden by default */
+      justify-content: center; align-items: center;
+    }
+    .modal-content {
+      background: white; width: 90%; max-width: 800px; height: 80vh;
+      border-radius: 8px; display: flex; flex-direction: column;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .modal-header {
+      padding: 15px; border-bottom: 1px solid #ddd;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .modal-header h3 { margin: 0; }
+    .modal-header button {
+      background: none; border: none; font-size: 24px; cursor: pointer;
+    }
+    #cvPreviewFrame {
+      flex: 1; width: 100%; border: none; background: #f4f4f4;
+    }
+    .modal-footer {
+      padding: 15px; border-top: 1px solid #ddd;
+      display: flex; justify-content: flex-end; gap: 10px;
+    }
+  </style>
+</head>
+
+<body>
+<div class="profile-container">
+  <!-- ================= TOP TABS ================= -->
+  <div class="profile-tabs top-tabs">
+    <button class="tab active" data-tab="profile">Overview</button>
+    <button class="tab" data-tab="job">Role & Job</button>
+    <button class="tab" data-tab="documents">Documents</button>
+    <button class="tab" data-tab="security">Security</button>
+  </div>
+
+  <div class="tabs-content-card">
+
+    <!-- ================= OVERVIEW ================= -->
+    <section class="tab-content active" id="tab-profile">
+
+      <!-- PROFILE HERO -->
+      <div class="profile-card modern">
+
+        <!-- Avatar -->
+        <div class="avatar-section">
+          <div class="avatar avatar-lg" id="profileAvatar">
+            <span id="profileInitials">—</span>
+          </div>
+
+          <button
+            class="change-photo"
+            onclick="document.getElementById('profileImageInput').click()">
+            Change Photo
+          </button>
+
+          <input type="file" id="profileImageInput" accept="image/*" hidden />
+        </div>
+
+        <!-- Identity -->
+        <div class="profile-info">
+
+          <div class="name-row">
+            <h1 id="profileNameHeader">—</h1>
+            <div class="profile-designation" id="profileDesignationHeader">
+            —
+            </div>
+            <span class="status-badge active">Active</span>
+          </div>
+
+          <!-- Decision badges -->
+          <div class="decision-row">
+            <span id="attritionRisk" class="risk-badge low">LOW</span>
+            <span id="leaveRisk" class="risk-badge normal">NORMAL</span>
+          </div>
+
+          <div class="info-row">
+            <span>Email</span>
+            <span id="profileEmail">—</span>
+          </div>
+
+          <div class="info-row">
+            <span>Last Login</span>
+            <span id="lastLogin">—</span>
+          </div>
+
+          <!-- Actions -->
+          <div class="actions">
+            <button
+              id="editProfileBtn"
+              class="btn btn-primary btn-sm"
+              onclick="openEditProfile()">
+              Edit Profile
+            </button>
+
+            <button
+              class="btn btn-outline-secondary btn-sm"
+              onclick="openChangePassword()">
+              Change Password
+            </button>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ================= TIMELINE ================= -->
+      <div class="meta-card">
+        <h5>Employee Timeline</h5>
+        <div id="profileTimeline" class="timeline"></div>
+      </div>
+
+      <!-- ================= ORG METRICS ================= -->
+      <div class="meta-card">
+        <h5>Work Insights</h5>
+        <div class="meta-grid">
+          <div class="meta-item">
+            <small>Billability</small>
+            <strong id="metricBillability">—</strong>
+          </div>
+          <div class="meta-item">
+            <small>Bench Risk</small>
+            <strong id="metricBenchRisk">—</strong>
+          </div>
+          <div class="meta-item">
+            <small>Leave Trend</small>
+            <strong id="metricLeaveTrend">—</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= MANAGER CONTEXT ================= -->
+      <div class="meta-card">
+        <h5>Manager Context</h5>
+        <div class="meta-grid">
+          <div class="meta-item">
+            <small>Team Size</small>
+            <strong id="managerTeamSize">—</strong>
+          </div>
+          <div class="meta-item">
+            <small>Load Risk</small>
+            <strong id="managerLoadRisk">—</strong>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= ROLE & JOB ================= -->
+    <section class="tab-content" id="tab-job">
+      <div class="details-grid">
+
+        <div class="detail-item">
+          <label>Department</label>
+          <span class="sep">:</span>
+          <span id="jobDepartment">—</span>
+        </div>
+
+        <div class="detail-item">
+          <label>Designation</label>
+          <span class="sep">:</span>
+          <span id="jobDesignation">—</span>
+        </div>
+
+        <div class="detail-item">
+          <label>Employment Type</label>
+          <span class="sep">:</span>
+          <span id="jobType">—</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= DOCUMENTS ================= -->
+    <section class="tab-content" id="tab-documents">
+      <div class="documents-list">
+        <div class="document-row">
+          <span>Curriculum Vitae (CV)</span>
+          <input type="file" id="cvFile" hidden />
+          <button id="uploadCvBtn" class="btn btn-outline-primary btn-sm">
+            Upload / Replace
+          </button>
+          <button id="viewCvBtn" class="btn btn-link btn-sm">
+            View / Download
+          </button>
+          <span id="cvStatus" class="ms-2 text-muted"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECURITY ================= -->
+    <section class="tab-content" id="tab-security">
+              <button
+                class="btn btn-danger"
+                onclick="logoutAllDevices()">
+                Logout all devices
+              </button>
+    </section>
+</div> </div> <div id="cvModal" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>CV Preview</h3>
+      <button onclick="closeCvModal()">×</button>
+    </div>
+    
+    <iframe id="cvPreviewFrame" src=""></iframe>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline-secondary" onclick="closeCvModal()">Close</button>
+      <a id="cvDownloadBtn" class="btn btn-primary" download="My_CV.pdf">Download</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

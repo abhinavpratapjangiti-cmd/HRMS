@@ -1,0 +1,77 @@
+<div class="team-wrapper">
+    <div class="team-stats">
+        <div class="team-stat" id="totalMembersCard">
+            <small>Total Members</small>
+            <b id="statTeamCount">0</b>
+        </div>
+        <div class="team-stat" id="onlineNowCard">
+            <small>Online Now</small>
+            <b id="statOnlineCount" class="text-success">0</b>
+        </div>
+        <div class="team-stat" id="departmentsCard">
+            <small>Departments</small>
+            <b id="statDeptCount">0</b>
+        </div>
+    </div>
+
+    <div class="org-tree">
+        <div class="org-section" style="width: 100%;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex align-items-center gap-2">
+                    <h3 class="org-section-title mb-0">Organization Structure</h3>
+                    <button id="resetOrgBtn" class="btn btn-sm btn-secondary d-none" onclick="window.teamActions.resetView()">
+                        ⬅ Back to Full View
+                    </button>
+                </div>
+
+                <div class="d-flex gap-2" id="treeControls">
+                    <input type="text" id="orgSearchInput" class="form-control form-control-sm" style="width: 200px;" placeholder="Search name or role...">
+                    <button class="btn btn-sm btn-light border" onclick="window.teamActions.expandAll()" title="Expand All">➕</button>
+                    <button class="btn btn-sm btn-light border" onclick="window.teamActions.collapseAll()" title="Collapse All">➖</button>
+                </div>
+            </div>
+             
+            <div id="activeFilterLabel" class="mb-2 text-muted small d-none"></div>         
+
+            <div id="orgTreeContainer" class="org-scroll-wrapper">
+                <div class="text-center py-5 text-muted">Loading organizational chart...</div>
+            </div>
+
+            <div id="singlePathContainer" class="d-none text-center py-4"></div>
+        </div>
+    </div>
+</div>
+
+<div id="profileModal" class="modal-overlay hidden">
+    <div class="modal-card">
+        <button class="modal-close" onclick="window.teamActions.closeModal()">&times;</button>
+
+        <div class="modal-header">
+            <div class="modal-avatar" id="modalAvatar"></div>
+            <div class="modal-status" id="modalStatus">Online</div>
+        </div>
+
+        <div class="modal-body">
+            <h3 id="modalName">Employee Name</h3>
+            <p id="modalRole">Designation</p>
+
+            <div class="modal-divider"></div>
+
+            <div class="modal-info-row">
+                <span class="label">ID</span>
+                <span class="value" id="modalId">--</span>
+            </div>
+            <div class="modal-info-row">
+                <span class="label">Manager</span>
+                <span class="value" id="modalManager">--</span>
+            </div>
+
+            <div class="modal-actions" style="grid-template-columns: 1fr;">
+                <button class="btn-primary" id="btnViewHierarchy" style="background: #4f46e5;">
+                    View Hierarchy Chain
+                </button>
+                <button class="btn-secondary" style="margin-top: 8px;" onclick="window.teamActions.closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

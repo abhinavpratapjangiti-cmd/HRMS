@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Salary Slip</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body>
+
+<!-- 🔝 NAVBAR -->
+<nav class="navbar navbar-dark bg-dark px-3">
+  <span class="navbar-brand">HRMS</span>
+
+  <div>
+    <a href="/employee-dashboard.html" class="btn btn-secondary btn-sm me-2">
+      Back
+    </a>
+    <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <h3 class="mb-4">My Salary Slip</h3>
+
+  <!-- 📅 MONTH SELECT -->
+  <select id="month" class="form-select w-25 mb-4"></select>
+
+  <!-- 💰 SALARY TABLE -->
+  <table class="table table-bordered w-50">
+    <tr>
+      <th>Basic</th>
+      <td id="basic">-</td>
+    </tr>
+    <tr>
+      <th>HRA</th>
+      <td id="hra">-</td>
+    </tr>
+    <tr>
+      <th>Deductions</th>
+      <td id="deductions">-</td>
+    </tr>
+    <tr class="table-success">
+      <th>Net Pay</th>
+      <td id="netpay">-</td>
+    </tr>
+  </table>
+
+  <!-- 📄 DOWNLOAD -->
+  <button class="btn btn-primary mt-2" onclick="downloadPDF()">
+    Download PDF
+  </button>
+</div>
+
+<!-- 🔐 AUTH -->
+<script src="/assets/js/auth.js"></script>
+<script>
+  requireAuth();
+</script>
+
+<!-- 📄 SALARY LOGIC -->
+<script>
+const API = "http://localhost:5000/api";
+const monthSelect = document.getElementById("month");
+
+/* =========================
+   LOAD MONTHS
+========================= */
+function loadMonths() {
+  const startYear = 2024;
+  const startMonth = 0;
+
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth();
+
+  monthSelect.innerHTML = "";
+
+  for (let y = startYear; y <= currentYear; y++) {
+    const mStart = y === startYear ? startMonth : 0;
+    const mEnd = y === currentYear ? currentMonth : 11;
+
+    for (let m = mStart; m <= mEnd; m++) {
+      const date = new Date(y, m);
+      const value = `${y}-${String(m + 1).padStart(2, "0")}`;
+      const label = date.toLocaleString("default", {
+        month: "short",
+        year: "numeric"
+      });
+
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = label;
+
+      if (y === currentYear && m === currentMonth) {
+        option.selected = true;
+      }
+
+      monthSelect.appendChild(option);
+    }
+  }
+}
+
+/* =========================
+   LOAD SALARY
+========================= */
+async function loadSalary() {
+  const month = monthSelect.value;
+
+  try {
+    const res = await fetch(`${API}/payslip/my?month=${month}`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    });
+
+    const data = await res.json();
+
+    document.getElementById("basic").innerText = data.basic ?? "-";
+    document.getElementById("hra").innerText = data.hra ?? "-";
+    document.getElementById("deductions").innerText = data.deductions ?? "-";
+    document.getElementById("netpay").innerText = data.net_pay ?? "-";
+
+  } catch (err) {
+    console.error(err);
+    alert("Unable to load salary");
+  }
+}
+
+/* =========================
+   DOWNLOAD PDF (SECURE)
+========================= */
+async function downloadPDF() {
+  const month = monthSelect.value;
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Session expired. Please login again.");
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `${API}/payslip/pdf?month=${month}`,
+      {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to download PDF");
+    }
+
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `Payslip-${month}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+
+    a.remove();
+    window.URL.revokeObjectURL(url);
+
+  } catch (err) {
+    console.error(err);
+    alert("Unable to download payslip");
+  }
+}
+
+monthSelect.addEventListener("change", loadSalary);
+
+// 🚀 INIT
+loadMonths();
+loadSalary();
+</script>
+
+</body>
+</html>

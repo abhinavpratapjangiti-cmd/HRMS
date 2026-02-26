@@ -1,0 +1,122 @@
+<section class="container py-4 payroll-page">
+
+  <!-- ================= HEADER ================= -->
+  <header class="page-header mb-4">
+    <h3 class="mb-1">💰 Payroll</h3>
+    <p class="text-muted mb-0">
+      View salary slips and manage payroll
+    </p>
+  </header>
+
+  <!-- ================= PAYROLL GRID ================= -->
+  <div class="row g-4">
+
+    <!-- ===== LEFT: EMPLOYEE PAYSLIP ===== -->
+    <div class="col-lg-6">
+      <div id="employeeSection" class="payroll-card h-100">
+
+        <div class="card-header">
+          <h5 class="mb-1">My Payslip</h5>
+          <small class="text-muted">
+            Select a month to view salary details
+          </small>
+        </div>
+
+        <div class="mb-3">
+          <label for="month" class="form-label">Payroll Month</label>
+          <select id="month" class="form-select">
+            <option>No payslips available</option>
+          </select>
+        </div>
+
+        <div class="salary-grid mt-4">
+
+          <div class="salary-item">
+            <span>Basic</span>
+            <strong id="basic">—</strong>
+          </div>
+
+          <div class="salary-item">
+            <span>HRA</span>
+            <strong id="hra">—</strong>
+          </div>
+
+          <div class="salary-item deduction">
+            <span>Deductions</span>
+            <strong id="deductions">—</strong>
+          </div>
+
+          <div class="salary-item netpay">
+            <span>Net Pay</span>
+            <strong id="netpay">—</strong>
+          </div>
+
+        </div>
+
+        <button
+          id="downloadBtn"
+          type="button"
+          class="btn btn-primary w-100 mt-4"
+        >
+          ⬇ Download Payslip (PDF)
+        </button>
+
+      </div>
+    </div>
+
+    <!-- ===== RIGHT: PAYROLL UPLOAD ===== -->
+    <div class="col-lg-6 d-none" id="payrollUploadWrapper">
+      <div id="payrollUploadSection" class="payroll-card payroll-upload-card h-100">
+
+        <div class="card-header">
+          <h5 class="mb-1">Payroll Upload</h5>
+          <small class="text-muted">
+            HR / Admin only
+          </small>
+        </div>
+
+        <form id="payrollUploadForm" novalidate>
+
+          <div class="mb-3">
+            <label for="uploadMonth" class="form-label">
+              Payroll Month
+            </label>
+            <input
+              type="month"
+              id="uploadMonth"
+              class="form-control"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="payrollFile" class="form-label">
+              Payroll File
+            </label>
+            <input
+              type="file"
+              id="payrollFile"
+              name="payrollFile"
+              class="form-control"
+              accept=".xlsx,.csv"
+              required
+            >
+            <small class="text-muted">.xlsx or .csv</small>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-success w-100 mt-2"
+          >
+            ⬆ Upload Payroll
+          </button>
+
+        </form>
+
+        <div id="uploadMsg" class="mt-3"></div>
+
+      </div>
+    </div>
+
+  </div>
+</section>

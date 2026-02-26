@@ -1,0 +1,179 @@
+/* ===============================
+   EDIT SIDEBAR (SLIDE-IN PANEL)
+   (RIGHT SIDE — INDEPENDENT)
+=============================== */
+
+.edit-sidebar {
+  position: fixed;
+  top: 0;
+  right: -420px;
+  width: 420px;
+  max-width: 100%;
+  height: 100dvh;
+  background: #fff;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+  z-index: 1050;
+
+  display: flex;
+  flex-direction: column;
+
+  transition: right 0.3s ease;
+  will-change: right;
+}
+
+/* OPEN STATE */
+.edit-sidebar.open {
+  right: 0;
+}
+
+/* ===============================
+   EDIT SIDEBAR HEADER
+=============================== */
+
+.sidebar-header {
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ===============================
+   EDIT SIDEBAR BODY
+=============================== */
+
+.sidebar-body {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* ===============================
+   BACKDROP (EDIT SIDEBAR)
+=============================== */
+
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1049;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.sidebar-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ==================================================
+   LEFT NAVIGATION SIDEBAR (ICON-ONLY COLLAPSE)
+   DOES NOT AFFECT .edit-sidebar
+================================================== */
+
+:root {
+  --sidebar-collapsed-width: 64px;
+}
+
+/* Base sidebar transition */
+.sidebar {
+  transition: width 0.25s ease;
+}
+
+/* COLLAPSED = ICON ONLY */
+.sidebar.is-collapsed {
+  width: var(--sidebar-collapsed-width) !important;
+}
+
+/* Center icons perfectly */
+.sidebar.is-collapsed a {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0;
+}
+
+/* Hide text labels */
+.sidebar.is-collapsed a span {
+  display: none;
+}
+
+/* Icon size consistency */
+.sidebar i {
+  font-size: 1.2rem;
+}
+
+/* ===============================
+   HOVER LABEL (COLLAPSED MODE)
+=============================== */
+
+.sidebar.is-collapsed a::after {
+  content: attr(data-title);
+  position: absolute;
+  left: calc(var(--sidebar-collapsed-width) + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #111827;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  z-index: 3000;
+}
+
+/* Show tooltip on hover */
+.sidebar.is-collapsed a:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(4px);
+}
+
+/* ===============================
+   MAIN LAYOUT SHIFT
+=============================== */
+
+.main {
+  transition: margin-left 0.25s ease;
+}
+
+.main.sidebar-collapsed {
+  margin-left: var(--sidebar-collapsed-width) !important;
+}
+
+/* ===============================
+   SIDEBAR BRAND (TOP LEFT)
+=============================== */
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+/* Hide brand text when collapsed */
+.sidebar.is-collapsed .brand-text {
+  display: none;
+}
+
+/* ===============================
+   MOBILE BEHAVIOR
+=============================== */
+
+@media (max-width: 768px) {
+  .sidebar.is-collapsed {
+    width: 0 !important;
+  }
+
+  .main.sidebar-collapsed {
+    margin-left: 0 !important;
+  }
+}
