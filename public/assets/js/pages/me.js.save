@@ -267,7 +267,7 @@ async function fetchUpcomingHolidays() {
             // 🚀 NEW: Dynamic Emoji Matcher based on your mockup!
             let emoji = '🎉'; // Default
             const nameLower = holiday.name.toLowerCase();
-            if (nameLower.includes('republic') || nameLower.includes('independence')) emoji = '🇮🇳';
+            if (nameLower.includes('republic') || nameLower.includes('independence')) emoji = '';
             else if (nameLower.includes('diwali') || nameLower.includes('deepavali')) emoji = '🪔';
             else if (nameLower.includes('christmas') || nameLower.includes('xmas')) emoji = '🎄';
             else if (nameLower.includes('eid') || nameLower.includes('ramzan')) emoji = '🌙';

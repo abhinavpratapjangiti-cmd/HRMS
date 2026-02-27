@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/assets/css/style.css" />
   <link rel="stylesheet" href="/assets/css/sidebar.css" />
   <link rel="stylesheet" href="/assets/css/pages/me.css" />
-<style>
+  <style>
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.5); z-index: 1000;
@@ -50,87 +50,81 @@
 
     <section class="tab-content active" id="tab-profile">
 
-      <div class="profile-card modern">
+      <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
+        
+        <div style="flex: 1 1 55%; min-width: 350px;">
+          <div class="profile-card modern" style="height: 100%; margin-bottom: 0;">
 
-        <div class="avatar-section">
-          <div class="avatar avatar-lg" id="profileAvatar">
-            <span id="profileInitials">—</span>
-          </div>
-
-          <button
-            class="change-photo"
-            onclick="document.getElementById('profileImageInput').click()">
-            Change Photo
-          </button>
-
-          <input type="file" id="profileImageInput" accept="image/*" hidden />
-        </div>
-
-        <div class="profile-info">
-
-          <div class="name-row">
-            <h1 id="profileNameHeader">—</h1>
-            <div class="profile-designation" id="profileDesignationHeader">
-            —
+            <div class="avatar-section">
+              <div class="avatar avatar-lg" id="profileAvatar">
+                <span id="profileInitials">—</span>
+              </div>
+              <button class="change-photo" onclick="document.getElementById('profileImageInput').click()">
+                Change Photo
+              </button>
+              <input type="file" id="profileImageInput" accept="image/*" hidden />
             </div>
-            <span class="status-badge active">Active</span>
-          </div>
 
-          <div class="decision-row">
-            <span id="attritionRisk" class="risk-badge low">LOW</span>
-            <span id="leaveRisk" class="risk-badge normal">NORMAL</span>
-          </div>
-
-          <div class="info-row">
-            <span>Email</span>
-            <span id="profileEmail">—</span>
-          </div>
-
-          <div class="info-row">
-            <span>PhoneNumber</span>
-            <span id="profilephoneno">—</span>
-          </div>
-          
-          <div class="info-row">
-            <span>Department</span>
-            <span id="profiledepartment">—</span>
-          </div>
-
-          <div class="info-row">
-            <span>Designation</span>
-            <span id="profiledesignation">—</span>
-          </div>
-
-          <div class="info-row">
-            <span>Last Login</span>
-            <span id="lastLogin">—</span>
-          </div>
-
-          <div class="actions">
-            <button
-              id="editProfileBtn"
-              class="btn btn-primary btn-sm"
-              onclick="openEditProfile()">
-              Edit Profile
-            </button>
-
-            <button
-              class="btn btn-outline-secondary btn-sm"
-              onclick="openChangePassword()">
-              Change Password
-            </button>
+            <div class="profile-info">
+              <div class="name-row">
+                <h1 id="profileNameHeader">—</h1>
+                <div class="profile-designation" id="profileDesignationHeader">—</div>
+                <span class="status-badge active">Active</span>
+              </div>
+              <div class="decision-row">
+                <span id="attritionRisk" class="risk-badge low">LOW</span>
+                <span id="leaveRisk" class="risk-badge normal">NORMAL</span>
+              </div>
+              <div class="info-row">
+                <span>Email</span>
+                <span id="profileEmail">—</span>
+              </div>
+              <div class="info-row">
+                <span>PhoneNumber</span>
+                <span id="profilephoneno">—</span>
+              </div>
+              <div class="info-row">
+                <span>Department</span>
+                <span id="profiledepartment">—</span>
+              </div>
+              <div class="info-row">
+                <span>Designation</span>
+                <span id="profiledesignation">—</span>
+              </div>
+              <div class="info-row">
+                <span>Last Login</span>
+                <span id="lastLogin">—</span>
+              </div>
+              <div class="actions">
+                <button id="editProfileBtn" class="btn btn-primary btn-sm" onclick="openEditProfile()">Edit Profile</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="openChangePassword()">Change Password</button>
+              </div>
+            </div>
 
           </div>
-
         </div>
-      </div>
 
+        <div style="flex: 1 1 40%; min-width: 300px;">
+          <div class="card shadow-sm border-0" style="height: 100%; background: #fff; border-radius: 12px;">
+            <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center pt-4 pb-0" style="border-radius: 12px 12px 0 0;">
+              <h2 class="mb-0 fw-bold">Upcoming Holidays</h5>
+              <button class="btn btn-primary btn-sm rounded-circle" style="width: 32px; height: 32px; padding: 0;">📅</button>
+            </div>
+            <div class="card-body">
+             
+              <ul class="list-group list-group-flush" id="holiday-list-container" style="list-style: none; padding-left: 0; margin-bottom: 0;">
+                <li class="list-group-item text-center text-muted py-3" style="border-bottom: 1px solid #eee;">Loading holidays...</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
       <div id="teamContextContainer" class="mt-4 p-3 bg-white rounded shadow-sm w-100">
           <div class="text-center text-muted p-3">Loading team context...</div>
       </div>
 
     </section>
-
 
     <section class="tab-content" id="tab-documents">
       <div class="documents-list">
@@ -149,21 +143,21 @@
     </section>
 
     <section class="tab-content" id="tab-security">
-              <button
-                class="btn btn-danger"
-                onclick="logoutAllDevices()">
-                Logout all devices
-              </button>
+      <button class="btn btn-danger" onclick="logoutAllDevices()">
+        Logout all devices
+      </button>
     </section>
-</div> </div> <div id="cvModal" class="modal-overlay">
+    
+  </div>
+</div> 
+
+<div id="cvModal" class="modal-overlay">
   <div class="modal-content">
     <div class="modal-header">
       <h3>CV Preview</h3>
       <button onclick="closeCvModal()">×</button>
     </div>
-
     <iframe id="cvPreviewFrame" src=""></iframe>
-
     <div class="modal-footer">
       <button class="btn btn-outline-secondary" onclick="closeCvModal()">Close</button>
       <a id="cvDownloadBtn" class="btn btn-primary" download="My_CV.pdf">Download</a>
@@ -171,41 +165,32 @@
   </div>
 </div>
 
-
-
 <div id="editProfileModal" class="modal-overlay">
   <div class="modal-content" style="height: auto; max-height: 80vh;">
     <div class="modal-header">
       <h3>Edit Profile</h3>
       <button onclick="closeEditProfileModal()">×</button>
     </div>
-    
     <div class="modal-body" style="padding: 20px; overflow-y: auto;">
       <div style="display: flex; flex-direction: column; gap: 15px;">
-        
         <div>
           <label style="font-size: 0.85rem; color: #666; font-weight: bold;">Email</label>
           <input type="email" id="editEmail" class="form-control" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
         </div>
-
         <div>
           <label style="font-size: 0.85rem; color: #666; font-weight: bold;">Phone Number</label>
           <input type="text" id="editPhoneno" class="form-control" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
         </div>
-
         <div>
           <label style="font-size: 0.85rem; color: #666; font-weight: bold;">Department</label>
           <input type="text" id="editDept" class="form-control" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
         </div>
-
         <div>
           <label style="font-size: 0.85rem; color: #666; font-weight: bold;">Designation</label>
           <input type="text" id="editDesig" class="form-control" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
         </div>
-        
       </div>
     </div>
-
     <div class="modal-footer">
       <button class="btn btn-outline-secondary" onclick="closeEditProfileModal()">Cancel</button>
       <button id="saveProfileBtn" class="btn btn-primary" onclick="saveProfileChanges()">Save Changes</button>

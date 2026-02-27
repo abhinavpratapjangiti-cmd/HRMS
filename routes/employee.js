@@ -56,6 +56,28 @@ router.get("/departments", verifyToken, async (req, res) => {
   }
 });
 
+
+/* ==========================================================================
+   NEW: UPCOMING HOLIDAYS WIDGET 
+   Must be placed BEFORE any /:id routes!
+   ========================================================================== */
+router.get('/upcoming-holidays', verifyToken, async (req, res) => { // Added verifyToken for security!
+    try {
+        const query = `
+            SELECT name, holiday_date, description 
+            FROM holidays 
+            WHERE holiday_date >= CURDATE() AND is_public = 1
+            ORDER BY holiday_date ASC 
+            LIMIT 5;
+        `;
+        const [rows] = await db.query(query); // Changed db.execute to db.query to match your other routes
+        res.status(200).json(rows);
+    } catch (error) {
+        console.error('Error fetching holidays:', error);
+        res.status(500).json({ error: 'Failed to retrieve upcoming holidays' });
+    }
+});
+
 /* ==========================================================================
    3. EMPLOYEE SEARCH (Matches GET /api/users/search)
    ========================================================================== */
@@ -506,5 +528,6 @@ router.get("/:id/team-context", verifyToken, async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 });
+
 
 module.exports = router;
