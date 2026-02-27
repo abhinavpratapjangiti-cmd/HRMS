@@ -20,10 +20,10 @@ router.get("/stats", verifyToken, async (req, res) => {
   try {
     // 1. Total Employees (Count names in employees table)
     const [empCount] = await db.query("SELECT COUNT(name) AS count FROM employees");
-    
+
     // 2. Managers (Count users with role 'manager')
     const [mgrCount] = await db.query("SELECT COUNT(*) AS count FROM users WHERE role = 'manager'");
-    
+
     // 3. Active Users (Count users currently logged in)
     const [activeCount] = await db.query("SELECT COUNT(*) AS count FROM users WHERE is_logged_in = 1");
 
@@ -83,7 +83,7 @@ router.get("/search", verifyToken, async (req, res) => {
     }
 
     sql += " ORDER BY e.name LIMIT 10";
-    
+
     const [rows] = await db.query(sql, params);
     res.json(rows);
   } catch (err) {
@@ -104,6 +104,7 @@ router.get("/me", verifyToken, async (req, res) => {
         e.email,
         e.employment_type,
         u.role,
+        e.phoneno,
         u.profile_photo,
         e.department,
         e.client_name,
@@ -174,7 +175,7 @@ router.get("/me/timeline", verifyToken, async (req, res) => {
     const employeeId = await getEmployeeIdByUser(req.user.id);
     await getTimeline(employeeId, res);
   } catch (e) {
-    res.json([]); 
+    res.json([]);
   }
 });
 
@@ -207,23 +208,24 @@ router.get("/:id/timeline", verifyToken, async (req, res) => {
    ========================================================================== */
 router.get("/", verifyToken, async (req, res) => {
   const role = req.user.role?.toLowerCase();
-  
+
   if (!["admin", "hr", "manager"].includes(role)) {
      return res.status(403).json({ message: "Access denied" });
   }
 
   try {
     const [rows] = await db.query(`
-      SELECT 
-        e.id, 
+      SELECT
+        e.id,
         e.user_id,
-        e.name, 
-        e.email, 
-        u.role, 
-        e.department, 
-        e.designation, 
-        e.manager_id, 
-        m.name AS manager_name, 
+        e.name,
+        e.email,
+        u.role,
+        e.phoneno AS phone,
+        e.department,
+        e.designation,
+        e.manager_id,
+        m.name AS manager_name,
         e.active,
         u.active,
         u.profile_photo
@@ -247,7 +249,8 @@ router.post("/", verifyToken, async (req, res) => {
         return res.status(403).json({ message: "Access denied" });
     }
 
-    const { name, email, password, role, department, designation, client_name, manager_id } = req.body;
+    // Notice we grab 'phone' from req.body here
+    const { name, email, password, role, department, designation, client_name, manager_id, phone } = req.body;
     const connection = await db.getConnection();
 
     try {
@@ -265,11 +268,12 @@ router.post("/", verifyToken, async (req, res) => {
         );
         const newUserId = userResult.insertId;
 
+        // The query is now safely inside the try block
         await connection.query(
-            `INSERT INTO employees 
-            (user_id, name, email, department, designation, client_name, manager_id, active) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, 1)`,
-            [newUserId, name, email, department, designation, client_name, manager_id || null]
+            `INSERT INTO employees
+            (user_id, name, email, department, designation, client_name, manager_id, active, phoneno)
+            VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?)`,
+            [newUserId, name, email, department, designation, client_name, manager_id || null, phone || null]
         );
 
         await connection.commit();
@@ -283,7 +287,6 @@ router.post("/", verifyToken, async (req, res) => {
         connection.release();
     }
 });
-
 /* ==========================================================================
    8. GET EMPLOYEE BY ID (Matches GET /api/users/:id)
    ========================================================================== */
@@ -297,16 +300,16 @@ router.get("/:id", verifyToken, async (req, res) => {
 
   try {
     const [rows] = await db.query(`
-      SELECT 
-        e.*, 
-        u.role, 
-        u.profile_photo, 
+      SELECT
+        e.*,
+        u.role,
+        u.profile_photo,
         u.active,
         m.name AS manager_name
       FROM employees e
       JOIN users u ON u.id = e.user_id
       LEFT JOIN employees m ON m.id = e.manager_id
-      WHERE e.id = ? OR e.user_id = ? 
+      WHERE e.id = ? OR e.user_id = ?
       LIMIT 1
     `, [targetId, targetId]);
 
@@ -328,8 +331,8 @@ router.patch("/:id", verifyToken, async (req, res) => {
     return res.status(403).json({ message: "Access denied" });
   }
 
-  const { id } = req.params; 
-  const { name, email, department, designation, manager_id, active } = req.body;
+  const { id } = req.params;
+  const { name, email, department, designation, manager_id, active, phone } = req.body;
 
   try {
     // 1. Update Employees Table
@@ -341,15 +344,12 @@ router.patch("/:id", verifyToken, async (req, res) => {
     if (email) { updates.push("email = ?"); params.push(email); }
     if (department) { updates.push("department = ?"); params.push(department); }
     if (designation) { updates.push("designation = ?"); params.push(designation); }
+    if (phone !== undefined) { updates.push("phoneno = ?"); params.push(phone); } // <--- Safely inside the try block
     if (manager_id !== undefined) {
-    updates.push("manager_id = ?");
-    params.push(
-        manager_id && parseInt(manager_id) > 0
-            ? parseInt(manager_id)
-            : null
-    );
-}
-if (active !== undefined) { updates.push("active = ?"); params.push(active); }
+        updates.push("manager_id = ?");
+        params.push(manager_id && parseInt(manager_id) > 0 ? parseInt(manager_id) : null);
+    }
+    if (active !== undefined) { updates.push("active = ?"); params.push(active); }
 
     if (updates.length > 0) {
         sql += updates.join(", ") + " WHERE id = ?";
@@ -364,10 +364,10 @@ if (active !== undefined) { updates.push("active = ?"); params.push(active); }
             let userSql = "UPDATE users SET ";
             const userParams = [];
             const userUpdates = [];
-            
+
             if (name) { userUpdates.push("name = ?"); userParams.push(name); }
             if (email) { userUpdates.push("email = ?"); userParams.push(email); }
-            
+
             userSql += userUpdates.join(", ") + " WHERE id = ?";
             userParams.push(emp[0].user_id);
             await db.query(userSql, userParams);
@@ -380,7 +380,6 @@ if (active !== undefined) { updates.push("active = ?"); params.push(active); }
     res.status(500).json({ message: "Update failed" });
   }
 });
-
 /* ==========================================================================
    10. UPDATE ROLE (Matches PATCH /api/users/:id/role - USER ID)
    ========================================================================== */
@@ -388,15 +387,15 @@ router.patch("/:id/role", verifyToken, async (req, res) => {
     if (!["admin"].includes(req.user.role?.toLowerCase())) {
         return res.status(403).json({ message: "Only Admins can change roles" });
     }
-    
-    const { id } = req.params; 
+
+    const { id } = req.params;
     const { role } = req.body;
 
     if (!role) return res.status(400).json({ message: "Role is required" });
 
     try {
         let [result] = await db.query("UPDATE users SET role = ? WHERE id = ?", [role, id]);
-        
+
         // Safety: If no rows affected, assume frontend sent Employee ID by mistake and try to find User ID
         if (result.affectedRows === 0) {
              const [emp] = await db.query("SELECT user_id FROM employees WHERE id = ?", [id]);
@@ -420,15 +419,15 @@ router.delete("/:id", verifyToken, async (req, res) => {
     if (!["admin", "hr"].includes(req.user.role?.toLowerCase())) {
         return res.status(403).json({ message: "Access denied" });
     }
-    
-    const { id } = req.params; 
+
+    const { id } = req.params;
 
     const connection = await db.getConnection();
     try {
         await connection.beginTransaction();
 
         const [emp] = await connection.query("SELECT user_id FROM employees WHERE id = ?", [id]);
-        
+
         if (!emp.length) {
             await connection.rollback();
             return res.status(404).json({ message: "Employee not found" });
@@ -450,6 +449,61 @@ router.delete("/:id", verifyToken, async (req, res) => {
         res.status(500).json({ message: "Delete failed" });
     } finally {
         connection.release();
+    }
+});
+
+/* ==========================================================================
+   12. NEW: TEAM CONTEXT (Manager and Peers)
+   ========================================================================== */
+async function getTeamContext(employeeId, res) {
+    try {
+        // 1. Get the employee's manager_id
+        const [empRows] = await db.query("SELECT manager_id FROM employees WHERE id = ? LIMIT 1", [employeeId]);
+        if (!empRows.length) return res.status(404).json({ message: "Employee not found" });
+
+        const managerId = empRows[0].manager_id;
+        let manager = null;
+        let peers = [];
+
+        if (managerId) {
+            // 2. Fetch manager details
+            const [mgrRows] = await db.query(
+                "SELECT id, name, designation FROM employees WHERE id = ?",
+                [managerId]
+            );
+            if (mgrRows.length) manager = mgrRows[0];
+
+            // 3. Fetch peers (same manager, excluding self, active only)
+            const [peerRows] = await db.query(
+                "SELECT id, name, designation FROM employees WHERE manager_id = ? AND id != ? AND active = 1",
+                [managerId, employeeId]
+            );
+            peers = peerRows;
+        }
+
+        res.json({ manager, peers });
+    } catch (err) {
+        console.error("TEAM CONTEXT ERROR:", err);
+        res.status(500).json({ message: "DB Error" });
+    }
+}
+
+router.get("/me/team-context", verifyToken, async (req, res) => {
+    try {
+        const employeeId = await getEmployeeIdByUser(req.user.id);
+        await getTeamContext(employeeId, res);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+router.get("/:id/team-context", verifyToken, async (req, res) => {
+    try {
+        await getTeamContext(req.params.id, res);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
     }
 });
 

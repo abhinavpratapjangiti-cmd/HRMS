@@ -7,7 +7,9 @@ const { verifyToken } = require("../middleware/auth");
 router.get("/my", verifyToken, async (req, res) => {
   const userId = req.user.id;
   const role = String(req.user.role || "").toLowerCase();
-  const SUPER_ROLES = new Set(["admin", "hr", "hr_admin", "director", "ceo"]);
+  
+  // PATCHED: Added "manager" to this set so they fetch the full company tree
+  const SUPER_ROLES = new Set(["admin", "hr", "hr_admin", "director", "ceo", "manager"]);
 
   try {
     const [me] = await db.query(
@@ -32,17 +34,18 @@ router.get("/my", verifyToken, async (req, res) => {
 
     let rows = [];
 
+    // Since "manager" is now in SUPER_ROLES, this block will execute and fetch EVERYONE
     if (SUPER_ROLES.has(role)) {
-        // HR/Admin sees everyone
-        [rows] = await db.query(`
+        let query = `
             SELECT ${SELECT_COLS}
             FROM employees e
             LEFT JOIN users u ON u.id = e.user_id
             WHERE e.active = 1
             ORDER BY e.manager_id ASC
-        `);
+        `;
+        [rows] = await db.query(query);
     } else {
-        // Managers see themselves + subordinates
+        // Regular staff only see themselves + subordinates
         const query = `
             WITH RECURSIVE team_tree AS (
                 SELECT id FROM employees WHERE id = ? AND active = 1
@@ -75,7 +78,7 @@ router.get("/my", verifyToken, async (req, res) => {
 router.get("/path/:id", verifyToken, async (req, res) => {
     try {
         const targetId = req.params.id;
-        
+
         // Recursive query to go UP the chain (Child -> Manager -> CEO)
         const query = `
             WITH RECURSIVE ReportingChain AS (
@@ -84,9 +87,9 @@ router.get("/path/:id", verifyToken, async (req, res) => {
                 FROM employees e
                 LEFT JOIN users u ON u.id = e.user_id
                 WHERE e.id = ?
-                
+
                 UNION ALL
-                
+
                 -- 2. Find the manager
                 SELECT e.id, e.name, e.designation, e.manager_id, u.role, rc.level + 1
                 FROM employees e
@@ -107,7 +110,6 @@ router.get("/path/:id", verifyToken, async (req, res) => {
 
 router.get("/attendance/today", verifyToken, async (req, res) => {
   try {
-
     const userId = req.user.id;
 
     // Get logged-in employee id
@@ -123,6 +125,7 @@ router.get("/attendance/today", verifyToken, async (req, res) => {
     const myEmpId = empRow[0].id;
 
     // Get team (manager + subordinates)
+    // 🔥 FIX: Added al.status to the SELECT statement
     const [rows] = await db.query(`
       WITH RECURSIVE team_tree AS (
         SELECT id FROM employees WHERE id = ?
@@ -131,14 +134,16 @@ router.get("/attendance/today", verifyToken, async (req, res) => {
         FROM employees e
         INNER JOIN team_tree t ON e.manager_id = t.id
       )
-      SELECT 
+      SELECT
         e.id,
         e.name,
+        e.designation,
         al.clock_in,
-        al.clock_out
+        al.clock_out,
+        al.status as db_status 
       FROM employees e
       JOIN team_tree tt ON tt.id = e.id
-      LEFT JOIN attendance_logs al 
+      LEFT JOIN attendance_logs al
         ON al.employee_id = e.id
         AND al.log_date = CURDATE()
     `, [myEmpId]);
@@ -146,15 +151,21 @@ router.get("/attendance/today", verifyToken, async (req, res) => {
     const result = rows.map(r => {
       let status = "Absent";
 
-      if (r.clock_in && !r.clock_out) {
-        status = "Working";
+      // 🔥 FIX: Use the actual database status first
+      if (r.db_status) {
+         status = r.db_status; 
+         // If it's ON_BREAK or WORKING from the DB, use it directly!
+      } else if (r.clock_in && !r.clock_out) {
+         status = "Working"; // Fallback just in case
       } else if (r.clock_in && r.clock_out) {
-        status = "Clocked Out";
+         status = "Clocked Out";
       }
 
       return {
+        id: r.id, 
         name: r.name,
-        status
+        designation: r.designation,
+        status: status 
       };
     });
 
@@ -165,6 +176,4 @@ router.get("/attendance/today", verifyToken, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-
 module.exports = router;

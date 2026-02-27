@@ -65,7 +65,12 @@ const ROUTES = {
     file: "change-password.html",
     roles: ["admin", "hr", "manager", "employee"],
     scripts: ["/assets/js/pages/change-password.js"]
-  }
+  },
+"service-request": {
+  file: "service-request.html",
+  roles: ["admin", "hr", "manager", "employee"],
+  scripts: ["/assets/js/service-request.js"]
+}
 };
 
 /* =========================

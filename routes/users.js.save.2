@@ -120,9 +120,9 @@ router.post("/", verifyToken, async (req, res) => {
 
     await connection.query(
       `INSERT INTO employees
-      (user_id, name, email, department, client_name, work_location, designation, manager_id, active,phoneno)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1,?)`,
-      [userId, name, email, department, client_name, work_location, designation, finalManagerId,phone]
+      (user_id, name, email, department, client_name, work_location, designation, manager_id, active)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)`,
+      [userId, name, email, department, client_name, work_location, designation, finalManagerId,]
     );
 
     await connection.commit();
@@ -178,7 +178,6 @@ router.get("/", verifyToken, async (req, res) => {
         u.id AS user_id,
         e.name,
         e.email,
-        e.phoneno AS phone,
         u.role,
         e.department,
         e.designation,

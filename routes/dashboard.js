@@ -207,20 +207,19 @@ router.get("/team-on-leave-list", verifyToken, async (req, res) => {
         res.json(rows);
     } catch (err) { res.status(500).json({ error: err.message }); }
 });
-
 // --- LIST: Team Attendance List (For Modal) ---
 router.get("/team-attendance-list", verifyToken, async (req, res) => {
   try {
     const isAdmin = ["ADMIN", "HR"].includes(req.user.role.toUpperCase());
     const empId = await getEmployeeId(req.user.id);
 
-    // FIX: Changed 'in_time' to 'clock_in' in the query
+    // 🔥 FIX: Replaced hardcoded 'Present' with the actual al.status from the database
     const query = isAdmin
-      ? `SELECT e.id, e.name, 'Present' as status, DATE_FORMAT(al.clock_in, '%H:%i') as in_time, e.designation
+      ? `SELECT e.id, e.name, al.status, DATE_FORMAT(al.clock_in, '%H:%i') as in_time, e.designation
          FROM attendance_logs al
          JOIN employees e ON al.employee_id = e.id
          WHERE al.log_date = CURDATE() AND al.employee_id != ?`
-      : `SELECT e.id, e.name, 'Present' as status, DATE_FORMAT(al.clock_in, '%H:%i') as in_time, e.designation
+      : `SELECT e.id, e.name, al.status, DATE_FORMAT(al.clock_in, '%H:%i') as in_time, e.designation
          FROM attendance_logs al
          JOIN employees e ON al.employee_id = e.id
          WHERE al.log_date = CURDATE() AND e.manager_id = ? AND al.employee_id != ?`;
@@ -234,5 +233,4 @@ router.get("/team-attendance-list", verifyToken, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 module.exports = router;

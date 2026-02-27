@@ -18,10 +18,13 @@
 
     if (socket) return;
 
+const user = JSON.parse(localStorage.getItem("user"));
+
     socket = io({
       query: {
-        token: token
-      },
+        token: token,
+        userId: user?.id    
+  },
       transports: ["websocket"],
       reconnection: true,
       reconnectionAttempts: Infinity,

@@ -177,3 +177,21 @@
     margin-left: 0 !important;
   }
 }
+
+
+/* =========================
+   SIDEBAR FIX FOR SERVICE REQUEST
+========================= */
+
+/* 1. Force the sidebar to be a full-height flex column */
+.sidebar { 
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100vh !important; 
+}
+
+/* 2. Shove the Service Request link to the very bottom */
+.bottom-link {
+  margin-top: auto !important; 
+  margin-bottom: 20px !important; 
+}

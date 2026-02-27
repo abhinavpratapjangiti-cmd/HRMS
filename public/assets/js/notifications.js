@@ -188,23 +188,22 @@ function loadNotifications() {
       console.log("🔌 Socket connected");
     });
 
-socket.on("notification_pop", function (data) {
-    console.log("🔥 Notification event received:", data);
-    if (!data || !data.id) return;
+    socket.on("notification_pop", function (data) {
+console.log("🔥 Notification event received:", data);
+if (!data || !data.id) return;
 
-    // Prevent duplicates
-    if (seenNotificationIds[data.id]) return;
-    seenNotificationIds[data.id] = true;
+      // Prevent duplicates
+      if (seenNotificationIds[data.id]) return;
+      seenNotificationIds[data.id] = true;
 
-    injectLiveNotification(data);
+      injectLiveNotification(data);
+    });
 
-    // 👉 ADD THIS: Force the dashboard to reload its stats silently
-    if (typeof window.__triggerHomeInit === 'function') {
-        console.log("🔄 Triggering live dashboard refresh...");
-        window.__triggerHomeInit();
-    }
-});
-}
+    socket.on("disconnect", function () {
+      console.warn("Socket disconnected");
+    });
+  }
+
   /* ================= LIVE INJECTION ================= */
 
   function injectLiveNotification(n) {
@@ -292,17 +291,36 @@ socket.on("notification_pop", function (data) {
 
   /* ================= MARK ALL ================= */
 
-  function markAllNotificationsRead() {
-    fetch(API_BASE + "/api/notifications/read-all", {
-      method: "PUT",
-      headers: authHeaders()
-    }).then(function () {
-      seenNotificationIds = {};
-      loadNotifications();
-    });
-  }
+function markAllNotificationsRead() {
+  fetch(API_BASE + "/api/notifications/read-all", {
+    method: "PUT",
+    headers: authHeaders()
+  }).then(function () {
 
-  /* ================= ADMIN RESOLVE PASSWORD RESET ================= */
+    var box = document.getElementById("notificationList");
+    var badge = document.getElementById("notificationBadge");
+
+    if (box) {
+      box.innerHTML =
+        "<small class='text-muted'>No notifications</small>";
+    }
+
+    if (badge) {
+      badge.innerText = "0";
+      badge.classList.add("d-none");
+    }
+
+    seenNotificationIds = {};
+  });
+}
+/* ================= MARK ALL EVENT LISTENER ================= */
+document.addEventListener("click", function (e) {
+  if (e.target.innerText && e.target.innerText.includes("Mark All")) {
+    e.preventDefault();
+    markAllNotificationsRead();
+  }
+});
+/* ================= ADMIN RESOLVE PASSWORD RESET ================= */
   /* 🔥 NEW ADDITION: Event listener to handle the Approve/Reject clicks safely */
   
   document.addEventListener("click", function (e) {
@@ -348,7 +366,7 @@ socket.on("notification_pop", function (data) {
 
   function startPolling() {
     stopPolling();
-    pollTimer = setInterval(loadNotifications, 500);
+    pollTimer = setInterval(loadNotifications, 5000);
   }
 
   function stopPolling() {

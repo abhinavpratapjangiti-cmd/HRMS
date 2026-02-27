@@ -19,6 +19,43 @@
 
     // --- CONFIGURATION & STATE ---
     const API_BASE = "http://16.16.18.115:5000";
+
+function initSocket() {
+    const token = localStorage.getItem("token") || localStorage.getItem("access_token");
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+    if (!token || !user.id) return;
+
+    const socket = io("http://16.16.18.115:5000", {
+        query: {
+            token: token,
+            userId: user.id
+        }
+    });
+
+    socket.on("connect", () => {
+        console.log("🔌 Socket.IO connected");
+    });
+
+    socket.on("disconnect", () => {
+        console.log("❌ Socket.IO disconnected");
+    });
+
+    socket.on("notification", (data) => {
+        console.log("🔔 Real-time notification:", data);
+
+        refreshNotificationCount();
+        playNotificationSound();
+
+        if (currentModalEndpoint && currentModalEndpoint.includes("notifications")) {
+            openDashboardModal("Notifications", "/api/notifications");
+        }
+    });
+
+    window.socket = socket;
+}
+
+initSocket();
     let initTimeout;
     let timeInterval;
     let currentModalEndpoint = null; // Tracks open modal for refreshing data
@@ -73,36 +110,60 @@
         return d ? d.toLocaleString() : '';
     }
 
+// 🔊 1. Pre-load the audio file (GLOBAL scope)
+const notificationSound = new Audio("/assets/sounds/notification.mp3");
+let isAudioUnlocked = false;
 
-async function refreshNotificationCount() {
-    try {
-        const res = await fetch(`${API_BASE}/api/notifications/count`, {
-            headers: getHeaders()
-        });
-
-        if (!res.ok) return;
-
-        const data = await res.json();
-        const bellBadge = document.querySelector(".notification-badge");
-
-        if (bellBadge) {
-            if (data.count > 0) {
-                bellBadge.textContent = data.count;
-                bellBadge.style.display = "inline-block";
-            } else {
-                bellBadge.style.display = "none";
-            }
-        }
-    } catch (e) {
-        console.warn("Failed to refresh notification count");
+// 🔊 2. Force the browser to unlock audio on the very first click
+document.addEventListener("click", function unlockAudio() {
+    if (!isAudioUnlocked) {
+        notificationSound.play().then(() => {
+            notificationSound.pause();
+            notificationSound.currentTime = 0;
+            isAudioUnlocked = true;
+            console.log("🔓 Browser audio unlocked successfully!");
+        }).catch(() => {});
     }
-}
+}, { once: true });
+
+// 🔊 3. The actual function that plays the sound
+function playNotificationSound() {
+    if (!isAudioUnlocked) return;
+    try {
+        notificationSound.currentTime = 0;
+        notificationSound.play().catch(() => {});
+    } catch (e) {
+        console.warn("Audio error:", e);
+    }
+}    async function refreshNotificationCount() {
+        try {
+            const res = await fetch(`${API_BASE}/api/notifications/count`, {
+                headers: getHeaders()
+            });
+
+            if (!res.ok) return;
+
+            const data = await res.json();
+            const bellBadge = document.querySelector(".notification-badge");
+
+            if (bellBadge) {
+                if (data.count > 0) {
+                    bellBadge.textContent = data.count;
+                    bellBadge.style.display = "inline-block";
+                } else {
+                    bellBadge.style.display = "none";
+                }
+            }
+        } catch (e) {
+            console.warn("Failed to refresh notification count");
+        }
+    }
 
 
     /* =========================================
        2. CORE DASHBOARD LOADERS
        ========================================= */
-window.__triggerHomeInit = function() {
+    window.__triggerHomeInit = function() {
         if (!window.location.hash || window.location.hash === "#") {
             window.location.hash = "/home";
             return;
@@ -228,35 +289,36 @@ window.__triggerHomeInit = function() {
         } catch (e) { console.warn("Home data failed", e); }
     }
 
-async function loadTodayTime() {
-    if (!window.location.hash.includes("#/home")) return;
+    async function loadTodayTime() {
+        if (!window.location.hash.includes("#/home")) return;
 
-    const fetchTime = async () => {
-        try {
-            const res = await fetch(`${API_BASE}/api/dashboard/attendance-today`, { headers: getHeaders() });
-            const d = await res.json();
+        const fetchTime = async () => {
+            try {
+                const res = await fetch(`${API_BASE}/api/dashboard/attendance-today`, { headers: getHeaders() });
+                const d = await res.json();
 
-            if (window.location.hash.includes("#/attendance")) return; // STOP interfering
+                if (window.location.hash.includes("#/attendance")) return; // STOP interfering
 
-            const workedEl = document.getElementById("workedTime");
-            const breakEl = document.getElementById("breakTime");
+                const workedEl = document.getElementById("workedTime");
+                const breakEl = document.getElementById("breakTime");
 
-            if (workedEl) workedEl.textContent = toHHMM(d.worked_seconds || 0);
-            if (breakEl) breakEl.textContent = toHHMM(d.break_seconds || 0);
-        } catch (e) {
-            console.warn("Time data failed", e);
+                if (workedEl) workedEl.textContent = toHHMM(d.worked_seconds || 0);
+                if (breakEl) breakEl.textContent = toHHMM(d.break_seconds || 0);
+            } catch (e) {
+                console.warn("Time data failed", e);
+            }
+        };
+
+        await fetchTime();
+
+        if (window.attendanceClockTimer) {
+            clearInterval(window.attendanceClockTimer);
         }
-    };
 
-    await fetchTime();
-
-    if (window.attendanceClockTimer) {
-        clearInterval(window.attendanceClockTimer);
+        window.attendanceClockTimer = setInterval(fetchTime, 60000);
     }
 
-    window.attendanceClockTimer = setInterval(fetchTime, 60000);
-}
-async function loadManagerStats() {
+    async function loadManagerStats() {
         if (!isManager()) return;
         const stats = {
             // teamAttendanceCount logic is now handled manually below to match modal filtering
@@ -298,7 +360,7 @@ async function loadManagerStats() {
         }
     }
 
-async function loadThoughtOfTheDay() {
+    async function loadThoughtOfTheDay() {
         const thoughtTextEl = document.getElementById("dailyThoughtText");
 
         // Only check for the text element now
@@ -327,7 +389,7 @@ async function loadThoughtOfTheDay() {
         }
     }
 
-/* =========================
+    /* =========================
        👋 GREETING
     ========================= */
     function loadGreeting() {
@@ -393,9 +455,15 @@ async function loadThoughtOfTheDay() {
             try {
                 const json = JSON.parse(text);
 
-                // Route to specific renderers
+                // 🔥 SERVICE REQUEST DETAIL ROUTING
+                if (endpoint.includes("service-requests/") && !endpoint.includes("pending")) {
+                    renderServiceDetail(json, modalBody);
+                    return;
+                }
+
+                // Other renderers
                 if (endpoint.includes('notifications')) {
-                    renderNotifications(json, modalBody);
+                    renderCombinedInbox(json, modalBody);
                 } else if (endpoint.includes('attendance/today')) {
                     renderAttendanceTable(json, modalBody);
                 } else {
@@ -433,9 +501,9 @@ async function loadThoughtOfTheDay() {
       let html = `
     <div class="d-flex justify-content-end p-2 border-bottom bg-light">
         ${hasUnread ? `
-            <button id="markAllReadBtn" class="btn btn-sm btn-primary">
-                <i class="fas fa-check-double"></i> Mark All as Read
-            </button>
+<button id="markAllBtn" class="btn btn-outline-primary btn-sm">
+  <i class="fas fa-check-double"></i> Mark All as Read
+</button>
         ` : ''}
     </div>
     <div class="list-group list-group-flush" style="max-height: 400px; overflow-y: auto;">
@@ -465,7 +533,64 @@ async function loadThoughtOfTheDay() {
         container.innerHTML = html;
     }
 
-function renderAttendanceTable(data, container) {
+    async function renderCombinedInbox(notificationData, container) {
+        let notifications = [];
+        try {
+            if (Array.isArray(notificationData)) notifications = notificationData;
+            else if (notificationData?.notifications) notifications = notificationData.notifications;
+        } catch {}
+
+
+        let html = `<div class="list-group list-group-flush">`;
+
+// 🔔 Notifications Section
+if (notifications.length > 0) {
+    const hasUnread = notifications.some(item => !item.is_read);
+
+    html += `
+    <div class="p-2 fw-bold text-primary border-bottom d-flex justify-content-between align-items-center bg-white sticky-top" style="z-index: 10;">
+        <span>Notifications</span>
+        ${hasUnread ? `
+            <button id="markAllReadBtn" class="btn btn-sm btn-outline-primary">
+                <i class="fas fa-check-double"></i> Mark All as Read
+            </button>
+        ` : ''}
+    </div>`;
+
+    notifications.forEach(item => {
+                html += `
+                    <div class="list-group-item">
+                        <strong>${escapeHtml(item.type || "System")}</strong>
+                        <small class="text-muted d-block">${formatDate(item.created_at)}</small>
+                        <div>${escapeHtml(item.message)}</div>
+                    </div>`;
+            });
+        }
+
+
+        if (notifications.length === 0) {
+    html += `<div class="text-center p-4 text-muted">Inbox is empty</div>`;
+}
+        html += `</div>`;
+
+        container.innerHTML = html;
+
+        // Update bell badge
+        const totalCount = notifications.length;
+        const badge = document.querySelector(".notification-badge");
+        if (badge) {
+            if (totalCount > 0) {
+                badge.textContent = totalCount;
+                badge.style.display = "inline-block";
+            } else {
+                badge.style.display = "none";
+            }
+        }
+    }
+
+
+
+    function renderAttendanceTable(data, container) {
         const currentUser = getUser();
         const myId = currentUser.id;
         const myName = currentUser.name;
@@ -486,18 +611,21 @@ function renderAttendanceTable(data, container) {
         const rowsHtml = filteredData.map(item => {
             let rawStatus = (item.status || "").toLowerCase();
             let displayStatus = item.status || "Not clocked in";
-            let statusIcon = "🔴"; 
+            let statusIcon = "🔴";
 
-            // Issue 1 & 2: Smart Status Colors & Text
+            // Issue 1 & 2: Smart Status Colors & Text (PATCHED)
             if (rawStatus === "absent" || rawStatus === "") {
                 displayStatus = "Not clocked in";
                 statusIcon = "🔴";
+            } else if (rawStatus.includes("break")) {
+                // 🔥 MOVED BREAK CHECK UP! Catches "Break In" or "On Break" immediately
+                displayStatus = "On Break";
+                statusIcon = "🟡"; // Yellow
             } else if (rawStatus.includes("out")) {
                 statusIcon = "🟠"; // Orange
             } else if (rawStatus.includes("in") || rawStatus === "present" || rawStatus === "working") {
+                displayStatus = "Working"; // Normalizes text to "Working"
                 statusIcon = "🟢"; // Green
-            } else if (rawStatus.includes("break")) {
-                statusIcon = "🟡"; // Yellow
             } else {
                 statusIcon = "🔵"; // Blue for any other status
             }
@@ -515,7 +643,7 @@ function renderAttendanceTable(data, container) {
         container.innerHTML = headerHtml + rowsHtml;
     }
 
-function renderGenericList(data, container, endpoint) {
+    function renderGenericList(data, container, endpoint) {
         if (!Array.isArray(data) || data.length === 0) {
             container.innerHTML = `<div class="text-center text-muted py-4">No records found</div>`;
             return;
@@ -590,50 +718,37 @@ function renderGenericList(data, container, endpoint) {
        4. ACTION HANDLERS
        ========================================= */
 
-  async function handleMarkAllRead(btn) {
-    try {
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-        btn.style.pointerEvents = 'none';
+async function handleMarkAllRead(btn) {
+        try {
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            btn.style.pointerEvents = 'none';
 
-        const res = await fetch(`${API_BASE}/api/notifications/mark-all-read`, {
-            method: 'PUT',
-            headers: getHeaders()
-        });
+            const res = await fetch(`${API_BASE}/api/notifications/read-all`, {
+                method: 'PUT',
+                headers: getHeaders()
+            });
 
-        if (!res.ok) {
-            throw new Error("Server responded with " + res.status);
+            if (!res.ok) {
+                throw new Error("Server responded with " + res.status);
+            }
+
+            // Update the bell counter
+            refreshNotificationCount();
+
+            // 🔥 Re-load the modal cleanly using the current endpoint
+            if (currentModalEndpoint) {
+                openDashboardModal(
+                    document.getElementById('dashboardModalTitle')?.innerText || "Notifications", 
+                    currentModalEndpoint
+                );
+            }
+
+        } catch (err) {
+            console.error("Mark Read Error:", err);
+            btn.innerHTML = '<i class="fas fa-check-double"></i> Mark All as Read';
+            btn.style.pointerEvents = 'auto';
         }
-
-        // 🔥 Use SAME fallback logic as openDashboardModal
-        const modalBody =
-            document.getElementById("dashboardModalBody") ||
-            document.querySelector(".modal-body");
-
-        if (!modalBody) return; // safety check
-
-        // Re-fetch unread notifications
-        const refreshed = await fetch(`${API_BASE}/api/notifications`, {
-            headers: getHeaders()
-        });
-
-        const data = await refreshed.json();
-
-        if (!Array.isArray(data) || data.length === 0) {
-            modalBody.innerHTML =
-                '<div class="text-center p-4 text-muted">No notifications found.</div>';
-        } else {
-            renderNotifications(data, modalBody);
-        }
-
-        refreshNotificationCount();
-
-    } catch (err) {
-        console.error("Mark Read Error:", err);
-        btn.innerHTML = 'Mark All as Read';
-        btn.style.pointerEvents = 'auto';
     }
-}
-
 
 
     async function handleAction(approveBtn, rejectBtn) {
@@ -645,24 +760,24 @@ function renderGenericList(data, container, endpoint) {
         btn.innerHTML = `<span class="spinner-border spinner-border-sm"></span>`;
 
         const id = btn.dataset.id;
-const action = approveBtn ? "APPROVED" : "REJECTED";
+        const action = approveBtn ? "APPROVED" : "REJECTED";
 
-const isTimesheet = currentModalEndpoint?.includes("pending/my-team/list");
+        const isTimesheet = currentModalEndpoint?.includes("pending/my-team/list");
 
-const url = isTimesheet
-    ? `${API_BASE}/api/timesheets/${id}/status`
-    : `${API_BASE}/api/leaves/${id}/action`;
+        const url = isTimesheet
+            ? `${API_BASE}/api/timesheets/${id}/status`
+            : `${API_BASE}/api/leaves/${id}/action`;
 
-const body = isTimesheet
-    ? { status: action }
-    : { action };
+        const body = isTimesheet
+            ? { status: action }
+            : { action };
 
-try {
-    const res = await fetch(url, {
-        method: "PUT",
-        headers: getHeaders(),
-        body: JSON.stringify(body)
-    });
+        try {
+            const res = await fetch(url, {
+                method: "PUT",
+                headers: getHeaders(),
+                body: JSON.stringify(body)
+            });
 
 
             if (!res.ok) {
@@ -680,95 +795,145 @@ try {
             btn.innerHTML = originalContent;
         }
     }
-/* =========================================
-   5. INITIALIZATION & LISTENERS
-================================================*/
+    
+    /* =========================================
+       5. INITIALIZATION & LISTENERS
+    ================================================*/
 
-document.addEventListener("click", (e) => {
+    document.addEventListener("click", (e) => {
 
-    const cardMap = {
-        teamAttendanceCard: {
-            title: "Team Attendance Details",
-            endpoint: "/api/team/attendance/today"
-        },
-
-        pendingLeavesCard: {
-            title: "Pending Leave Requests",
-            endpoint: "/api/dashboard/pending-leaves-list"
-        },
-
-        pendingTimesheetsCard: {
-            title: "Pending Timesheets",
-            endpoint: "/api/timesheets/pending/my-team/list"
-        },
-
-        teamOnLeaveCard: {
-            title: "Team On Leave Today",
-            endpoint: "/api/dashboard/team-on-leave-list"
-        },
-
-        homeInboxCard: {
-            title: "Notifications",
-            endpoint: "/api/notifications"
+        const ticketItem = e.target.closest(".service-ticket-item");
+        if (ticketItem) {
+            const id = ticketItem.dataset.id;
+            openDashboardModal("Service Request Detail", `/api/service-requests/${id}`);
+            return;
         }
-    };
 
-    const clickedCardId = Object.keys(cardMap)
-        .find(id => e.target.closest(`#${id}`));
+        const resolveBtn = e.target.closest(".resolve-ticket-btn");
+        if (resolveBtn) {
+            const id = resolveBtn.dataset.id;
 
-    if (clickedCardId) {
-        e.preventDefault();
-        const { title, endpoint } = cardMap[clickedCardId];
-        openDashboardModal(title, endpoint);
-        return;
-    }
+            fetch(`${API_BASE}/api/service-requests/${id}/resolve`, {
+                method: "PUT",
+                headers: getHeaders()
+            }).then(() => {
+                openDashboardModal("Service Request Detail", `/api/service-requests/${id}`);
+                refreshNotificationCount();
+            });
 
-    const markReadBtn = e.target.closest("#markAllReadBtn");
-    if (markReadBtn) {
-        e.preventDefault();
-        handleMarkAllRead(markReadBtn);
-        return;
-    }
+            return;
+        }
 
-    const approveBtn = e.target.closest(".approve-btn");
-    const rejectBtn = e.target.closest(".reject-btn");
-    if (approveBtn || rejectBtn) {
-        e.preventDefault();
-        handleAction(approveBtn, rejectBtn);
-        return;
-    }
+        const cardMap = {
+            teamAttendanceCard: {
+                title: "Team Attendance Details",
+                endpoint: "/api/team/attendance/today"
+            },
 
-    const navBtn = e.target.closest("#viewAttendanceBtn");
-    if (navBtn) {
-        e.preventDefault();
-        window.location.hash = "#/attendance";
-    }
+            pendingLeavesCard: {
+                title: "Pending Leave Requests",
+                endpoint: "/api/dashboard/pending-leaves-list"
+            },
 
-});
+            pendingTimesheetsCard: {
+                title: "Pending Timesheets",
+                endpoint: "/api/timesheets/pending/my-team/list"
+            },
 
-// Init Triggers
+            teamOnLeaveCard: {
+                title: "Team On Leave Today",
+                endpoint: "/api/dashboard/team-on-leave-list"
+            },
+
+            homeInboxCard: {
+                title: "Notifications",
+                endpoint: "/api/notifications"
+            }
+        };
+
+        const clickedCardId = Object.keys(cardMap)
+            .find(id => e.target.closest(`#${id}`));
+
+        if (clickedCardId) {
+            e.preventDefault();
+            const { title, endpoint } = cardMap[clickedCardId];
+            openDashboardModal(title, endpoint);
+            return;
+        }
+
+        const markReadBtn = e.target.closest("#markAllReadBtn");
+        if (markReadBtn) {
+            e.preventDefault();
+            handleMarkAllRead(markReadBtn);
+            return;
+        }
+
+        const approveBtn = e.target.closest(".approve-btn");
+        const rejectBtn = e.target.closest(".reject-btn");
+        if (approveBtn || rejectBtn) {
+            e.preventDefault();
+            handleAction(approveBtn, rejectBtn);
+            return;
+        }
+
+        const navBtn = e.target.closest("#viewAttendanceBtn");
+        if (navBtn) {
+            e.preventDefault();
+            window.location.hash = "#/attendance";
+        }
+
+    });
+
+    // Init Triggers
     window.__triggerHomeInit();
 
     // Re-trigger on custom route changes
     window.addEventListener("route:loaded", window.__triggerHomeInit);
-    
+
     // FIX 1: Listen for hash changes so it auto-reloads when landing on #/home after login
     window.addEventListener("hashchange", window.__triggerHomeInit);
-    
-    // FIX 2: Expose a global refresh function. 
+
+    // FIX 2: Expose a global refresh function.
     // In your "Apply Leave" or "Timesheet" submission scripts, call `window.refreshHomeData()` after a successful submit!
     window.refreshHomeData = window.__triggerHomeInit;
 
-// Ensure we only attach the global listener ONCE, even if the route reloads
+    // Ensure we only attach the global listener ONCE, even if the route reloads
     if (!window.__homeListenerAttached) {
         window.__homeListenerAttached = true;
-        
+
         document.addEventListener("hrms:data-changed", (e) => {
             // Only fetch if the user is actively on the home page
             if (window.location.hash.includes("#/home")) {
                 console.log("🔄 Dashboard updating from global event:", e.detail);
                 loadManagerStats();
                 loadLeaveBalance();
+            }
+        });
+    }
+
+    /* =========================
+       🔔 REAL-TIME SERVICE REQUEST LISTENER
+    ========================= */
+
+    if (window.socket) {
+        window.socket.addEventListener("message", function (event) {
+            try {
+                const message = JSON.parse(event.data);
+
+                if (message.event === "notification") {
+                    console.log("🔔 Real-time notification received:", message.data);
+
+                    refreshNotificationCount();
+                    playNotificationSound();
+
+                    // If inbox modal is open, refresh it
+                    if (currentModalEndpoint && currentModalEndpoint.includes("notifications")) {
+                        openDashboardModal("Notifications", "/api/notifications");
+                    }
+                }
+
+            } catch (e) {
+                console.warn("Invalid WS message:", e);
             }
         });
     }

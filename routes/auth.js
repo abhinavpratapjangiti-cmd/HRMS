@@ -6,7 +6,7 @@ const crypto = require("crypto");
 const db = require("../db");
 const { verifyToken } = require("../middleware/auth");
 const transporter = require("../utils/mailer");
-
+const { sendNotification } = require("../services/notificationService");
 
 /* =========================
    ENV GUARDS
@@ -239,7 +239,7 @@ router.post("/change-password", verifyToken, (req, res) => {
 
 /* =========================
    FORGOT PASSWORD
-========================= 
+========================= */
 router.post("/forgot-password", (req, res) => {
   const { email } = req.body;
 
@@ -295,10 +295,9 @@ router.post("/forgot-password", (req, res) => {
     });
 });
 
- =========================
+/* =========================
    RESET PASSWORD
-=============================
-
+========================= */
 router.post("/reset-password", (req, res) => {
   const { token, newPassword } = req.body;
 
@@ -334,7 +333,9 @@ router.post("/reset-password", (req, res) => {
       res.status(500).json({ message: "Password reset failed" });
     });
 });
-=============================================================================== //
+
+
+
 
 /* =====================================================
    1️⃣ CHECK STATUS / CREATE REQUEST
@@ -413,17 +414,12 @@ router.post("/check-reset-status", async (req, res) => {
 
       for (let admin of admins) {
         try {
-          await db.query(
-            `INSERT INTO notifications (user_id, type, message, is_read, created_at)
-             VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)`,
-            [
-              admin.id,
-              'password_request',
-              `🔔 Password Reset Requested by: ${email} (Request ID: ${requestId})`,
-              0
-            ]
+          await sendNotification(
+            admin.id,
+            'password_request',
+            `🔔 Password Reset Requested by: ${email} (Request ID: ${requestId})`
           );
-          console.log(`✅ Notification stored for Admin ID: ${admin.id}`);
+          console.log(`✅ Notification emitted for Admin ID: ${admin.id}`);
         } catch (notifErr) {
           console.error(`❌ FAILED to insert notification for Admin ${admin.id}:`, notifErr.message);
         }
@@ -453,7 +449,18 @@ router.post("/admin/resolve-reset", async (req, res) => {
       return res.status(400).json({ message: "INVALID ACTION" });
     }
 
-    // Update the request status and log the admin who responded
+    // 1️⃣ Fetch the original requester's user_id so we can notify them
+    const [requestData] = await db.query(
+      "SELECT user_id FROM password_reset_requests WHERE id = ?",
+      [request_id]
+    );
+
+    if (!requestData.length) {
+      return res.status(404).json({ message: "REQUEST NOT FOUND" });
+    }
+    const employeeUserId = requestData[0].user_id;
+
+    // 2️⃣ Update the request status and log the admin who responded
     const [updateResult] = await db.query(
       `UPDATE password_reset_requests
        SET status = ?, responded_by = ?, responded_at = CURRENT_TIMESTAMP
@@ -465,11 +472,18 @@ router.post("/admin/resolve-reset", async (req, res) => {
       return res.status(400).json({ message: "REQUEST ALREADY PROCESSED OR NOT FOUND" });
     }
 
-    // Mark the specific notification as read so it clears from the bell icon
+    // 3️⃣ Mark the specific notification as read so it clears from the admin's bell icon
     await db.query(
       "UPDATE notifications SET is_read = 1 WHERE message LIKE ?",
       [`%Request ID: ${request_id}%`]
     );
+
+    // 4️⃣ Notify the employee in real-time!
+    const notificationMsg = action === 'APPROVED'
+      ? "✅ Your password reset request was APPROVED. You can now reset your password."
+      : "❌ Your password reset request was REJECTED by an admin.";
+
+    await sendNotification(employeeUserId, 'password_request_update', notificationMsg);
 
     return res.json({ message: `REQUEST ${action} SUCCESSFULLY` });
 
@@ -555,7 +569,8 @@ router.post("/logout-all", verifyToken, (req, res) => {
   db.query(
     `
     UPDATE users
-    SET token_version = IFNULL(token_version,0) + 1
+    SET token_version = IFNULL(token_version,0) + 1,
+        is_logged_in = 0
     WHERE id = ?
     `,
     [req.user.id]
@@ -576,7 +591,6 @@ router.post("/logout-all", verifyToken, (req, res) => {
    LOGOUT
 ========================= */
 router.post("/logout", (req, res) => {
-  // Since we use JWT, we just tell the frontend it's successful
   res.json({ success: true, message: "Logged out successfully" });
 });
 

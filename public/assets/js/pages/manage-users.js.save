@@ -130,8 +130,7 @@ function renderTable(employees) {
         const name = emp.name || emp.username || "Unknown";
         const email = emp.email || "No Email";
         const role = emp.role || "employee";
-        const phone = emp.phone || "";
-
+        
         // FIX: Handle both possible ID keys from backend
         let userId = emp.user_id; 
         if (!userId) userId = emp.id; 
@@ -253,7 +252,6 @@ window.createUser = async function() {
 
     btn.disabled = true;
     try {
-        // FIXED: Pointing back to /api/users to create the login credentials
         const res = await fetch(`${window.API_BASE}/api/users`, {
             method: "POST",
             headers: window.getHeaders(),
@@ -276,7 +274,8 @@ window.createUser = async function() {
         btn.disabled = false;
     }
 };
-window.openEditModal = function(userId, employeeId, name, email, role, managerId, department, designation,phone) {
+
+window.openEditModal = function(userId, employeeId, name, email, role, managerId, department, designation,) {
     document.getElementById("edit-id").value = userId;
     document.getElementById("edit-emp-id").value = employeeId;
 
@@ -338,7 +337,7 @@ window.saveEdit = async function() {
     const newDesignation = document.getElementById("edit-designation").value.trim();
     const newPhone = document.getElementById("edit-phone").value.trim();
 
-    // Convert empty dropdown to NULL
+    // FIX 4: Convert empty dropdown to NULL
     let newManager = document.getElementById("edit-manager").value;
     if (newManager === "" || newManager === "null") {
         newManager = null;
@@ -349,7 +348,6 @@ window.saveEdit = async function() {
 
         // 1. Update User Role
         promises.push(
-            // FIXED: Pointing back to /api/users/${userId}/role
             fetch(`${window.API_BASE}/api/users/${userId}/role`, {
                 method: "PATCH",
                 headers: window.getHeaders(),
@@ -361,15 +359,14 @@ window.saveEdit = async function() {
         const employeePayload = {
             name: newName,
             email: newEmail,
-            phone: newPhone,
-            department: newDept,
+           phone: newPhone, 
+           department: newDept,
             designation: newDesignation,
             manager_id: newManager
         };
 
         promises.push(
-            // FIXED: Pointing to /api/employees to fix the 404 error!
-            fetch(`${window.API_BASE}/api/employees/${employeeId}`, {
+            fetch(`${window.API_BASE}/api/users/${employeeId}`, {
                 method: "PATCH",
                 headers: window.getHeaders(),
                 body: JSON.stringify(employeePayload)
@@ -401,6 +398,7 @@ window.saveEdit = async function() {
         saveBtn.disabled = false;
     }
 };
+
 window.deleteEmployee = async function(employeeId) {
     if (!confirm("Are you sure you want to delete this employee?")) {
         return;

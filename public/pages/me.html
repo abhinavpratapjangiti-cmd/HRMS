@@ -5,7 +5,6 @@
   <title>My Profile</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- GLOBAL CSS -->
   <link rel="stylesheet" href="/assets/css/style.css" />
   <link rel="stylesheet" href="/assets/css/sidebar.css" />
   <link rel="stylesheet" href="/assets/css/pages/me.css" />
@@ -41,23 +40,18 @@
 
 <body>
 <div class="profile-container">
-  <!-- ================= TOP TABS ================= -->
   <div class="profile-tabs top-tabs">
     <button class="tab active" data-tab="profile">Overview</button>
-    <button class="tab" data-tab="job">Role & Job</button>
     <button class="tab" data-tab="documents">Documents</button>
     <button class="tab" data-tab="security">Security</button>
   </div>
 
   <div class="tabs-content-card">
 
-    <!-- ================= OVERVIEW ================= -->
     <section class="tab-content active" id="tab-profile">
 
-      <!-- PROFILE HERO -->
       <div class="profile-card modern">
 
-        <!-- Avatar -->
         <div class="avatar-section">
           <div class="avatar avatar-lg" id="profileAvatar">
             <span id="profileInitials">—</span>
@@ -72,7 +66,6 @@
           <input type="file" id="profileImageInput" accept="image/*" hidden />
         </div>
 
-        <!-- Identity -->
         <div class="profile-info">
 
           <div class="name-row">
@@ -83,7 +76,6 @@
             <span class="status-badge active">Active</span>
           </div>
 
-          <!-- Decision badges -->
           <div class="decision-row">
             <span id="attritionRisk" class="risk-badge low">LOW</span>
             <span id="leaveRisk" class="risk-badge normal">NORMAL</span>
@@ -95,11 +87,25 @@
           </div>
 
           <div class="info-row">
+            <span>PhoneNumber</span>
+            <span id="profilephoneno">—</span>
+          </div>
+          
+          <div class="info-row">
+            <span>Department</span>
+            <span id="profiledepartment">—</span>
+          </div>
+
+          <div class="info-row">
+            <span>Designation</span>
+            <span id="profiledesignation">—</span>
+          </div>
+
+          <div class="info-row">
             <span>Last Login</span>
             <span id="lastLogin">—</span>
           </div>
 
-          <!-- Actions -->
           <div class="actions">
             <button
               id="editProfileBtn"
@@ -119,74 +125,13 @@
         </div>
       </div>
 
-      <!-- ================= TIMELINE ================= -->
-      <div class="meta-card">
-        <h5>Employee Timeline</h5>
-        <div id="profileTimeline" class="timeline"></div>
-      </div>
-
-      <!-- ================= ORG METRICS ================= -->
-      <div class="meta-card">
-        <h5>Work Insights</h5>
-        <div class="meta-grid">
-          <div class="meta-item">
-            <small>Billability</small>
-            <strong id="metricBillability">—</strong>
-          </div>
-          <div class="meta-item">
-            <small>Bench Risk</small>
-            <strong id="metricBenchRisk">—</strong>
-          </div>
-          <div class="meta-item">
-            <small>Leave Trend</small>
-            <strong id="metricLeaveTrend">—</strong>
-          </div>
-        </div>
-      </div>
-
-      <!-- ================= MANAGER CONTEXT ================= -->
-      <div class="meta-card">
-        <h5>Manager Context</h5>
-        <div class="meta-grid">
-          <div class="meta-item">
-            <small>Team Size</small>
-            <strong id="managerTeamSize">—</strong>
-          </div>
-          <div class="meta-item">
-            <small>Load Risk</small>
-            <strong id="managerLoadRisk">—</strong>
-          </div>
-        </div>
+      <div id="teamContextContainer" class="mt-4 p-3 bg-white rounded shadow-sm w-100">
+          <div class="text-center text-muted p-3">Loading team context...</div>
       </div>
 
     </section>
 
-    <!-- ================= ROLE & JOB ================= -->
-    <section class="tab-content" id="tab-job">
-      <div class="details-grid">
 
-        <div class="detail-item">
-          <label>Department</label>
-          <span class="sep">:</span>
-          <span id="jobDepartment">—</span>
-        </div>
-
-        <div class="detail-item">
-          <label>Designation</label>
-          <span class="sep">:</span>
-          <span id="jobDesignation">—</span>
-        </div>
-
-        <div class="detail-item">
-          <label>Employment Type</label>
-          <span class="sep">:</span>
-          <span id="jobType">—</span>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ================= DOCUMENTS ================= -->
     <section class="tab-content" id="tab-documents">
       <div class="documents-list">
         <div class="document-row">
@@ -203,7 +148,6 @@
       </div>
     </section>
 
-    <!-- ================= SECURITY ================= -->
     <section class="tab-content" id="tab-security">
               <button
                 class="btn btn-danger"
@@ -217,12 +161,54 @@
       <h3>CV Preview</h3>
       <button onclick="closeCvModal()">×</button>
     </div>
-    
+
     <iframe id="cvPreviewFrame" src=""></iframe>
 
     <div class="modal-footer">
       <button class="btn btn-outline-secondary" onclick="closeCvModal()">Close</button>
       <a id="cvDownloadBtn" class="btn btn-primary" download="My_CV.pdf">Download</a>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="editProfileModal" class="modal-overlay">
+  <div class="modal-content" style="height: auto; max-height: 80vh;">
+    <div class="modal-header">
+      <h3>Edit Profile</h3>
+      <button onclick="closeEditProfileModal()">×</button>
+    </div>
+    
+    <div class="modal-body" style="padding: 20px; overflow-y: auto;">
+      <div style="display: flex; flex-direction: column; gap: 15px;">
+        
+        <div>
+          <label style="font-size: 0.85rem; color: #666; font-weight: bold;">Email</label>
+          <input type="email" id="editEmail" class="form-control" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
+        </div>
+
+        <div>
+          <label style="font-size: 0.85rem; color: #666; font-weight: bold;">Phone Number</label>
+          <input type="text" id="editPhoneno" class="form-control" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
+        </div>
+
+        <div>
+          <label style="font-size: 0.85rem; color: #666; font-weight: bold;">Department</label>
+          <input type="text" id="editDept" class="form-control" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
+        </div>
+
+        <div>
+          <label style="font-size: 0.85rem; color: #666; font-weight: bold;">Designation</label>
+          <input type="text" id="editDesig" class="form-control" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline-secondary" onclick="closeEditProfileModal()">Cancel</button>
+      <button id="saveProfileBtn" class="btn btn-primary" onclick="saveProfileChanges()">Save Changes</button>
     </div>
   </div>
 </div>

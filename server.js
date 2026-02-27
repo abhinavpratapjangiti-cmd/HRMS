@@ -16,6 +16,7 @@ const path = require("path");
 const http = require("http");
 const compression = require("compression");
 const { Server } = require("socket.io"); // 🔥 ADDED: Socket.io Server
+const socket = require("./socket");
 
 /* =========================
    APP INIT
@@ -126,6 +127,7 @@ const executiveRoutes        = loadRoute("./routes/executive");
 const analyticsProfileRoutes = loadRoute("./routes/analytics-profile");
 const analyticsBenchRoutes   = loadRoute("./routes/analytics-bench");
 const analyticsRoutes        = loadRoute("./routes/analytics");
+const serviceRequestRoutes = loadRoute("./routes/service-requests");
 
 /* =========================
    API ROUTES (ORDER MATTERS)
@@ -152,6 +154,7 @@ app.use("/api/executive", executiveRoutes);
 app.use("/api/analytics/profile", analyticsProfileRoutes);
 app.use("/api/analytics/bench", analyticsBenchRoutes);
 app.use("/api/analytics", analyticsRoutes);
+app.use("/api/service-requests", serviceRequestRoutes);
 
 /* =========================
    HEALTH CHECK
@@ -224,6 +227,7 @@ const io = new Server(server, {
     credentials: true
   }
 });
+socket.init(io);
 
 // 🔥 PATCHED: Pass IO instance to Notification Service
 initSocket(io);

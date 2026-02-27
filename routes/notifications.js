@@ -51,7 +51,7 @@ router.get("/", verifyToken, async (req, res) => {
    2. MARK ALL AS READ
    Matches frontend: fetch(`${API_BASE}/api/notifications/mark-all-read`)
 ===================================================== */
-router.put("/mark-all-read", verifyToken, async (req, res) => {
+router.put("/read-all", verifyToken, async (req, res) => {
   try {
     const ids = getUserIds(req.user);
     if (!ids.length) return res.json({ success: true });
