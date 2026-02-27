@@ -16,39 +16,52 @@ console.log("notifications.js loaded");
   var seenNotificationIds = {};
 
   /* ================= SOUND SYSTEM ================= */
+/* ================= SOUND SYSTEM ================= */
 
-  var notificationSound = new Audio("/assets/sounds/notification.mp3");
-  notificationSound.volume = 0.6;
+var notificationSound = new Audio("/assets/sounds/notification.mp3");
+notificationSound.volume = 1.0; // set 1.0 for testing
 
-  var audioUnlocked = false;
-  var lastSoundAt = 0;
+var audioUnlocked = false;
+var lastSoundAt = 0;
 
-  function unlockNotificationAudio() {
-    if (audioUnlocked) return;
+// Try auto-unlock once on load
+notificationSound.play().then(function () {
+  notificationSound.pause();
+  notificationSound.currentTime = 0;
+  audioUnlocked = true;
+  console.log("🔓 Audio auto-unlocked");
+}).catch(function () {
+  console.log("🔒 Audio auto-unlock blocked (needs user interaction)");
+});
 
-    notificationSound.play()
-      .then(function () {
-        notificationSound.pause();
-        notificationSound.currentTime = 0;
-        audioUnlocked = true;
-      })
-      .catch(function () {});
-  }
+function unlockNotificationAudio() {
+  if (audioUnlocked) return;
 
-  document.addEventListener("click", unlockNotificationAudio, { once: true });
-  document.addEventListener("keydown", unlockNotificationAudio, { once: true });
+  notificationSound.play()
+    .then(function () {
+      notificationSound.pause();
+      notificationSound.currentTime = 0;
+      audioUnlocked = true;
+      console.log("🔓 Audio unlocked by user interaction");
+    })
+    .catch(function () {});
+}
 
-  function playNotificationSound() {
-    if (!audioUnlocked) return;
+document.addEventListener("click", unlockNotificationAudio, { once: true });
+document.addEventListener("keydown", unlockNotificationAudio, { once: true });
 
-    var now = Date.now();
-    if (now - lastSoundAt < 1500) return;
-    lastSoundAt = now;
+function playNotificationSound() {
+  console.log("🔊 Attempting sound. Unlocked:", audioUnlocked);
 
-    notificationSound.currentTime = 0;
-    notificationSound.play().catch(function () {});
-  }
+  var now = Date.now();
+  if (now - lastSoundAt < 1500) return;
+  lastSoundAt = now;
 
+  notificationSound.currentTime = 0;
+  notificationSound.play().catch(function (e) {
+    console.log("❌ Play blocked:", e);
+  });
+}
   /* ================= AUTH ================= */
 
   function authHeaders() {
@@ -169,41 +182,27 @@ function loadNotifications() {
 
   /* ================= SOCKET INIT ================= */
 
-  function initSocketConnection() {
-    if (typeof io === "undefined") {
-      console.warn("Socket.io client missing. Polling only.");
-      return;
-    }
-
-    var user = getUser();
-    if (!user.id) return;
-
-    socket = io(API_BASE, {
-      query: { userId: user.id },
-      transports: ["websocket", "polling"],
-      reconnectionAttempts: 5
-    });
-
-    socket.on("connect", function () {
-      console.log("🔌 Socket connected");
-    });
-
-    socket.on("notification_pop", function (data) {
-console.log("🔥 Notification event received:", data);
-if (!data || !data.id) return;
-
-      // Prevent duplicates
-      if (seenNotificationIds[data.id]) return;
-      seenNotificationIds[data.id] = true;
-
-      injectLiveNotification(data);
-    });
-
-    socket.on("disconnect", function () {
-      console.warn("Socket disconnected");
-    });
+function initSocketConnection() {
+  if (!window.socket) {
+    setTimeout(initSocketConnection, 300);
+    return;
   }
 
+  socket = window.socket;
+
+  socket.on("notification_pop", function (data) {
+    console.log("🔥 Notification event received:", data);
+
+    if (!data || !data.id) return;
+    if (seenNotificationIds[data.id]) {
+  playNotificationSound();   // 🔥 still play sound
+  return;
+}
+
+    seenNotificationIds[data.id] = true;
+    injectLiveNotification(data);
+  });
+}
   /* ================= LIVE INJECTION ================= */
 
   function injectLiveNotification(n) {
