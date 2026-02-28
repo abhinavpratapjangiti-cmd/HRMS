@@ -35,8 +35,35 @@ if (role === "admin" || role === "hr") {
 
     console.log("🌿 Leaves Page Initialized");
     setupDateListeners();
+    setMyLeavesHeader();
     window.loadLeaveHistory();
 };
+
+function setMyLeavesHeader() {
+
+    const thead = document.querySelector("thead tr");
+
+    thead.innerHTML = `
+        <th class="ps-4 py-3 text-secondary text-uppercase small fw-bold">
+            Leave Type
+        </th>
+        <th class="py-3 text-secondary text-uppercase small fw-bold">
+            From
+        </th>
+        <th class="py-3 text-secondary text-uppercase small fw-bold">
+            To
+        </th>
+        <th class="py-3 text-secondary text-uppercase small fw-bold">
+            Days
+        </th>
+        <th class="py-3 text-secondary text-uppercase small fw-bold">
+            Status
+        </th>
+        <th class="pe-4 py-3 text-end text-secondary text-uppercase small fw-bold">
+            Action
+        </th>
+    `;
+}
 
 /* ========================================
    2️⃣ LOAD LEAVE HISTORY
@@ -385,6 +412,34 @@ function formatDate(dateStr) {
     return date.toLocaleDateString();
 }
 
+function setAllEmployeesHeader() {
+
+    const thead = document.querySelector("thead tr");
+
+    thead.innerHTML = `
+        <th class="ps-4 py-3 text-secondary text-uppercase small fw-bold">
+            Name
+        </th>
+        <th class="py-3 text-secondary text-uppercase small fw-bold">
+            Leave Type
+        </th>
+        <th class="py-3 text-secondary text-uppercase small fw-bold">
+            From
+        </th>
+        <th class="py-3 text-secondary text-uppercase small fw-bold">
+            To
+        </th>
+        <th class="py-3 text-secondary text-uppercase small fw-bold">
+            Days
+        </th>
+        <th class="py-3 text-secondary text-uppercase small fw-bold">
+            Status
+        </th>
+        <th class="pe-4 py-3 text-end text-secondary text-uppercase small fw-bold">
+            Action
+        </th>
+    `;
+}
 
 window.loadTeamLeaves = async function() {
 
@@ -411,8 +466,10 @@ window.loadTeamLeaves = async function() {
 };
 window.loadAllLeaves = async function() {
 
+    setAllEmployeesHeader(); // 👈 change header
+
     const tbody = document.getElementById("leaveHistoryBody");
-    tbody.innerHTML = `<tr><td colspan="7">Loading...</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7" class="text-center">Loading...</td></tr>`;
 
     const res = await fetch(`${API_BASE}/api/leaves/all-history`, {
         headers: getHeaders()
@@ -422,13 +479,23 @@ window.loadAllLeaves = async function() {
 
     tbody.innerHTML = data.map(l => `
         <tr>
-            <td>${l.employee_name}</td>
+            <td class="ps-4 fw-bold">${l.employee_name}</td>
             <td>${l.leave_type}</td>
-            <td>${l.from_date}</td>
-            <td>${l.to_date}</td>
+            <td>${formatDate(l.from_date)}</td>
+            <td>${formatDate(l.to_date)}</td>
             <td>${l.days}</td>
-            <td>${l.status}</td>
-            <td>-</td>
+            <td>${getStatusBadge(l.status)}</td>
+            <td class="text-end pe-4">
+                <button class="btn btn-sm btn-outline-primary"
+                    onclick="window.openEditModal(
+                        ${l.id},
+                        '${l.from_date}',
+                        '${l.to_date}',
+                        '${l.leave_type}'
+                    )">
+                    Edit
+                </button>
+            </td>
         </tr>
     `).join('');
 };

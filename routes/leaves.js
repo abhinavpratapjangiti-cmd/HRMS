@@ -285,34 +285,20 @@ router.put("/:id", verifyToken, async (req, res) => {
   try {
 
     const { from_date, to_date, leave_type, reason } = req.body;
+    const role = req.user.role;
 
-    const { employee_id } =
-      await getEmployeeDetails(req.user.id);
-
-    // Check leave exists & pending
-    const [rows] = await db.query(
-      `
-      SELECT * FROM leaves
-      WHERE id = ?
-        AND employee_id = ?
-        AND LOWER(status) = 'pending'
-      `,
-      [req.params.id, employee_id]
-    );
-
-    if (!rows.length) {
-      return res.status(400).json({
-        message: "Only pending leaves can be edited"
-      });
+    if (!from_date || !to_date || !leave_type) {
+      return res.status(400).json({ message: "Missing required fields" });
     }
 
     if (new Date(to_date) < new Date(from_date)) {
       return res.status(400).json({ message: "Invalid date range" });
     }
 
-    // ❌ Sunday check again
+    // ❌ Block Sundays
     let current = new Date(from_date);
     const end = new Date(to_date);
+
     while (current <= end) {
       if (current.getDay() === 0) {
         return res.status(400).json({
@@ -320,6 +306,36 @@ router.put("/:id", verifyToken, async (req, res) => {
         });
       }
       current.setDate(current.getDate() + 1);
+    }
+
+    let rows;
+
+    if (role === "admin" || role === "hr") {
+      // Admin/HR can edit any leave
+      [rows] = await db.query(
+        `SELECT * FROM leaves WHERE id = ?`,
+        [req.params.id]
+      );
+    } else {
+      // Employee can edit only own pending leave
+      const { employee_id } =
+        await getEmployeeDetails(req.user.id);
+
+      [rows] = await db.query(
+        `
+        SELECT * FROM leaves
+        WHERE id = ?
+          AND employee_id = ?
+          AND LOWER(status) = 'pending'
+        `,
+        [req.params.id, employee_id]
+      );
+    }
+
+    if (!rows.length) {
+      return res.status(400).json({
+        message: "Not allowed to edit this leave"
+      });
     }
 
     await db.query(
