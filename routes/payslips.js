@@ -69,7 +69,7 @@ router.get("/my/:month", verifyToken, async (req, res) => {
       Number(p.da || 0) +
       Number(p.lta || 0) +
       Number(p.special_allowance || 0) +
-      Number(p.other_allowances || 0);
+Number(p.other_allowance || 0);
 
     res.json({
       month: p.month,
@@ -89,6 +89,10 @@ router.get("/my/:month", verifyToken, async (req, res) => {
 ========================= */
 router.get("/my/:month/pdf", verifyToken, async (req, res) => {
   const month = req.params.month;
+
+  const [year, monthNum] = month.split("-");
+  const startDate = new Date(year, monthNum - 1, 1);
+  const endDate = new Date(year, monthNum, 0);
 
   try {
     const emp = await getEmployee(req.user.id);
@@ -118,15 +122,47 @@ router.get("/my/:month/pdf", verifyToken, async (req, res) => {
     }
 
     const p = rows[0];
+// Worked days
+const [workedRows] = await db.query(
+  `SELECT COUNT(DISTINCT work_date) AS worked_days
+   FROM timesheets
+   WHERE employee_id = ?
+   AND status = 'APPROVED'
+   AND work_date BETWEEN ? AND ?`,
+  [emp.id, startDate, endDate]
+);
 
-    // Calculate totals
+const workedDays = workedRows[0].worked_days || 0;
+
+
+// Leave days (Approved only)
+const [leaveRows] = await db.query(
+  `SELECT SUM(
+      DATEDIFF(
+        LEAST(to_date, ?),
+        GREATEST(from_date, ?)
+      ) + 1
+    ) AS leave_days
+   FROM leaves
+   WHERE employee_id = ?
+   AND status = 'Approved'
+   AND from_date <= ?
+   AND to_date >= ?`,
+  [endDate, startDate, emp.id, endDate, startDate]
+);
+
+const leaveDays = leaveRows[0].leave_days || 0;
+    /* =========================
+       SALARY CALCULATION
+    ========================== */
+
     const earnings =
       Number(p.basic || 0) +
       Number(p.hra || 0) +
       Number(p.da || 0) +
       Number(p.lta || 0) +
       Number(p.special_allowance || 0) +
-      Number(p.other_allowances || 0);
+      Number(p.other_allowance || 0);
 
     const deductions =
       Number(p.pf || 0) +
@@ -134,11 +170,10 @@ router.get("/my/:month/pdf", verifyToken, async (req, res) => {
       Number(p.other_deductions || 0);
 
     const netPay = earnings - deductions;
-    const absentDays = Number(p.working_days || 0) - Number(p.paid_days || 0);
 
     /* ===== BULLETPROOF LOGO LOADER ===== */
     const absoluteLogoPath = path.join(__dirname, "..", "templates", "assets", "lovas-logo.png");
-    
+
     let logoUrl = "";
     try {
       if (fs.existsSync(absoluteLogoPath)) {
@@ -199,8 +234,8 @@ router.get("/my/:month/pdf", verifyToken, async (req, res) => {
                 <td style="width: 50%; line-height: 1.6;">
                     Emp ID: ${p.emp_code || "-"}<br>
                     Department: ${p.department || "-"}<br>
-                    No. of Working Days: ${p.working_days || "0"}<br>
-                    Absent days: ${absentDays > 0 ? absentDays : "0"}
+                    No. of Working Days: ${workedDays}<br>
+                    Absent days: ${leaveDays}
                 </td>
                 <td style="width: 50%; line-height: 1.6;">
                     PAN: ${p.pan || "-"}<br>
@@ -240,7 +275,7 @@ router.get("/my/:month/pdf", verifyToken, async (req, res) => {
                     <td></td><td></td>
                 </tr>
                 <tr>
-                    <td>Other Allowances</td><td class="text-right">${money(p.other_allowances)}</td>
+                    <td>Other Allowances</td><td class="text-right">${money(p.other_allowance)}</td>
                     <td></td><td></td>
                 </tr>
                 <tr>
@@ -267,8 +302,8 @@ router.get("/my/:month/pdf", verifyToken, async (req, res) => {
       browser = await puppeteer.launch({
         headless: "new",
         args: [
-          "--no-sandbox", 
-          "--disable-setuid-sandbox", 
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
           "--disable-dev-shm-usage"
         ]
       });

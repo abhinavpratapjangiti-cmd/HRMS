@@ -69,17 +69,18 @@ router.post("/", verifyToken, async (req, res) => {
     }
 
     // 2. Destructure Payload
-    const {
-      name,
-      email,
-      password,
-      role = "employee",
-      department = "IT",
-      work_location = "Remote",
-      designation = null, // FIX: Capture designation
-      manager_id = null,
-      phone = null
-    } = req.body;
+const {
+  name,
+  email,
+  password,
+  role = "employee",
+  department = "IT",
+  work_location = "Remote",
+  designation = null,
+  manager_id = null,
+  phone = null,
+  emp_code = null   // ✅ ADD THIS
+} = req.body;
 
     const client_name = req.body.client_name || req.body.client || "Internal";
 
@@ -120,9 +121,9 @@ router.post("/", verifyToken, async (req, res) => {
 
     await connection.query(
       `INSERT INTO employees
-      (user_id, name, email, department, client_name, work_location, designation, manager_id, active,phoneno)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1,?)`,
-      [userId, name, email, department, client_name, work_location, designation, finalManagerId,phone]
+      (user_id, name, email, department, client_name, work_location, designation, manager_id, active,phoneno,emp_code)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1,?,?)`,
+      [userId, name, email, department, client_name, work_location, designation, finalManagerId,phone,emp_code || null]
     );
 
     await connection.commit();

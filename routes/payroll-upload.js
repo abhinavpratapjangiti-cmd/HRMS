@@ -52,87 +52,103 @@ router.post(
       console.log(`📊 Processing ${rows.length} rows...`);
 
       // 3. Process Rows
-      for (let i = 0; i < rows.length; i++) {
-        const r = rows[i];
-        
-        // Clean keys
-        const cleanRow = {};
-        Object.keys(r).forEach(key => cleanRow[key.trim()] = r[key]);
+// 3. Process Rows
+for (let i = 0; i < rows.length; i++) {
+  const r = rows[i];
 
-        try {
-            if (!cleanRow.emp_code || !cleanRow.month) {
-                errors.push(`Row ${i + 1}: Missing emp_code or month`);
-                continue;
-            }
+  const cleanRow = {};
+  Object.keys(r).forEach(key => cleanRow[key.trim()] = r[key]);
 
-            const empCode = String(cleanRow.emp_code).trim();
-            const month = String(cleanRow.month).trim();
+  try {
+    if (!cleanRow.emp_code || !cleanRow.month) {
+      errors.push(`Row ${i + 1}: Missing emp_code or month`);
+      continue;
+    }
 
-            console.log(`👉 Row ${i+1}: Checking ${empCode} for ${month}`);
+    const empCode = String(cleanRow.emp_code).trim();
+    const month = String(cleanRow.month).trim();
 
-            // ✅ FIXED: Using await db.query() directly (No callbacks)
-            const [empRows] = await db.query(
-                "SELECT id FROM employees WHERE emp_code = ? AND active = 1", 
-                [empCode]
-            );
+    const [empRows] = await db.query(
+      "SELECT id FROM employees WHERE emp_code = ? AND active = 1",
+      [empCode]
+    );
 
-            if (!empRows.length) {
-                errors.push(`Row ${i+1}: Employee ${empCode} not found or inactive`);
-                continue;
-            }
-            const empId = empRows[0].id;
+    if (!empRows.length) {
+      errors.push(`Row ${i + 1}: Employee ${empCode} not found or inactive`);
+      continue;
+    }
 
-            // Check duplicate
-            const [existRows] = await db.query(
-                "SELECT id FROM payroll WHERE employee_id = ? AND month = ?", 
-                [empId, month]
-            );
+    const empId = empRows[0].id;
 
-            if (existRows.length > 0) {
-                errors.push(`Row ${i+1}: Payroll already exists`);
-                continue;
-            }
+    const [existRows] = await db.query(
+      "SELECT id FROM payroll WHERE employee_id = ? AND month = ?",
+      [empId, month]
+    );
 
-            // Insert
-            await db.query(
-                `INSERT INTO payroll 
-                (employee_id, month, working_days, paid_days, basic, hra, special_allowance, deductions, net_pay, locked)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)`,
-                [
-                    empId,
-                    month,
-                    Number(cleanRow.working_days) || 0,
-                    Number(cleanRow.paid_days) || 0,
-                    Number(cleanRow.basic) || 0,
-                    Number(cleanRow.hra) || 0,
-                    Number(cleanRow.special_allowance) || 0,
-                    Number(cleanRow.deductions) || 0,
-                    Number(cleanRow.net_pay) || 0
-                ]
-            );
+    if (existRows.length > 0) {
+      errors.push(`Row ${i + 1}: Payroll already exists`);
+      continue;
+    }
 
-            uploaded++;
+    await db.query(
+      `INSERT INTO payroll (
+          employee_id,
+          month,
+          working_days,
+          paid_days,
+          basic,
+          hra,
+          da,
+          lta,
+          special_allowance,
+          other_allowance,
+          pf,
+          pt,
+          other_deductions,
+          net_pay,
+          locked
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)`,
+      [
+        empId,
+        month,
+        Number(cleanRow.working_days) || 0,
+        Number(cleanRow.paid_days) || 0,
+        Number(cleanRow.basic) || 0,
+        Number(cleanRow.hra) || 0,
+        Number(cleanRow.da) || 0,
+        Number(cleanRow.lta) || 0,
+        Number(cleanRow.special_allowance) || 0,
+        Number(cleanRow.other_allowance) || 0,
+        Number(cleanRow.pf) || 0,
+        Number(cleanRow.pt) || 0,
+        Number(cleanRow.other_deductions) || 0,
+        Number(cleanRow.net_pay) || 0
+      ]
+    );
 
-        } catch (e) {
-            console.error(`❌ Row ${i+1} Error:`, e);
-            errors.push(`Row ${i + 1}: ${e.message}`);
-        }
-      }
+    uploaded++;
 
+  } catch (e) {
+    console.error(`❌ Row ${i + 1} Error:`, e);
+    errors.push(`Row ${i + 1}: ${e.message}`);
+  }
+}
       // Cleanup
       if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
 
       console.log(`✅ Finished: ${uploaded} uploaded`);
       res.json({ uploaded, errors });
 
-    } catch (err) {
+ } catch (err) {
       console.error("💥 Critical Upload Error:", err);
-      if (req.file && fs.existsSync(req.file.path)) fs.unlinkSync(req.file.path);
+      if (req.file && fs.existsSync(req.file.path)) {
+        fs.unlinkSync(req.file.path);
+      }
       res.status(500).json({ message: "Server error during upload" });
     }
   }
 );
-
 function parseCSV(path) {
   return new Promise((resolve, reject) => {
     const rows = [];

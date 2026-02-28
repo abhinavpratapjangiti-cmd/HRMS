@@ -41,7 +41,7 @@ async function loadEmployees() {
     tableBody.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-primary" role="status"></div><div class="mt-2 text-muted">Loading directory...</div></div>';
 
     try {
-        const res = await fetch(`${window.API_BASE}/api/users`, { headers: window.getHeaders() });
+        const res = await fetch(`${window.API_BASE}/api/employees`, { headers: window.getHeaders() });
 
         if (!res.ok) throw new Error(`Server returned ${res.status}`);
 
@@ -131,6 +131,7 @@ function renderTable(employees) {
         const email = emp.email || "No Email";
         const role = emp.role || "employee";
         const phone = emp.phone || "";
+        const empCode = emp.emp_code || "";
 
         // FIX: Handle both possible ID keys from backend
         let userId = emp.user_id; 
@@ -161,19 +162,21 @@ function renderTable(employees) {
 
         const hasValidIds = (employeeId && userId);
 
-        const editBtn = hasValidIds 
-            ? `<button class="btn btn-sm btn-outline-primary me-1" 
-                    title="Edit User"
-                    onclick="window.openEditModal('${userId}', '${employeeId}', '${safeName}', '${safeEmail}', '${safeRole}', '${managerId}', '${safeDept}', '${safeDesig}','${safePhone}')">
-                <i class="fa fa-edit"></i>
-               </button>`
-            : `<button class="btn btn-sm btn-outline-secondary me-1" disabled title="Error: ID Missing"><i class="fa fa-exclamation-triangle"></i></button>`;
+        const editBtn = hasValidIds
+    ? `<button class="btn btn-sm btn-outline-primary me-1"
+            title="Edit User"
+            onclick="window.openEditModal('${userId}', '${employeeId}', '${safeName}', '${safeEmail}', '${safeRole}', '${managerId}', '${safeDept}', '${safeDesig}','${safePhone}','${empCode}')">
+        <i class="fa-solid fa-pen-to-square"></i>
+       </button>`
+    : `<button class="btn btn-sm btn-outline-secondary me-1" disabled>
+        <i class="fa-solid fa-exclamation-triangle"></i>
+       </button>`;
 
         const deleteBtn = employeeId
             ? `<button class="btn btn-sm btn-outline-danger" 
                     title="Delete User"
                     onclick="window.deleteEmployee('${employeeId}')"> 
-                <i class="fa fa-trash"></i>
+                <i class="fa-solid fa-trash"></i>
                </button>`
             : `<button class="btn btn-sm btn-outline-secondary" disabled><i class="fa fa-trash"></i></button>`;
 
@@ -238,6 +241,7 @@ window.createUser = async function() {
         name: document.getElementById("name").value.trim(),
         email: document.getElementById("email").value.trim(),
         phone: document.getElementById("phone").value.trim(),
+        emp_code: document.querySelector('input[name="emp_code"]').value.trim(),
         password: document.getElementById("password").value || "Welcome123",
         role: document.getElementById("role").value,
         department: document.getElementById("department").value,
@@ -276,13 +280,14 @@ window.createUser = async function() {
         btn.disabled = false;
     }
 };
-window.openEditModal = function(userId, employeeId, name, email, role, managerId, department, designation,phone) {
+window.openEditModal = function(userId, employeeId, name, email, role, managerId, department, designation, phone, empCode) {
     document.getElementById("edit-id").value = userId;
     document.getElementById("edit-emp-id").value = employeeId;
 
     document.getElementById("edit-name").value = name;
     document.getElementById("edit-email").value = email;
     if(document.getElementById("edit-phone")) document.getElementById("edit-phone").value = phone || "";
+    if(document.getElementById("edit-emp-code")) document.getElementById("edit-emp-code").value = empCode || "";
     document.getElementById("edit-role").value = (role || 'employee').toLowerCase();
 
     // Department Selection
@@ -337,6 +342,7 @@ window.saveEdit = async function() {
     const newDept = document.getElementById("edit-department").value;
     const newDesignation = document.getElementById("edit-designation").value.trim();
     const newPhone = document.getElementById("edit-phone").value.trim();
+    const newEmpCode = document.getElementById("edit-emp-code").value.trim();
 
     // Convert empty dropdown to NULL
     let newManager = document.getElementById("edit-manager").value;
@@ -362,10 +368,12 @@ window.saveEdit = async function() {
             name: newName,
             email: newEmail,
             phone: newPhone,
+            emp_code: newEmpCode,
             department: newDept,
             designation: newDesignation,
             manager_id: newManager
-        };
+            
+};
 
         promises.push(
             // FIXED: Pointing to /api/employees to fix the 404 error!

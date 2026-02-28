@@ -244,6 +244,7 @@ router.get("/", verifyToken, async (req, res) => {
         e.email,
         u.role,
         e.phoneno AS phone,
+        e.emp_code,
         e.department,
         e.designation,
         e.manager_id,
@@ -272,7 +273,7 @@ router.post("/", verifyToken, async (req, res) => {
     }
 
     // Notice we grab 'phone' from req.body here
-    const { name, email, password, role, department, designation, client_name, manager_id, phone } = req.body;
+    const { name, email, password, role, department, designation, client_name, manager_id, phone,emp_code } = req.body;
     const connection = await db.getConnection();
 
     try {
@@ -293,9 +294,9 @@ router.post("/", verifyToken, async (req, res) => {
         // The query is now safely inside the try block
         await connection.query(
             `INSERT INTO employees
-            (user_id, name, email, department, designation, client_name, manager_id, active, phoneno)
-            VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?)`,
-            [newUserId, name, email, department, designation, client_name, manager_id || null, phone || null]
+            (user_id, name, email, department, designation, client_name, manager_id, active, phoneno,emp_code)
+            VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?,?)`,
+            [newUserId, name, email, department, designation, client_name, manager_id || null, phone || null,emp_code || null]
         );
 
         await connection.commit();
@@ -354,7 +355,7 @@ router.patch("/:id", verifyToken, async (req, res) => {
   }
 
   const { id } = req.params;
-  const { name, email, department, designation, manager_id, active, phone } = req.body;
+  const { name, email, department, designation, manager_id, active, phone,emp_code } = req.body;
 
   try {
     // 1. Update Employees Table
@@ -366,7 +367,8 @@ router.patch("/:id", verifyToken, async (req, res) => {
     if (email) { updates.push("email = ?"); params.push(email); }
     if (department) { updates.push("department = ?"); params.push(department); }
     if (designation) { updates.push("designation = ?"); params.push(designation); }
-    if (phone !== undefined) { updates.push("phoneno = ?"); params.push(phone); } // <--- Safely inside the try block
+    if (phone !== undefined) { updates.push("phoneno = ?"); params.push(phone); }
+    if (emp_code !== undefined) { updates.push("emp_code = ?"); params.push(emp_code); }
     if (manager_id !== undefined) {
         updates.push("manager_id = ?");
         params.push(manager_id && parseInt(manager_id) > 0 ? parseInt(manager_id) : null);

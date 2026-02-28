@@ -157,11 +157,11 @@ router.get("/my/calendar/excel", verifyToken, (req, res) => {
   let emp;
 
   // 1. Get Employee Details
-  db.query(
-    `SELECT id, name, department, designation, work_location, client_name
-     FROM employees WHERE id = ?`,
-    [empId]
-  )
+db.query(
+  `SELECT id, emp_code, name, department, designation, work_location, client_name
+   FROM employees WHERE id = ?`,
+  [empId]
+)
     .then(([[row]]) => {
       emp = row || {};
 
@@ -267,7 +267,7 @@ router.get("/my/calendar/excel", verifyToken, (req, res) => {
         sh.getRow(rowNum).height = 25;
       };
 
-      addMeta(2, "Employee ID:", emp.id);
+      addMeta(2, "Employee code:", emp.emp_code || "—");
       addMeta(3, "Employee Name:", emp.name);
       addMeta(4, "Department / Project:", emp.department);
       addMeta(5, "Client Name:", emp.client_name);
