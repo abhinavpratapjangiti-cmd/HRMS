@@ -160,6 +160,7 @@ function playNotificationSound() {
     }
 
 
+
     /* =========================================
        2. CORE DASHBOARD LOADERS
        ========================================= */
@@ -255,16 +256,55 @@ function playNotificationSound() {
             // Holiday Logic
             const hName = document.getElementById("holidayName");
             const hDate = document.getElementById("holidayDate");
-            if (hName && d.holiday) {
-                hName.textContent = d.holiday.name;
-                const validDate = safeDate(d.holiday.date);
-                hDate.textContent = validDate
-                    ? validDate.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
-                    : "Date TBD";
-            } else if (hName) {
-                hName.textContent = "No Upcoming Holiday";
-                if (hDate) hDate.textContent = "";
-            }
+
+
+if (hName && d.holiday) {
+
+    hName.textContent = d.holiday.name;
+
+    const validDate = safeDate(d.holiday.date);
+    hDate.textContent = validDate
+        ? validDate.toLocaleDateString('en-IN', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        })
+        : "Date TBD";
+
+    // ✅ IMAGE LOGIC (CLEANED)
+    const imgEl = document.getElementById("nearestHolidayImage");
+
+    if (imgEl) {
+        const name = d.holiday.name.toLowerCase();
+
+        if (name.includes("ugadi")) {
+            imgEl.src = "/assets/images/holidays/ugadi.png";
+        } 
+        else if (name.includes("independence")) {
+            imgEl.src = "/assets/images/holidays/independence.png";
+        } 
+        else if (name.includes("diwali")) {
+            imgEl.src = "/assets/images/holidays/diwali.png";
+        } 
+        else if (name.includes("christmas")) {
+            imgEl.src = "/assets/images/holidays/christmas.png";
+        } 
+        else {
+            imgEl.src = "/assets/images/holidays/default.png";
+        }
+    }
+
+} else if (hName) {
+
+    hName.textContent = "No Upcoming Holiday";
+    if (hDate) hDate.textContent = "";
+
+    const imgEl = document.getElementById("nearestHolidayImage");
+    if (imgEl) {
+        imgEl.src = "/assets/images/holidays/default.png";
+    }
+}
 
             // Upcoming Holidays List
             const ul = document.getElementById("upcomingHolidays");
