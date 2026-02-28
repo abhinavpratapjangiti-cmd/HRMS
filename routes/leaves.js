@@ -89,8 +89,80 @@ router.post("/apply", verifyToken, async (req, res) => {
       return res.status(400).json({ message: "Invalid date range" });
     }
 
+
+
+// ================================
+// ❌ BLOCK SUNDAYS
+// ================================
+function containsSunday(startDate, endDate) {
+  let current = new Date(startDate);
+  const end = new Date(endDate);
+
+  while (current <= end) {
+    if (current.getDay() === 0) { // Sunday
+      return true;
+    }
+    current.setDate(current.getDate() + 1);
+  }
+
+  return false;
+}
+
+if (containsSunday(from_date, to_date)) {
+  return res.status(400).json({
+    message: "Leaves cannot include Sunday."
+  });
+}
+
+
     const { employee_id, manager_id } =
       await getEmployeeDetails(req.user.id);
+
+// =======================================
+// 🔥 CHECK LEAVE BALANCE
+// =======================================
+
+const currentYear = new Date().getFullYear();
+
+// Get leave type quota
+const [typeRows] = await db.query(
+  `SELECT annual_quota FROM leave_types WHERE code = ?`,
+  [leave_type]
+);
+
+if (!typeRows.length) {
+  return res.status(400).json({ message: "Invalid leave type" });
+}
+
+const totalQuota = Number(typeRows[0].annual_quota) || 0;
+
+// Get used leaves (Approved only)
+const [usageRows] = await db.query(
+  `
+  SELECT SUM(DATEDIFF(to_date, from_date) + 1) AS used
+  FROM leaves
+  WHERE employee_id = ?
+    AND leave_type = ?
+    AND LOWER(status) = 'approved'
+    AND YEAR(from_date) = ?
+  `,
+  [employee_id, leave_type, currentYear]
+);
+
+const usedLeaves = Number(usageRows[0].used || 0);
+
+// Requested days
+const requestedDays =
+  Math.ceil(
+    (new Date(to_date) - new Date(from_date)) /
+    (1000 * 60 * 60 * 24)
+  ) + 1;
+
+if ((usedLeaves + requestedDays) > totalQuota) {
+  return res.status(400).json({
+    message: `Leave balance exceeded. Remaining: ${Math.max(totalQuota - usedLeaves, 0)}`
+  });
+}
 
     const [overlap] = await db.query(
       `
@@ -206,6 +278,66 @@ router.get("/history", verifyToken, async (req, res) => {
   }
 });
 
+/* ==================================================
+   EDIT LEAVE (Pending Only)
+================================================== */
+router.put("/:id", verifyToken, async (req, res) => {
+  try {
+
+    const { from_date, to_date, leave_type, reason } = req.body;
+
+    const { employee_id } =
+      await getEmployeeDetails(req.user.id);
+
+    // Check leave exists & pending
+    const [rows] = await db.query(
+      `
+      SELECT * FROM leaves
+      WHERE id = ?
+        AND employee_id = ?
+        AND LOWER(status) = 'pending'
+      `,
+      [req.params.id, employee_id]
+    );
+
+    if (!rows.length) {
+      return res.status(400).json({
+        message: "Only pending leaves can be edited"
+      });
+    }
+
+    if (new Date(to_date) < new Date(from_date)) {
+      return res.status(400).json({ message: "Invalid date range" });
+    }
+
+    // ❌ Sunday check again
+    let current = new Date(from_date);
+    const end = new Date(to_date);
+    while (current <= end) {
+      if (current.getDay() === 0) {
+        return res.status(400).json({
+          message: "Leaves cannot include Sunday."
+        });
+      }
+      current.setDate(current.getDate() + 1);
+    }
+
+    await db.query(
+      `
+      UPDATE leaves
+      SET from_date = ?, to_date = ?, leave_type = ?, reason = ?
+      WHERE id = ?
+      `,
+      [from_date, to_date, leave_type, reason || "", req.params.id]
+    );
+
+    res.json({ message: "Leave updated successfully" });
+
+  } catch (err) {
+    console.error("Edit Leave Error:", err);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
 
 /* ==================================================
    CANCEL LEAVE
@@ -231,6 +363,7 @@ router.delete("/:id", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Error" });
   }
 });
+
 
 /* ==================================================
    APPROVE / REJECT
@@ -325,6 +458,79 @@ router.put("/:id/action", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   } finally {
     connection.release();
+  }
+});
+
+
+/* ==================================================
+   TEAM LEAVES (MANAGER ONLY)
+================================================== */
+router.get("/team-history", verifyToken, async (req, res) => {
+  try {
+
+    if (req.user.role !== "manager") {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    const managerEmployeeId = req.user.employee_id;
+
+    const [rows] = await db.query(
+      `
+      SELECT
+        l.id,
+        e.name AS employee_name,
+        l.leave_type,
+        DATE_FORMAT(l.from_date, '%Y-%m-%d') AS from_date,
+        DATE_FORMAT(l.to_date, '%Y-%m-%d') AS to_date,
+        DATEDIFF(l.to_date, l.from_date) + 1 AS days,
+        l.status
+      FROM leaves l
+      JOIN employees e ON l.employee_id = e.id
+      WHERE e.manager_id = ?
+      ORDER BY l.created_at DESC
+      `,
+      [managerEmployeeId]
+    );
+
+    res.json(rows);
+
+  } catch (err) {
+    console.error("Team History Error:", err);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
+/* ==================================================
+   ALL EMPLOYEE LEAVES (ADMIN / HR)
+================================================== */
+router.get("/all-history", verifyToken, async (req, res) => {
+  try {
+
+    if (!["admin", "hr"].includes(req.user.role)) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    const [rows] = await db.query(
+      `
+      SELECT
+        l.id,
+        e.name AS employee_name,
+        l.leave_type,
+        DATE_FORMAT(l.from_date, '%Y-%m-%d') AS from_date,
+        DATE_FORMAT(l.to_date, '%Y-%m-%d') AS to_date,
+        DATEDIFF(l.to_date, l.from_date) + 1 AS days,
+        l.status
+      FROM leaves l
+      JOIN employees e ON l.employee_id = e.id
+      ORDER BY l.created_at DESC
+      `
+    );
+
+    res.json(rows);
+
+  } catch (err) {
+    console.error("All History Error:", err);
+    res.status(500).json({ message: "Server Error" });
   }
 });
 

@@ -1,5 +1,5 @@
 <div class="container-fluid p-4" style="max-width: 1600px;">
-  
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h3 class="fw-bold text-dark mb-0">Leave Management</h3>
@@ -8,30 +8,47 @@
     </div>
 
     <div class="row g-4">
-        
+
+        <!-- ============================= -->
+        <!-- APPLY LEAVE CARD -->
+        <!-- ============================= -->
         <div class="col-lg-4 col-xl-3">
             <div class="card shadow-sm border-0 h-100">
+
                 <div class="card-header bg-white py-3">
-                    <h5 class="mb-0 fw-bold text-primary"><i class="fa-solid fa-calendar-plus me-2"></i>🏖  Apply Leave</h5>
+                    <h5 class="mb-0 fw-bold text-primary">
+                        <i class="fa-solid fa-calendar-plus me-2"></i>🏖 Apply Leave
+                    </h5>
                     <small class="text-muted">Manager approval required</small>
                 </div>
+
                 <div class="card-body p-4">
-                    
-                    <form id="leaveForm" autocomplete="off" onsubmit="event.preventDefault(); window.submitLeave();">
-                        
+
+                    <form id="leaveForm" autocomplete="off"
+                          onsubmit="event.preventDefault(); window.submitLeave();">
+
                         <div class="mb-3">
-                            <label class="form-label small fw-bold text-uppercase text-muted">📅 Date Range</label>
+                            <label class="form-label small fw-bold text-uppercase text-muted">
+                                📅 Date Range
+                            </label>
                             <div class="input-group">
-                                <input type="date" id="fromDate" name="from_date" class="form-control" required>
+                                <input type="date" id="fromDate" name="from_date"
+                                       class="form-control" required>
                                 <span class="input-group-text bg-light text-muted">to</span>
-                                <input type="date" id="toDate" name="to_date" class="form-control" required>
+                                <input type="date" id="toDate" name="to_date"
+                                       class="form-control" required>
                             </div>
-                            <small id="leaveDuration" class="text-primary fw-bold mt-1 d-block" style="font-size: 0.8rem;"></small>
+                            <small id="leaveDuration"
+                                   class="text-primary fw-bold mt-1 d-block"
+                                   style="font-size: 0.8rem;"></small>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label small fw-bold text-uppercase text-muted">🗂 Leave Type</label>
-                            <select id="leaveType" name="leave_type" class="form-select" required>
+                            <label class="form-label small fw-bold text-uppercase text-muted">
+                                🗂 Leave Type
+                            </label>
+                            <select id="leaveType" name="leave_type"
+                                    class="form-select" required>
                                 <option value="" selected disabled>Select leave type</option>
                                 <option value="SL">Sick Leave (SL)</option>
                                 <option value="CL">Casual Leave (CL)</option>
@@ -40,54 +57,188 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label small fw-bold text-uppercase text-muted">📝 Reason <span class="fw-normal text-muted">(Optional)</span></label>
-                            <textarea id="reason" name="reason" class="form-control" rows="3" placeholder="Reason..." maxlength="255"></textarea>
+                            <label class="form-label small fw-bold text-uppercase text-muted">
+                                📝 Reason <span class="fw-normal text-muted">(Optional)</span>
+                            </label>
+                            <textarea id="reason"
+                                      name="reason"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Reason..."
+                                      maxlength="255"></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100">
                             Apply Leave
                         </button>
                     </form>
-                    
+
                     <div id="msg" class="mt-3"></div>
+
                 </div>
             </div>
         </div>
 
+        <!-- ============================= -->
+        <!-- LEAVE HISTORY CARD -->
+        <!-- ============================= -->
         <div class="col-lg-8 col-xl-9">
             <div class="card shadow-sm border-0 h-100">
-                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0 fw-bold text-dark"><i class="fa-solid fa-clock-rotate-left me-2 text-secondary"></i>Leave History</h5>
-                    <button class="btn btn-sm btn-outline-secondary" onclick="window.loadLeaveHistory()">
-                        <i class="fa fa-refresh me-1"></i> Refresh
-                    </button>
+
+                <!-- CARD HEADER WITH TABS -->
+                <div class="card-header bg-white py-3">
+
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+
+                        <div class="d-flex align-items-center">
+
+                            <h5 class="mb-0 fw-bold text-dark me-3">
+                                <i class="fa-solid fa-clock-rotate-left me-2 text-secondary"></i>
+                                Leave History
+                            </h5>
+
+                            <!-- ROLE BASED TABS -->
+                            <ul class="nav nav-tabs mb-0" id="leaveTabs">
+
+                                <li class="nav-item">
+                                    <button class="nav-link active"
+                                            onclick="window.loadLeaveHistory()">
+                                        My Leaves
+                                    </button>
+                                </li>
+
+                                <li class="nav-item d-none" id="teamTab">
+                                    <button class="nav-link"
+                                            onclick="window.loadTeamLeaves()">
+                                        Team Leaves
+                                    </button>
+                                </li>
+
+                                <li class="nav-item d-none" id="allTab">
+                                    <button class="nav-link"
+                                            onclick="window.loadAllLeaves()">
+                                        All Employees
+                                    </button>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                        <button class="btn btn-sm btn-outline-secondary"
+                                onclick="window.loadLeaveHistory()">
+                            <i class="fa fa-refresh me-1"></i> Refresh
+                        </button>
+
+                    </div>
+
                 </div>
+
+                <!-- TABLE -->
                 <div class="card-body p-0">
                     <div class="table-responsive">
+
                         <table class="table table-hover align-middle mb-0">
+
                             <thead class="bg-light">
                                 <tr>
-                                    <th class="ps-4 py-3 text-secondary text-uppercase small fw-bold">Leave Type</th>
-                                    <th class="py-3 text-secondary text-uppercase small fw-bold">From</th>
-                                    <th class="py-3 text-secondary text-uppercase small fw-bold">To</th>
-                                    <th class="py-3 text-secondary text-uppercase small fw-bold">Days</th>
-                                    <th class="py-3 text-secondary text-uppercase small fw-bold">Status</th>
-                                    <th class="pe-4 py-3 text-end text-secondary text-uppercase small fw-bold">Action</th>
+                                    <th class="ps-4 py-3 text-secondary text-uppercase small fw-bold">
+                                        Leave Type
+                                    </th>
+                                    <th class="py-3 text-secondary text-uppercase small fw-bold">
+                                        From
+                                    </th>
+                                    <th class="py-3 text-secondary text-uppercase small fw-bold">
+                                        To
+                                    </th>
+                                    <th class="py-3 text-secondary text-uppercase small fw-bold">
+                                        Days
+                                    </th>
+                                    <th class="py-3 text-secondary text-uppercase small fw-bold">
+                                        Status
+                                    </th>
+                                    <th class="pe-4 py-3 text-end text-secondary text-uppercase small fw-bold">
+                                        Action
+                                    </th>
                                 </tr>
                             </thead>
+
                             <tbody id="leaveHistoryBody">
                                 <tr>
-                                    <td colspan="6" class="text-center py-5 text-muted">
+                                    <td colspan="6"
+                                        class="text-center py-5 text-muted">
                                         <div class="spinner-border spinner-border-sm text-primary mb-2"></div>
                                         <p class="mb-0">Loading leave history...</p>
                                     </td>
                                 </tr>
                             </tbody>
+
                         </table>
+
                     </div>
                 </div>
+
             </div>
         </div>
 
+    </div>
+</div>
+
+<!-- ============================= -->
+<!-- EDIT LEAVE MODAL -->
+<!-- ============================= -->
+<div class="modal fade" id="editLeaveModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Leave</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <input type="hidden" id="editLeaveId">
+
+                <div class="mb-3">
+                    <label class="form-label">From Date</label>
+                    <input type="date"
+                           id="editFromDate"
+                           class="form-control"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">To Date</label>
+                    <input type="date"
+                           id="editToDate"
+                           class="form-control"
+                           required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Leave Type</label>
+                    <select id="editLeaveType"
+                            class="form-select"
+                            required>
+                        <option value="SL">Sick Leave (SL)</option>
+                        <option value="CL">Casual Leave (CL)</option>
+                        <option value="CO">Comp Off</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary"
+                        onclick="window.updateLeave()">
+                    Save Changes
+                </button>
+            </div>
+
+        </div>
     </div>
 </div>
