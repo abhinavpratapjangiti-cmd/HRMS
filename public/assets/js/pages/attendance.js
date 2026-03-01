@@ -302,9 +302,9 @@
         const bM = Number(r.total_break_minutes) || 0;
         const workStr = formatHoursMins(wM);
         const breakStr = formatHoursMins(bM);
-
-        let badge = '<span class="badge bg-secondary">Absent</span>';
-        if(r.status === 'COMPLETED' || r.status === 'Present') badge = '<span class="badge bg-success">Present</span>';
+let badge = '<span class="badge bg-secondary">Absent</span>';
+        if(r.status === 'Full Day') badge = '<span class="badge bg-success">Full Day</span>';
+        else if(r.status === 'COMPLETED' || r.status === 'Present') badge = '<span class="badge bg-primary">Present</span>';
         else if (r.status === 'Half Day') badge = '<span class="badge bg-warning text-dark">Half Day</span>';
         else if (r.status === 'Working') badge = '<span class="badge bg-info text-dark">Live</span>';
 

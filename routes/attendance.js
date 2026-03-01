@@ -409,17 +409,17 @@ router.get("/history/me", verifyToken, async (req, res) => {
   const employee_id = req.user.employee_id;
 
   try {
-    const [rows] = await db.query(
-      `SELECT log_date, clock_in, clock_out, total_work_minutes, total_break_minutes, 
-         CASE 
+const [rows] = await db.query(
+      `SELECT log_date, clock_in, clock_out, total_work_minutes, total_break_minutes,
+         CASE
             WHEN clock_out IS NULL THEN 'Working'
+            WHEN total_work_minutes >= 480 THEN 'Full Day'
             WHEN total_work_minutes < 240 THEN 'Half Day'
             ELSE 'Present' 
          END as status
-       FROM attendance_logs WHERE employee_id = ? ORDER BY log_date DESC LIMIT 30`,
+       FROM attendance_logs WHERE employee_id = ? ORDER BY log_date DESC LIMIT 10`,
       [employee_id]
-    );
-    res.json(rows);
+    );    res.json(rows);
   } catch (err) {
     res.status(500).json({ error: "Server Error" });
   }
