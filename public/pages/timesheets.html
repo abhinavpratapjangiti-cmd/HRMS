@@ -3,7 +3,6 @@
   <h4 class="mb-0">Timesheets</h4>
   <small class="text-muted">View, submit and approve timesheets</small>
 
-  <!-- Tabs -->
   <ul class="nav nav-tabs mt-3" role="tablist">
     <li class="nav-item">
       <button
@@ -28,17 +27,27 @@
         Team Approval
       </button>
     </li>
+
+    <li class="nav-item d-none" id="rejectedTab">
+      <button
+        class="nav-link"
+        id="rejected-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#tab-rejected"
+        type="button"
+        role="tab">
+        Rejected Timesheets
+      </button>
+    </li>
   </ul>
 
-  <!-- TAB CONTENT -->
   <div class="tab-content pt-3">
 
-    <!-- MY TIMESHEETS -->
     <div
       class="tab-pane fade show active"
       id="tab-my"
       role="tabpanel">
-      <!-- ADD: Download Excel (Employee) -->
+
       <div class="text-end mb-2">
         <button
           id="btnDownloadMyExcel"
@@ -64,7 +73,6 @@
       </table>
     </div>
 
-    <!-- ✅ TEAM APPROVAL (TABLE MUST BE HERE) -->
     <div
       class="tab-pane fade"
       id="tab-approval"
@@ -79,15 +87,15 @@
           class="form-control"
           style="max-width:200px">
       </div>
-      <!-- ADD: Download Excel (Manager / HR / Admin) -->
-    <div class="text-end mb-2">
-      <button
-        id="btnDownloadTeamExcel"
-        class="btn btn-sm btn-primary d-none"
-        onclick="downloadTeamTimesheetExcel()">
-        ⬇ Download Team Timesheets (Excel)
-      </button>
-    </div>
+
+      <div class="text-end mb-2">
+        <button
+          id="btnDownloadTeamExcel"
+          class="btn btn-sm btn-primary d-none"
+          onclick="downloadTeamTimesheetExcel()">
+          ⬇ Download Team Timesheets (Excel)
+        </button>
+      </div>
 
       <table class="table table-sm table-bordered align-middle">
         <thead>
@@ -104,8 +112,85 @@
         </thead>
         <tbody id="approvalTable"></tbody>
       </table>
+    </div>
+
+    <div
+      class="tab-pane fade"
+      id="tab-rejected"
+      role="tabpanel"
+      aria-labelledby="rejected-tab">
+
+      <div class="d-flex gap-2 mb-3">
+        <label class="fw-semibold">Month:</label>
+        <input
+          type="month"
+          id="rejectedMonth"
+          class="form-control"
+          style="max-width:200px">
+      </div>
+
+      <table class="table table-sm table-bordered align-middle">
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Date</th>
+            <th>Project</th>
+            <th>Task</th>
+            <th>Hours</th>
+            <th>Status</th>
+            <th>Reason</th>
+            <th class="text-center">Action</th> </tr>
+        </thead>
+        <tbody id="rejectedTable"></tbody>
+      </table>
 
     </div>
 
   </div>
+
+<div class="modal fade" id="editRejectedModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Rejected Timesheet</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="editTimesheetId">
+
+        <div class="mb-2">
+          <label>Project</label>
+          <input type="text" id="editProject" class="form-control">
+        </div>
+
+        <div class="mb-2">
+          <label>Task</label>
+          <input type="text" id="editTask" class="form-control">
+        </div>
+
+        <div class="mb-2">
+          <label>Hours</label>
+          <input type="number" step="0.01" id="editHours" class="form-control">
+        </div>
+
+        <div class="mb-2">
+          <label>Status</label>
+          <select id="editStatus" class="form-control">
+            <option value="APPROVED">Approve</option>
+            <option value="REJECTED">Reject</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-success" onclick="saveRejectedEdit()">Save</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 </section>
+

@@ -11,7 +11,7 @@ console.log("🚀 timesheets.js LOADED — FINAL");
 (function () {
   if (window.__timesheetsLoaded) {
     console.log("timesheets.js already initialized — skipping script execution");
-    // We do NOT return here if the router needs to re-trigger window.initTimesheets, 
+    // We do NOT return here if the router needs to re-trigger window.initTimesheets,
     // but the functions are already in memory.
   }
   window.__timesheetsLoaded = true;
@@ -115,7 +115,7 @@ console.log("🚀 timesheets.js LOADED — FINAL");
       return;
     }
 
-    // ✅ SPA FIX: Check if the picker is already in the DOM. 
+    // ✅ SPA FIX: Check if the picker is already in the DOM.
     // If yes, just grab the current month and load data. Do not duplicate the picker.
     const existingMonthInput = document.getElementById("myTimesheetMonth");
     if (existingMonthInput) {
@@ -191,6 +191,7 @@ console.log("🚀 timesheets.js LOADED — FINAL");
           "";
 
         const typeBadge =
+          type === "L"   ? `<span class="badge bg-info">L</span>` :
           type === "P"   ? `<span class="badge bg-primary">P</span>` :
           type === "HOL" ? `<span class="badge bg-warning text-dark">HOL</span>` :
           type === "WO"  ? `<span class="badge bg-dark">WO</span>` :
@@ -334,6 +335,91 @@ console.log("🚀 timesheets.js LOADED — FINAL");
     }
   };
 
+async function loadRejectedTimesheets() {
+  const tbody = document.getElementById("rejectedTable");
+  const monthInput = document.getElementById("rejectedMonth");
+
+  if (!tbody || !monthInput) return;
+
+  if (!monthInput.value) {
+    monthInput.value = new Date().toISOString().slice(0, 7);
+  }
+
+  tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted">Loading…</td></tr>`;
+
+  try {
+    const rows = await apiGet(`/timesheets/rejected?month=${monthInput.value}`);
+
+    tbody.innerHTML = rows.length
+      ? rows.map(r => {
+          // Escape strings so single quotes in tasks don't break the HTML button
+          const safeProject = (r.project || "").replace(/'/g, "\\'");
+          const safeTask = (r.task || "").replace(/'/g, "\\'");
+
+          return `
+          <tr class="table-danger">
+            <td>${r.employee_name}</td>
+            <td>${formatDate(r.work_date)}</td>
+            <td>${r.project || "—"}</td>
+            <td>${r.task || "—"}</td>
+            <td>${formatHoursToHHMM(r.hours)}</td>
+            <td><span class="badge bg-danger">Rejected</span></td>
+            <td>${r.rejection_reason || "—"}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-primary"
+                onclick="openEditRejected(${r.id}, '${safeProject}', '${safeTask}', ${r.hours || 0}, '${r.status}')">
+                Edit
+              </button>
+            </td>
+          </tr>
+        `}).join("")
+      : `<tr><td colspan="8" class="text-center text-muted">No rejected timesheets</td></tr>`;
+
+  } catch (err) {
+    console.error("REJECTED LOAD FAILED:", err);
+    tbody.innerHTML = `<tr><td colspan="8" class="text-center text-danger">Failed to load data</td></tr>`;
+  }
+}
+
+window.openEditRejected = function(id, project, task, hours, status) {
+  document.getElementById("editTimesheetId").value = id;
+  document.getElementById("editProject").value = project || "";
+  document.getElementById("editTask").value = task || "";
+  document.getElementById("editHours").value = hours || 0;
+  // Default to rejected so the manager actively has to switch it to Approve
+  document.getElementById("editStatus").value = status || "REJECTED"; 
+
+  new bootstrap.Modal(document.getElementById('editRejectedModal')).show();
+};
+
+window.saveRejectedEdit = async function() {
+  const id = document.getElementById("editTimesheetId").value;
+  
+  const data = {
+    project: document.getElementById("editProject").value,
+    task: document.getElementById("editTask").value,
+    hours: document.getElementById("editHours").value,
+    status: document.getElementById("editStatus").value
+  };
+
+  try {
+    await apiPut(`/timesheets/rejected/${id}`, data);
+    
+    // Hide modal
+    const modalEl = document.getElementById('editRejectedModal');
+    const modalInstance = bootstrap.Modal.getInstance(modalEl);
+    if (modalInstance) modalInstance.hide();
+
+    // Refresh tables
+    loadRejectedTimesheets();
+    if(typeof loadApprovalTimesheets === 'function') loadApprovalTimesheets();
+    
+  } catch (err) {
+    console.error("Failed to save edited timesheet:", err);
+    alert("Failed to update: " + (err.message || "Server error"));
+  }
+};
+
   /* =====================================================
      EXCEL DOWNLOADS
   ===================================================== */
@@ -384,7 +470,6 @@ console.log("🚀 timesheets.js LOADED — FINAL");
   /* =====================================================
      PAGE INIT (CALLED BY ROUTER)
   ===================================================== */
-
   window.initTimesheets = function () {
     const role = getUserRole();
 
@@ -394,12 +479,22 @@ console.log("🚀 timesheets.js LOADED — FINAL");
       document.getElementById("btnDownloadMyExcel")?.classList.remove("d-none");
     }
 
+    // ✅ TEAM APPROVAL
     if (["manager", "hr", "admin"].includes(role)) {
       document.getElementById("btnDownloadTeamExcel")?.classList.remove("d-none");
       document.getElementById("approvalTab")?.classList.remove("d-none");
 
       waitForElement("#approval-tab", tab => {
         tab.addEventListener("shown.bs.tab", loadApprovalTimesheets);
+      });
+    }
+
+    // ✅ REJECTED TAB (ONLY MANAGER + ADMIN)
+    if (["manager", "admin"].includes(role)) {
+      document.getElementById("rejectedTab")?.classList.remove("d-none");
+
+      waitForElement("#rejected-tab", tab => {
+        tab.addEventListener("shown.bs.tab", loadRejectedTimesheets);
       });
     }
   };

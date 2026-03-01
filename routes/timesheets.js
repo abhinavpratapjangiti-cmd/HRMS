@@ -11,11 +11,11 @@ function formatHoursToHHMM(decimalHours) {
   if (decimalHours === null || decimalHours === undefined || decimalHours === "") return "—";
   const num = Number(decimalHours);
   if (isNaN(num)) return "—";
-  
+
   const totalMinutes = Math.round(num * 60);
   const h = Math.floor(totalMinutes / 60);
   const m = totalMinutes % 60;
-  
+
   return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
 }
 
@@ -30,41 +30,47 @@ router.get("/my/calendar", verifyToken, (req, res) => {
     return res.status(400).json({ message: "Employee or month missing" });
   }
 
-  db.query(
-    `
-    WITH RECURSIVE calendar AS (
-      SELECT DATE(CONCAT(?, '-01')) AS work_date
-      UNION ALL
-      SELECT DATE_ADD(work_date, INTERVAL 1 DAY)
-      FROM calendar
-      WHERE work_date < LAST_DAY(CONCAT(?, '-01'))
-    )
-    SELECT
-      c.work_date,
-      DAYNAME(c.work_date) AS day,
-      al.clock_in AS start_time,
-      al.clock_out AS end_time,
-      ts.project,
-      ts.task,
-      ts.hours,
-      COALESCE(ts.status, '') AS status,
-      CASE
-        WHEN ts.id IS NOT NULL THEN 'P'
-        WHEN h.holiday_date IS NOT NULL THEN 'HOL'
-        WHEN DAYOFWEEK(c.work_date) IN (1,7) THEN 'WO'
-        ELSE ''
-      END AS type
-    FROM calendar c
-    LEFT JOIN attendance_logs al
-      ON al.employee_id = ? AND al.log_date = c.work_date
-    LEFT JOIN timesheets ts
-      ON ts.employee_id = ? AND ts.work_date = c.work_date
-    LEFT JOIN holidays h
-      ON h.holiday_date = c.work_date
-    ORDER BY c.work_date
-    `,
-    [month, month, empId, empId]
+db.query(
+  `
+  WITH RECURSIVE calendar AS (
+    SELECT DATE(CONCAT(?, '-01')) AS work_date
+    UNION ALL
+    SELECT DATE_ADD(work_date, INTERVAL 1 DAY)
+    FROM calendar
+    WHERE work_date < LAST_DAY(CONCAT(?, '-01'))
   )
+  SELECT
+    c.work_date,
+    DAYNAME(c.work_date) AS day,
+    al.clock_in AS start_time,
+    al.clock_out AS end_time,
+    ts.project,
+    ts.task,
+    ts.hours,
+    CASE
+      WHEN l.id IS NOT NULL THEN 'L'
+      WHEN ts.id IS NOT NULL THEN 'P'
+      WHEN h.holiday_date IS NOT NULL THEN 'HOL'
+      WHEN DAYOFWEEK(c.work_date) IN (1,7) THEN 'WO'
+      ELSE ''
+    END AS type,
+    COALESCE(l.status, ts.status, '') AS status
+  FROM calendar c
+  LEFT JOIN attendance_logs al
+    ON al.employee_id = ? AND al.log_date = c.work_date
+  LEFT JOIN timesheets ts
+    ON ts.employee_id = ? AND ts.work_date = c.work_date
+  LEFT JOIN holidays h
+    ON h.holiday_date = c.work_date
+  LEFT JOIN leaves l
+    ON l.employee_id = ?
+    AND l.status = 'Approved'
+    AND c.work_date BETWEEN l.from_date AND l.to_date
+  ORDER BY c.work_date
+  `,
+  [month, month, empId, empId, empId]
+)
+
     .then(([rows]) => res.json(rows))
     .catch((err) => {
       console.error("MY CALENDAR ERROR:", err);
@@ -143,8 +149,9 @@ router.put("/:id/status", verifyToken, (req, res) => {
     });
 });
 
+
 /* =====================================================
-   4️⃣ MY TIMESHEET – OFFICIAL EXCEL (BIG DATA + DYNAMIC NAME)
+   4️⃣ MY TIMESHEET – OFFICIAL EXCEL (FIXED VERSION)
 ===================================================== */
 router.get("/my/calendar/excel", verifyToken, (req, res) => {
   const { month } = req.query;
@@ -156,52 +163,57 @@ router.get("/my/calendar/excel", verifyToken, (req, res) => {
 
   let emp;
 
-  // 1. Get Employee Details
-db.query(
-  `SELECT id, emp_code, name, department, designation, work_location, client_name
-   FROM employees WHERE id = ?`,
-  [empId]
-)
-    .then(([[row]]) => {
-      emp = row || {};
+  db.query(
+    `SELECT id, emp_code, name, department, designation, work_location, client_name
+     FROM employees WHERE id = ?`,
+    [empId]
+  )
+  .then(([[row]]) => {
+    emp = row || {};
 
-      // 2. Get Calendar & Timesheet Data
-      return db.query(
-        `
-        WITH RECURSIVE calendar AS (
-          SELECT DATE(CONCAT(?, '-01')) AS work_date
-          UNION ALL
-          SELECT DATE_ADD(work_date, INTERVAL 1 DAY)
-          FROM calendar
-          WHERE work_date < LAST_DAY(CONCAT(?, '-01'))
-        )
-        SELECT
-          c.work_date,
-          DAYNAME(c.work_date) AS day,
-          DATE_FORMAT(al.clock_in, '%h:%i %p') AS start_time,
-          DATE_FORMAT(al.clock_out, '%h:%i %p') AS end_time,
-          ts.hours,
-          COALESCE(ts.status, '') AS status,
-          CASE
-            WHEN ts.id IS NOT NULL THEN 'P'
-            WHEN h.holiday_date IS NOT NULL THEN 'HOL'
-            WHEN DAYOFWEEK(c.work_date) IN (1,7) THEN 'WO'
-            ELSE ''
-          END AS type
-        FROM calendar c
-        LEFT JOIN attendance_logs al ON al.employee_id = ? AND al.log_date = c.work_date
-        LEFT JOIN timesheets ts ON ts.employee_id = ? AND ts.work_date = c.work_date
-        LEFT JOIN holidays h ON h.holiday_date = c.work_date
-        ORDER BY c.work_date
-        `,
-        [month, month, empId, empId]
-      );
-    })
-    .then(([rows]) => {
-      const wb = new ExcelJS.Workbook();
-      const sh = wb.addWorksheet("Timesheet", {
-        views: [{ showGridLines: false }]
-      });
+    return db.query(
+      `
+      WITH RECURSIVE calendar AS (
+        SELECT DATE(CONCAT(?, '-01')) AS work_date
+        UNION ALL
+        SELECT DATE_ADD(work_date, INTERVAL 1 DAY)
+        FROM calendar
+        WHERE work_date < LAST_DAY(CONCAT(?, '-01'))
+      )
+      SELECT
+        c.work_date,
+        DAYNAME(c.work_date) AS day,
+        DATE_FORMAT(al.clock_in, '%h:%i %p') AS start_time,
+        DATE_FORMAT(al.clock_out, '%h:%i %p') AS end_time,
+        ts.hours,
+        COALESCE(ts.status, '') AS status,
+        CASE
+          WHEN l.id IS NOT NULL THEN 'L'
+          WHEN ts.id IS NOT NULL THEN 'P'
+          WHEN h.holiday_date IS NOT NULL THEN 'HOL'
+          WHEN DAYOFWEEK(c.work_date) IN (1,7) THEN 'WO'
+          ELSE ''
+        END AS type
+      FROM calendar c
+      LEFT JOIN attendance_logs al
+        ON al.employee_id = ? AND al.log_date = c.work_date
+      LEFT JOIN timesheets ts
+        ON ts.employee_id = ? AND ts.work_date = c.work_date
+      LEFT JOIN holidays h
+        ON h.holiday_date = c.work_date
+      LEFT JOIN leaves l
+        ON l.employee_id = ?
+        AND l.status = 'Approved'
+        AND c.work_date BETWEEN l.from_date AND l.to_date
+      ORDER BY c.work_date
+      `,
+      [month, month, empId, empId, empId]
+    );
+  })
+  .then(([rows]) => {
+
+    const wb = new ExcelJS.Workbook();
+    const sh = wb.addWorksheet("Timesheet");
 
       // --- STYLES ---
       const borderStyle = {
@@ -214,13 +226,13 @@ db.query(
       const brightBlueFill = {
         type: 'pattern',
         pattern: 'solid',
-        fgColor: { argb: 'FF0070C0' } 
+        fgColor: { argb: 'FF0070C0' }
       };
 
       const lightOrangeFill = {
         type: 'pattern',
         pattern: 'solid',
-        fgColor: { argb: 'FFFFE699' } 
+        fgColor: { argb: 'FFFFE699' }
       };
 
       const whiteFont = {
@@ -310,14 +322,14 @@ db.query(
         const isPresent = r.type === "P";
         const isWeekend = (r.day === 'Saturday' || r.day === 'Sunday');
 
-        if (isPresent) {
-            workedDays++;
-            // Keep decimal math for the final total
-            totalHours += parseFloat(r.hours || 0);
-        }
-        if (r.type === 'LE') {
-            leaveCount++;
-        }
+if (r.type === "P") {
+  workedDays++;                         // Only present counts as working
+  totalHours += parseFloat(r.hours || 0);
+}
+
+if (r.type === "L") {
+  leaveCount++;                         // Leave only counts as leave
+}
 
         let formattedDate = "—";
         if (r.work_date) {
@@ -389,8 +401,8 @@ db.query(
       // --- H. Signatures ---
       const sigLabelRow = sh.getRow(currentRowIndex);
       sigLabelRow.getCell(1).value = `Employee Name : ${emp.name}`;
-      sigLabelRow.getCell(5).value = "Authorized Name"; 
-      sigLabelRow.getCell(7).value = "Signature";       
+      sigLabelRow.getCell(5).value = "Authorized Name";
+      sigLabelRow.getCell(7).value = "Signature";
 
       sigLabelRow.eachCell({ includeEmpty: true }, (cell, colNum) => {
          if (colNum <= 7) {
@@ -519,7 +531,7 @@ router.get("/pending/my-team", verifyToken, (req, res) => {
   `;
 
   const params = req.user.role === "manager"
-    ? [req.user.employee_id]   
+    ? [req.user.employee_id]
     : [];
 
   db.query(sql, params)
@@ -567,6 +579,88 @@ router.get("/pending/my-team/list", verifyToken, (req, res) => {
     });
 });
 
+/* =====================================================
+   8️⃣ REJECTED TIMESHEETS (MANAGER / ADMIN)
+===================================================== */
+router.get("/rejected", verifyToken, (req, res) => {
+  const { month } = req.query;
+  const { role, employee_id: managerId } = req.user;
 
+  if (!["manager", "admin"].includes(role)) {
+    return res.status(403).json({ message: "Access denied" });
+  }
 
+  if (!month) {
+    return res.status(400).json({ message: "Month missing" });
+  }
+
+  db.query(
+    `
+    SELECT
+      t.id,
+      e.name AS employee_name,
+      t.work_date,
+      t.project,
+      t.task,
+      t.hours,
+      t.status,
+      t.rejection_reason
+    FROM timesheets t
+    JOIN employees e ON e.id = t.employee_id
+    WHERE t.status = 'REJECTED'
+      AND DATE_FORMAT(t.work_date, '%Y-%m') = ?
+      AND (? = 'admin' OR e.manager_id = ?)
+    ORDER BY t.work_date DESC
+    `,
+    [month, role, managerId]
+  )
+    .then(([rows]) => res.json(rows))
+    .catch((err) => {
+      console.error("REJECTED TIMESHEETS ERROR:", err);
+      res.status(500).json({ message: "DB error" });
+    });
+});
+
+router.put("/rejected/:id", verifyToken, async (req, res) => {
+  const { id } = req.params;
+  const { project, task, hours, status } = req.body;
+
+  if (!["manager", "admin"].includes(req.user.role)) {
+    return res.status(403).json({ message: "Access denied" });
+  }
+
+  try {
+    let query = `
+      UPDATE timesheets
+      SET project = ?,
+          task = ?,
+          hours = ?,
+          status = ?,
+          updated_at = NOW()
+    `;
+    let params = [project, task, hours, status];
+
+    // If they switched it from Rejected to Approved in the modal, track the approval!
+    if (status === 'APPROVED') {
+        query += `, approved_by = ?, approved_at = NOW() `;
+        params.push(req.user.employee_id);
+    }
+
+    query += ` WHERE id = ? AND status = 'REJECTED'`;
+    params.push(id);
+
+    const [result] = await db.query(query, params);
+
+    if (!result.affectedRows) {
+      return res.status(400).json({
+        message: "Cannot edit. Timesheet not found or already processed."
+      });
+    }
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error("ERROR UPDATING REJECTED TIMESHEET:", err);
+    res.status(500).json({ message: "Database error" });
+  }
+});
 module.exports = router;
